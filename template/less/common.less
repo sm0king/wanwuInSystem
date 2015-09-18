@@ -1,0 +1,32 @@
+.flex(){
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;
+}
+
+.box-flex(@x:1){
+  -webkit-box-flex: @x;            /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: @x;               /* OLD - Firefox 19- */
+  -webkit-flex: @x;                /* Chrome */
+  -ms-flex: @x;                    /* IE 10 */
+  flex: @x;
+}
+body{
+  padding-top: 50px;
+  margin-bottom: 55px;
+}
+.txt-red{
+  color: red;
+}
+.block{
+  display: block;
+}
+// 重置bootstrap
+@import "reset-boot.less";
+
+@import "top.less";
+@import "person.less";
+@import "business.less";
+@import "foot.less";

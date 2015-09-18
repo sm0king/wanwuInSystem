@@ -56,6 +56,14 @@ module.exports = function (grunt) {
       jade:{
         files:['<%= config.tpl %>/**/*.{html,jade}'],
         tasks:['jade']
+      },
+      less:{
+        files: ['<%= config.tpl %>/less/**/*.less'],
+        tasks: ['less'],
+      },
+      images:{
+        files: ['<%= config.tpl %>/images/**/*.*'],
+        tasks: ['copy:images'],
       }
     },
 
@@ -328,6 +336,13 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      images:{
+        expand: true,
+        dot: true,
+        cwd: '<%= config.tpl %>/images',
+        dest: '<%= config.app %>/images',
+        src: '{,*/}*.*'
       }
     },
 
@@ -362,6 +377,19 @@ module.exports = function (grunt) {
                 ext: '.html'
             }]
         }
+    },
+    less:{
+      options:{
+        compress: true,
+        yuicompress: true
+      },
+      main: {
+        expand: true,
+        cwd: '<%= config.tpl %>/less/',
+        src: ['common.less'],
+        dest: '<%= config.app%>/css/',
+        ext: '.css'
+      },
     }
   });
 
@@ -374,8 +402,9 @@ module.exports = function (grunt) {
     //执行任务
     grunt.task.run([
       //jade 模板编译任务
-      'jade', 
+      'jade',
       'clean:server',
+      'less',
       'wiredep',
       'concurrent:server',
       'postcss',
