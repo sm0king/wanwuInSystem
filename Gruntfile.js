@@ -343,6 +343,13 @@ module.exports = function (grunt) {
         cwd: '<%= config.tpl %>/images',
         dest: '<%= config.app %>/images',
         src: '{,*/}*.*'
+      },
+      js:{
+        expand: true,
+        dot: true,
+        cwd: '<%= config.tpl %>/js',
+        dest: '<%= config.app %>/js',
+        src: '{,*/}*.*'
       }
     },
 
