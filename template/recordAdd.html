@@ -1,0 +1,14 @@
+extends common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 拜访记录
+block topcenter
+  | 商家详情
+block topright
+  span#save 保存
+
+block section
+  .record-form
+    include includes/infoform.jade

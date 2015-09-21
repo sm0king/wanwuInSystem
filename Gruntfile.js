@@ -393,7 +393,7 @@ module.exports = function (grunt) {
       main: {
         expand: true,
         cwd: '<%= config.tpl %>/less/',
-        src: ['common.less'],
+        src: ['common.less','login.less'],
         dest: '<%= config.app%>/css/',
         ext: '.css'
       },
