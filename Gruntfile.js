@@ -64,6 +64,10 @@ module.exports = function (grunt) {
       images:{
         files: ['<%= config.tpl %>/images/**/*.*'],
         tasks: ['copy:images'],
+      },
+      js:{
+        files: ['<%= config.tpl %>/js/**/*.*'],
+        tasks: ['copy:js'],
       }
     },
 
