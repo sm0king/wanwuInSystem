@@ -23,3 +23,16 @@
     }
   }
 })(window,jQuery);
+
+
+$(function(){
+  $('.navbar-back').on('click touched',function(){
+      if ($(this).data('control')) {
+        if ($(this).data('control') == 1) {
+            history.back(-1);
+        }
+      }else {
+        history.go(-1);
+      }
+  });
+});

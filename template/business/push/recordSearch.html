@@ -1,0 +1,18 @@
+extends ../../common.jade
+
+block top
+
+block section
+  section
+    .record-list
+      .search-box.clearfix
+        input.left-input.form-control(type="text" placeholder="搜索")
+        div.right-btn.cancel 取消
+      include ../../includes/record.jade
+block script
+  script.
+    $(function(){
+        $('.cancel').on('click',function(){
+            history.back(-1);
+        });
+    })

@@ -1,4 +1,4 @@
-extends common.jade
+extends ../../common.jade
 
 block topleft
   div.navbar-back
@@ -10,7 +10,8 @@ block topright
   span#save 完成
 
 block section
-  #mapContainer.show
+  section.main
+    #mapContainer.show
 
 block script
     script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8760360d4d0f0a29553680c42977a909")

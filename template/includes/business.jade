@@ -1,5 +1,6 @@
-- var items = ["等待接货", "等待送货", "拜访记录","我的用户","员工管理","查看业绩"]
+- var items = [{name:"等待接货",url:"record.html"},{name:"等待送货",url:"record.html"},{name:"拜访记录",url:"./business/push/recordList.html"},{name:"我的用户",url:"./business/push/myUserList.html"},{name:"员工管理",url:"record.html"},{name:"查看业绩"}];
 ul.list-group
   each item in items
-    li.list-group-item= item
-      span.badge 1
+    a(href= item.url)
+      li.list-group-item= item.name
+        span.badge 1

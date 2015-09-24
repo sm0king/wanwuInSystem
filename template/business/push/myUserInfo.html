@@ -1,0 +1,23 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 我的用户
+block topcenter
+  | 商家详情
+block topright
+  span#save 保存
+
+block section
+  section.main
+    .record-form
+      include ../../includes/infoform.jade
+      small.time.help-block 注册时间 2015-09-28
+block script
+   script.
+      $(function(){
+          $(".point").on("click", function(){
+              window.location.href = "./myUserMap.html";
+          });
+      });

@@ -1,0 +1,37 @@
+extends ../../common.jade
+block local
+  - var local = "./recordAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 拜访记录
+
+block section
+  section.main
+    .record-list
+      .search-box
+        input#search.form-control(type="text" placeholder="搜索")
+      .add-record
+        a.btn.btn-primary.btn-lg.btn-block(href="./recordAdd.html") +添加拜访记录
+      .list-date.clearfix.bg-warning
+        span.pull-left 今天（2）
+        span.pull-right.point
+          i.glyphicon.glyphicon-map-marker
+      include ../../includes/record.jade
+
+block script
+   script.
+      $(function(){
+          $(".point").on("click", function(){
+              window.location.href = "./recordMap.html";
+          });
+          $("#search").on('keyup',function(e){
+              var k = e.keyCode || e.which;
+              if(k == 13){
+                window.location.href = "./recordSearch.html";
+              }
+          });
+      });
