@@ -1,6 +1,20 @@
-- var items = [{name:"等待接货",url:"record.html"},{name:"等待送货",url:"record.html"},{name:"拜访记录",url:"./business/push/recordList.html"},{name:"我的用户",url:"./business/push/myUserList.html"},{name:"员工管理",url:"record.html"},{name:"查看业绩"}];
-ul.list-group
+mixin list(items)
   each item in items
     a(href= item.url)
       li.list-group-item= item.name
-        span.badge 1
+        span.badge= item.num
+ul.list-group
+  +list([{name:"等待接货",url:"#",num:"3"}])
+  +list([{name:"等待送货",url:"#",num:"3"}])
+  +list([{name:"配送数据",url:"#",num:"3"}])
+  +list([{name:"供应商管理",url:"#",num:"3"}])
+  +list([{name:"拜访记录 v2.0",url:"./business/push/recordList.html",num:"1"}])
+  +list([{name:"我的用户 v2.0",url:"./business/push/myUserList.html",num:"1"}])
+  +list([{name:"业务数据 v2.0",url:"./business/push/myBusiness.html",num:"1"}])
+  +list([{name:"员工管理",url:"#",num:"1"}])
+  +list([{name:"部门管理",url:"#",num:"1"}])
+  +list([{name:"业务业绩",url:"#",num:"1"}])
+  +list([{name:"配送业绩",url:"#",num:"1"}])
+  +list([{name:"配送规则设定",url:"#",num:"3"}])
+  +list([{name:"厂商管理",url:"#",num:"3"}])
+  +list([{name:"厂商信息",url:"#",num:"3"}])
