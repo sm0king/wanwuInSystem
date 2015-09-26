@@ -1,7 +1,11 @@
-ul.list-group
+mixin infoList(lt,rt)
   li.list-group-item.info-item
-    .left-txt 门店图片
-    .right-content.text-right 新增 >
+    .left-txt= lt
+    .right-content.text-right= rt 
+      | >
+  
+ul.list-group
+  + infoList('头像','新增')
   li.list-group-item.info-item
     .left-txt.txt-red 超市名称
     .right-content 

@@ -29,11 +29,18 @@
     border-radius: 0;
     box-shadow:none;
 }
-.form-control:focus ,.form-control:active ,select:focus{
+.form-control:focus ,.form-control:active ,select:focus,input:focus{
      border-color: #ccc;
-     outline: inherit;
+     outline: none;
      -webkit-box-shadow:none;
      box-shadow: none;
+}
+
+input[type=file]:focus, input[type=checkbox]:focus, input[type=radio]:focus{
+  outline: none;
+}
+input[type=checkbox], input[type=radio]{
+  margin: 0;
 }
 
 .nav-tabs {
