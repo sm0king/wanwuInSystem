@@ -66,7 +66,7 @@ module.exports = function (grunt) {
         tasks: ['copy:images'],
       },
       js:{
-        files: ['<%= config.tpl %>/js/**/*.*'],
+        files: ['<%= config.tpl %>/**/*.js'],
         tasks: ['copy:js'],
       }
     },
@@ -350,9 +350,9 @@ module.exports = function (grunt) {
       js:{
         expand: true,
         dot: true,
-        cwd: '<%= config.tpl %>/js',
-        dest: '<%= config.app %>/js',
-        src: '{,*/}*.*'
+        cwd: '<%= config.tpl %>/',
+        dest: '<%= config.app %>',
+        src: '**/*.js'
       }
     },
 

@@ -103,7 +103,7 @@ require(['config'], function() {
             },
             //修改密码  暂无
             userReset: function() {},
-            //获取拜访纪录列表 传入 关键词 （可无，没有为空 “”）分页信息： 第一页 每页多少条数据 
+            //获取拜访纪录列表 传入 关键词 （可无，没有为空 “”）分页信息： 第一页 每页多少条数据
             // 返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果
             serviceMyRecord: function(keyValue, page, pageSize, callback) {
                 var url = host + '/service/myRecord';

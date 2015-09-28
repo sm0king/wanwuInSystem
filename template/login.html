@@ -5,20 +5,69 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
     link(rel="stylesheet", href="css/login.css")
-    script(src="/bower_components/jquery/dist/jquery.min.js")
+    script(src="/plugs/jquery/jquery.js")
   body.
     <div class="container">
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+      <div class="form-signin">
+        <h2 class="form-signin-heading">万物—地瓜2.0</h2>
+        <label for="inputTel" class="sr-only">手机号</label>
+        <input type="tel" id="inputTel" class="form-control" placeholder="手机号" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
         <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+          <a href="">忘记密码</a>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+        <div id="msg" class="alert hide"></div>
+        <div id="login" class="btn btn-lg btn-primary btn-block">登录</div>
+      </div>
     </div>
+  script(type='text/javascript',src='/js/utils.js')
+  script.
+    $(function(){
+      $('#login').on('click',function(){
+          if (checkForm()) {
+            var phoneNum = $('#inputTel').val(),
+                password = $('#inputPassword').val();
+                
+            console.log($('#inputTel').val());
+            service.userLogin(phoneNum,0,password,"",function(re,reContent){
+                console.log(re);
+                var cl,msg;
+                if (re) {
+                  cl = "alert-success";
+                }else {
+                  cl = "alert-danger";
+                }
+                $('#msg').addClass(cl).removeClass('hide').html(reContent);
+            });
+          }
+      });
+      
+      function checkForm(){
+        if($('#inputTel').val().length == 11  && !isNaN($('#inputTel').val())){
+          var reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+          if (reg.test($('#inputTel').val())) {
+            if ($('#inputPassword').val() == 0) {
+              alert('密码不能为空');
+              $('#inputPassword').focus();
+              return false;
+            }else {
+              return true;
+            }
+          }else {
+            alert('手机号格式不正确');
+            $('#inputTel').focus();
+            return false;
+          }
+        }else if($('#inputTel').val() == 0){
+          alert('手机号不能为空');
+          $('#inputTel').focus();
+          return false;
+        }else{
+          alert('手机号格式不正确');
+          $('#inputTel').focus();
+          return false;
+        }
+
+      }
+    });
