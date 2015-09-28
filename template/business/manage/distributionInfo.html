@@ -1,0 +1,37 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务业绩
+block topcenter
+  | 详细数据
+block toprightTxt
+  span#selectDate 选择日期
+block section
+  section.main
+    div.time 2015-9-22 ~ 2015-9-22
+    .table-responsive
+      table.table.table-bordered
+        thead.h6
+          tr
+            th 姓名
+            th 配送商品数
+            th 配送订单数
+            th 配送订单金额
+            th 
+              a(href="./distributionRefuse.html") 拒绝配送次数
+        tbody
+          tr
+            td 所有
+            td 50
+            td 23
+            td 20
+            td 32
+block script
+  script.
+    $(function(){
+      $('#selectDate').click(function (e) {
+          window.location.href = "./distributionSearch.html";
+      })
+    })

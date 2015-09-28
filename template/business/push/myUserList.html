@@ -1,0 +1,27 @@
+extends ../../common.jade
+block local
+  - var local = "./myUserInfo.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 我的用户
+
+block section
+  section.main
+    .record-list
+      .search-box
+        input#search.form-control(type="text" placeholder="搜索")
+      include ../../includes/record.jade
+block script
+   script.
+      $(function(){
+          $("#search").on('keyup',function(e){
+              var k = e.keyCode || e.which;
+              if(k == 13){
+                window.location.href = "./myUserSearch.html";
+              }
+          });
+      });

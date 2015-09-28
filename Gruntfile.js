@@ -56,6 +56,18 @@ module.exports = function (grunt) {
       jade:{
         files:['<%= config.tpl %>/**/*.{html,jade}'],
         tasks:['jade']
+      },
+      less:{
+        files: ['<%= config.tpl %>/less/**/*.less'],
+        tasks: ['less'],
+      },
+      images:{
+        files: ['<%= config.tpl %>/images/**/*.*'],
+        tasks: ['copy:images'],
+      },
+      js:{
+        files: ['<%= config.tpl %>/js/**/*.*'],
+        tasks: ['copy:js'],
       }
     },
 
@@ -327,6 +339,20 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      images:{
+        expand: true,
+        dot: true,
+        cwd: '<%= config.tpl %>/images',
+        dest: '<%= config.app %>/images',
+        src: '{,*/}*.*'
+      },
+      js:{
+        expand: true,
+        dot: true,
+        cwd: '<%= config.tpl %>/js',
+        dest: '<%= config.app %>/js',
+        src: '{,*/}*.*'
       }
     },
 
@@ -375,6 +401,19 @@ module.exports = function (grunt) {
           bowerOptions:{}
         }
       }
+    },
+    less:{
+      options:{
+        compress: true,
+        yuicompress: true
+      },
+      main: {
+        expand: true,
+        cwd: '<%= config.tpl %>/less/',
+        src: ['common.less','login.less'],
+        dest: '<%= config.app%>/css/',
+        ext: '.css'
+      },
     }
   });
   // jit 无法加载 只能手动加载bower任务
@@ -391,6 +430,7 @@ module.exports = function (grunt) {
       'jade',
       'clean:server',
       // 'wiredep',
+      'less',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',

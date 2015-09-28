@@ -1,0 +1,43 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 业务数据
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group.data-cont
+      li.list-group-item
+        | 我的邀请码 
+        span ADFASF
+      li.list-group-item.business-data
+        div.list-flex
+          p 拜访量
+          h2.text-center 36
+        div.list-flex
+          p 注册用户
+          h2.text-center 36
+      li.list-group-item.business-data
+        div.list-flex
+          p 订单数
+          h2.text-center 36
+        div.list-flex
+          p 订单金额
+          h2.text-center 36
+      a.block(href="./myBusinessInfo.html")  
+        li.list-group-item
+          | 详细数据
+          span.badge >
+block script
+  script(src="/bower_components/bootstrap/js/tab.js")
+  script.
+    $(function(){
+      $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+      })  
+    })

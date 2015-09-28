@@ -1,0 +1,34 @@
+extends ../../common.jade
+
+block head
+  link(rel="stylesheet", href="../../js/datepicker/datepicker.min.css")
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 详细数据
+block topcenter
+  | 数据查询
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group
+      li.list-group-item.info-item
+        .left-txt 开始时间
+        .right-content
+          input.form-control.sel-time
+      li.list-group-item.info-item
+        .left-txt 结束时间
+        .right-content
+          input.form-control.sel-time
+      .large-btnbox
+        a.btn.btn-primary.btn-lg.btn-block(href="./businessInfo.html") 查询
+block script
+  script(src="../../js/datepicker/datepicker.min.js")
+  script(src="../../js/datepicker/datepicker.zh-CN.min.js")
+  script.
+    $('.sel-time').datepicker({
+      language: "zh-CN",
+      orientation: "top left"
+    });

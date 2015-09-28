@@ -1,0 +1,42 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 查看业绩
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group
+      li.list-group-item
+        | 配送员
+        span.badge 36
+      li.list-group-item
+        | 配送商品数
+        span.badge 36
+      li.list-group-item
+        | 配送订单数
+        span.badge 36
+      li.list-group-item
+        | 拒绝配送次数
+        span.badge 36
+      li.list-group-item
+        | 配送订单金额
+        span.badge 36
+      p
+      a.block(href="./distributionInfo.html")
+        li.list-group-item
+          | 详细数据
+          span.badge >
+block script
+  script(src="/bower_components/bootstrap/js/tab.js")
+  script.
+    $(function(){
+      $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+      })
+    })

@@ -1,0 +1,14 @@
+mixin list(items)
+  each item in items
+    a(href= item.url)
+      li.list-group-item= item.name
+        span.badge= item.num
+ul.list-group
+  +list([{name:"拜访记录",url:"./business/push/recordList.html",num:"1"}])
+  +list([{name:"我的用户",url:"./business/push/myUserList.html",num:"1"}])
+  +list([{name:"业务数据",url:"./business/push/myBusiness.html",num:"1"}])
+  +list([{name:"员工管理",url:"./business/manage/employeeList.html",num:"1"}])
+  +list([{name:"部门管理",url:"./business/manage/departmentList.html",num:"1"}])
+  +list([{name:"业务业绩",url:"./business/manage/businessList.html",num:"1"}])
+  +list([{name:"配送业绩",url:"./business/manage/distributionList.html",num:"1"}])
+  +list([{name:"万物数据",url:"./business/manage/wanwu.html",num:"1"}])
