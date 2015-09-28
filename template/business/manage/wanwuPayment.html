@@ -3,16 +3,16 @@ extends ../../common.jade
 block topleft
   div.navbar-back
     i.glyphicon.glyphicon-chevron-left
-    span 业务
+    span 万物数据
 block topcenter
-  | 万物数据
+  | 平台付款
 block toprightTxt
-
+  span#selectDate 选择日期
 block section
   section.main
-    div.bg-warning 平台流水
+    div 今天
     ul.list-group
-      a(href="./wanwuReceipt.html")   
+      a(href="./wanwuReceipt.html")
         li.list-group-item
           span 收款金额
           span.pull-right ￥12123412
@@ -24,3 +24,10 @@ block section
         li.list-group-item
           span 平台余额
           span.pull-right ￥12123412
+block script
+  script.
+    $(function(){
+      $('#selectDate').click(function (e) {
+          window.location.href = "./wanwuSearch.html";
+      })
+    })

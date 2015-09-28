@@ -1,0 +1,33 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 万物数据
+block topcenter
+  | 平台收款
+block toprightTxt
+  span#selectDate 选择日期
+block section
+  section.main
+    div 今天          
+    table.table.table-bordered.data
+        tr
+          td 2015-9-23 16:15:25
+          td 订单支付
+          td ￥23.05
+        tr
+          td 2015-9-23 16:15:25
+          td 订单支付
+          td ￥23.05
+
+block script
+  script.
+    $(function(){
+      $('#selectDate').click(function (e) {
+          window.location.href = "./wanwuSearch.html";
+      });
+      $('.data tr').on('click',function(){
+          window.location.href = "./wanwuReceiptInfo.html";
+      });
+    })
