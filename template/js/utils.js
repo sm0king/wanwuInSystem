@@ -1,6 +1,6 @@
 (function(win,$){
   //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-  var host = window.location.hostname === 'localhost' ? 'http://testapi.wanwu.com/newosadmin' : 'http://api.wanwu.com/newosadmin';
+  var host = window.location.hostname === 'localhost' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
   win.service = {
       catchError: function(error_no) {
           var error_messge = {
@@ -24,7 +24,7 @@
               data: data
           }).done(function(result) {
               //有返回数据
-              if (result.error_no === 0) {
+              if (result.error_no == 0) {
                   //请求成功，有数据
                   callback(true, result.content);
               } else {
@@ -60,8 +60,8 @@
           this.getData(url, data, function(isTrue, reContent) {
               if (isTrue) {
                   //获取登陆结果
-                  if (reContent.length > 0) {
-                      var userInfo = JSON.stringify(reContent.userInfo);
+                  if (reContent) {
+                      var userInfo = JSON.stringify(reContent);
                       window.localStorage.setItem('userInfo', userInfo);
                       //将获取的用户信息存在本地存储中 获取方式为：var  useuInfo = JSON.parse(window.localStorage.getItem('userInfo')); 这样，获取的就是数据对象。
                       callback(true, reContent.rights);
