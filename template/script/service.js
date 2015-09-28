@@ -147,22 +147,22 @@ require(['config'], function() {
             },
 
             /**
-名称  类型  是否必须    默认值 描述
-userId  String  是       用户名
-token   String  是       token
-taskId  int 否       任务id,如果存在我将执行更新操作，没有我执行插入操作
-mobile  String  是       手机号
-shopName    String  是       超市名称
-shopLogo    String  否       图片url
-pid String  是       省份id
-cid String  否       城市id
-did String  否       区域id
-parentId    String  否       父级id
-location    String  是       地址位置
-address String  否       详细地址
-scales  String  否       超市规模
-running_state   String  否       经营状况
-remark  String  否       备注
+            名称  类型  是否必须    默认值 描述
+            userId  String  是       用户名
+            token   String  是       token
+            taskId  int 否       任务id,如果存在我将执行更新操作，没有我执行插入操作
+            mobile  String  是       手机号
+            shopName    String  是       超市名称
+            shopLogo    String  否       图片url
+            pid String  是       省份id
+            cid String  否       城市id
+            did String  否       区域id
+            parentId    String  否       父级id
+            location    String  是       地址位置
+            address String  否       详细地址
+            scales  String  否       超市规模
+            running_state   String  否       经营状况
+            remark  String  否       备注
             */
             //保存我的拜访纪录
             serviceSaveMyRecord: function(taskId, shopName, shopLogo, provinces, city, district, parentId, location, address, scales, running_state, remark, callback) {
@@ -212,8 +212,7 @@ remark  String  否       备注
                     return false;
                 }
             },
-            /* 这里有问题 */
-            // 提供关键字 如果没有关键字则返回 当前默认列表  分页信息 page pageSize
+            // 获取我的用户列表 提供关键字 如果没有关键字则返回 当前默认列表  分页信息 page pageSize
             serviceSaveMyCustomers: function(keyValue, page, pageSize,callback) {
                 var url = host + '/service/myCustomers';
                 var userInfo = getUserInfo();
