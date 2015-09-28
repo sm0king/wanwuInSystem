@@ -388,19 +388,6 @@ module.exports = function (grunt) {
             }]
         }
     },
-    less:{
-      options:{
-        compress: true,
-        yuicompress: true
-      },
-      main: {
-        expand: true,
-        cwd: '<%= config.tpl %>/less/',
-        src: ['common.less','login.less'],
-        dest: '<%= config.app%>/css/',
-        ext: '.css'
-      },
-    },
     //bower task
     bower:{
       install:{
@@ -414,10 +401,23 @@ module.exports = function (grunt) {
           bowerOptions:{}
         }
       }
+    },
+    less:{
+      options:{
+        compress: true,
+        yuicompress: true
+      },
+      main: {
+        expand: true,
+        cwd: '<%= config.tpl %>/less/',
+        src: ['common.less','login.less'],
+        dest: '<%= config.app%>/css/',
+        ext: '.css'
+      },
     }
   });
-  // 好像插件太多，自动加载任务插件失败，手动加载bower任务
-  // grunt.loadNpmTasks('grunt-bower-task');
+  // jit 无法加载 只能手动加载bower任务
+  grunt.loadNpmTasks('grunt-bower-task');
 
   grunt.registerTask('serve', 'start the server and preview your app', function (target) {
 
@@ -429,8 +429,8 @@ module.exports = function (grunt) {
       //jade 模板编译任务
       'jade',
       'clean:server',
-      'less',
       // 'wiredep',
+      'less',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',
