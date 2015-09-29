@@ -22,4 +22,18 @@
             window.location.href = url;
         }
     };
+
+    $('.navbar-back').on('click touched',function(){
+        if ($(this).data('control')) {
+          if ($(this).data('control') == 1) {
+              back.to();
+          }
+        }else {
+          history.go(-1);
+        }
+    });
+
+    // if (!window.localStorage.getItem('userInfo')) {
+    //     window.location.href = "/diguaApp/index.html";
+    // }
 })(window,jQuery);

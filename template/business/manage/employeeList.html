@@ -7,8 +7,9 @@ block topleft
     i.glyphicon.glyphicon-chevron-left
     span 业务
 block topcenter
-  | 拜访记录
-
+  | 员工管理
+block toprightTxt
+  span#add 添加
 block section
   section.main
     .record-list
@@ -19,6 +20,7 @@ block section
       include ../../includes/employee.jade
 
 block script
+   script(src="/js/manage/employeeList.js")
    script.
       $(function(){
           $("#search").on('keyup',function(e){

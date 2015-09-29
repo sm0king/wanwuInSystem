@@ -2,19 +2,22 @@ doctype html
 html
   head
     title= title
+    meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
-    link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
-    link(rel="stylesheet", href="/css/common.css")
-    script(src="/plugs/jquery/jquery.js")
+    link(rel="stylesheet", href="/diguaApp/plugs/bootstrap/bootstrap.min.css")
+    link(rel="stylesheet", href="/diguaApp/css/common.css")
+    script(src="/diguaApp/plugs/jquery/jquery.js")
     block head
   body
-    #main.hide
+    #main
       block top
         include includes/top.jade
       block section
       block tag
     block login
     
+  script(src="/diguaApp/js/utils.js")
+  script(src="/diguaApp/js/back.js")
   block script
-    script(src="/js/wanwu.js")
+
   

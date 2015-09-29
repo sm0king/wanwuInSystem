@@ -1,6 +1,6 @@
 (function(win,$){
   //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-  var host = window.location.hostname === 'localhost' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
+  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
   win.service = {
       catchError: function(error_no) {
           var error_messge = {
@@ -14,6 +14,7 @@
           }[error_no] || '未知或者网络错误！';
           return error_messge;
       },
+
       //请求数据
       getData: function(url, data, callback) {
           var serviceThis = this;
@@ -93,9 +94,17 @@
       userReset: function() {},
       //获取拜访纪录列表 传入 关键词 （可无，没有为空 “”）分页信息： 第一页 每页多少条数据
       // 返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果
+      /**
+       * [function description]
+       * @param  {[type]}   keyValue [关键词（可无，没有为空 “”）]
+       * @param  {[type]}   page     [页码]
+       * @param  {[type]}   pageSize [每页多少条数据]
+       * @param  {Function} callback [返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果]
+       * @return {[type]}            [description]
+       */
       serviceMyRecord: function(keyValue, page, pageSize, callback) {
           var url = host + '/service/myRecord';
-          var userInfo = getUserInfo();
+          var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId: userInfo.id,
@@ -104,7 +113,7 @@
                   pageSize: pageSize || 10,
                   keyword: keyValue || ""
               };
-              getData(url, data, function(isTrue, reContent) {
+              this.getData(url, data, function(isTrue, reContent) {
                   if (isTrue) {
                       if (keyValue.length > 0) {
                           callback(true, reContent.searchLists);
@@ -200,10 +209,17 @@
               return false;
           }
       },
-      // 获取我的用户列表 提供关键字 如果没有关键字则返回 当前默认列表  分页信息 page pageSize
+      /**
+       * [获取我的用户列表]
+       * @param  {[type]}   keyValue [提供关键字 如果没有关键字则返回 当前默认列表]
+       * @param  {[type]}   page     [页码]
+       * @param  {[type]}   pageSize [单页数量]
+       * @param  {Function} callback [回调函数]
+       * @return {[type]}            [description]
+       */
       serviceSaveMyCustomers: function(keyValue, page, pageSize,callback) {
           var url = host + '/service/myCustomers';
-          var userInfo = getUserInfo();
+          var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId: userInfo.id,
@@ -212,7 +228,7 @@
                   PageNumber: page || 0,
                   PageSize: pageSize
               };
-              getData(url, data, function(isTrue, reContent) {
+              this.getData(url, data, function(isTrue, reContent) {
                   //
                   /*if (isTrue) {
                       if (keyValue.length > 0) {
@@ -246,14 +262,14 @@
       //获取所有员工
       manageGetEmployeeList: function(keyValue,callback) {
           var url = host + '/service/getEmployeeList';
-          var userInfo = getUserInfo();
+          var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId:userInfo.id,
                   token:userInfo.token,
                   keyword:keyValue || ""
               };
-              getData(url, data, function(isTrue, reContent) {
+              this.getData(url, data, function(isTrue, reContent) {
                   //
                   callback(isTrue,reContent);
               })
@@ -333,6 +349,19 @@
               }
 
           })
+      },
+      getBusinessUrl: function(url_name){
+          var url = {
+            '拜访记录':'./business/push/recordList.html',
+            '我的用户':'./business/push/myUserList.html',
+            '业务数据':'./business/push/myBusiness.html',
+            '员工管理':'./business/manage/employeeList.html',
+            '部门管理':'./business/manage/departmentList.html',
+            '业务业绩':'./business/manage/businessList.html',
+            '配送业绩':'./business/manage/distributionList.html',
+            '万物数据':'./business/manage/wanwu.html'
+          }[url_name] || '#';
+          return url;
       }
   };
 })(window,jQuery);

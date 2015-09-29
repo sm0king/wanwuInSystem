@@ -16,13 +16,13 @@ block section
         input#search.form-control(type="text" placeholder="搜索")
       .add-record
         a.btn.btn-primary.btn-lg.btn-block(href="./recordAdd.html") +添加拜访记录
-      .list-date.clearfix.bg-warning
-        span.pull-left 今天（2）
-        span.pull-right.point
-          i.glyphicon.glyphicon-map-marker
-      include ../../includes/record.jade
+      #record-list
+        .list-date.bg-warning
+          span 今天（2）
+        include ../../includes/record.jade
 
 block script
+   script(src="/diguaApp/js/push/recordList.js")
    script.
       $(function(){
           $(".point").on("click", function(){

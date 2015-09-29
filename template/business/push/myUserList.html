@@ -16,6 +16,7 @@ block section
         input#search.form-control(type="text" placeholder="搜索")
       include ../../includes/record.jade
 block script
+    script(src="/js/push/userList.js")
    script.
       $(function(){
           $("#search").on('keyup',function(e){

@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
   // Configurable paths
   var config = {
-    app: 'app',
+    app: 'app/diguaApp',
     dist: 'dist',
     tpl:'template'
   };
