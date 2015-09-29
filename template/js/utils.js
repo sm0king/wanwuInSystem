@@ -92,10 +92,9 @@
       },
       //修改密码  暂无
       userReset: function() {},
-      //获取拜访纪录列表 传入 关键词 （可无，没有为空 “”）分页信息： 第一页 每页多少条数据
-      // 返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果
+
       /**
-       * [function description]
+       * [获取拜访纪录列表]
        * @param  {[type]}   keyValue [关键词（可无，没有为空 “”）]
        * @param  {[type]}   page     [页码]
        * @param  {[type]}   pageSize [每页多少条数据]
@@ -130,14 +129,14 @@
       serviceMyRecordDetail: function(id, callback) {
           //获取用户信息
           var url = host + '/service/myRecordDetail';
-          var userInfo = getUserInfo();
+          var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
                   taskId: id
               };
-              getData(url, data, function(isTrue, reContent) {
+              this.getData(url, data, function(isTrue, reContent) {
                   callback(isTrue, reContent);
               });
           };
@@ -162,26 +161,26 @@
       remark  String  否       备注
       */
       //保存我的拜访纪录
-      serviceSaveMyRecord: function(taskId, shopName, shopLogo, provinces, city, district, parentId, location, address, scales, running_state, remark, callback) {
+      serviceSaveMyRecord: function(record , callback) {
           var url = host + '/service/saveMyRecord';
           var userInfo = getUserInfo();
           if (userInfo) {
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
-                  taskId: "" || 0,
+                  taskId: record.taskId || "" || 0,
                   mobile: userInfo.phone,
-                  shopName: shopName,
-                  shopLogo: shopName,
-                  pid: provinces,
-                  cid: city,
-                  did: district,
-                  parentId: parentId,
-                  location: location,
-                  address: address,
-                  scales: scales,
-                  running_state: running_state,
-                  remark: remark
+                  shopName: record.shopName,
+                  shopLogo: record.shopLogo,
+                  pid: record.provinces,
+                  cid: record.city,
+                  did: record.district,
+                  parentId: record.parentId,
+                  location: record.location,
+                  address: record.address,
+                  scales: record.scales,
+                  running_state: record.state,
+                  remark: record.remark
               };
               getData(url, data, function(isTrue, reContent) {
                   callback(isTrue, reContent);
@@ -194,7 +193,7 @@
           var data = {
               regionId: region || 1
           }
-          getData(url, data, function(isTrue, reContent) {
+          this.getData(url, data, function(isTrue, reContent) {
               callback(isTrue, reContent);
           })
       },
@@ -362,6 +361,18 @@
             '万物数据':'./business/manage/wanwu.html'
           }[url_name] || '#';
           return url;
-      }
+      },
+      getSearch: function(key){
+          var rep = new RegExp('\\b'+ key + '=(.+?)(&|$)','ig'),
+              result = rep.exec(window.location.search);
+          return result ? result[ 1 ] : null;
+      },
+      strCheck : function(str){
+          if (/['")><&?\/\.]/.test(str)) {
+              return str.replace(/['"><&?\/\.]/ig,"");
+          }else {
+              return str;
+          }
+      },
   };
 })(window,jQuery);

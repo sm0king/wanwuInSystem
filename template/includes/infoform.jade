@@ -9,42 +9,42 @@ ul.list-group
   li.list-group-item.info-item
     .left-txt.txt-red 超市名称
     .right-content 
-      input.form-control
+      input#marketName.form-control
   p
   li.list-group-item.info-item
     .left-txt 联系人
     .right-content 
-      input.form-control
+      input#linkman.form-control
   li.list-group-item.info-item
     .left-txt 联系电话
     .right-content 
-      input.form-control
+      input#phone.form-control(type="tel")
   li.list-group-item.info-item
     .left-txt.txt-red 地址
     .right-content 
-      select.select.form-control
+      select#provinces.select.form-control
         option 全国
-      select.select.form-control
+      select#city.select.form-control
         option 四川省四川省
-      select.select.form-control
+      select#district.select.form-control
         option 成都市
   li.list-group-item.info-item
     .left-txt
     .right-content 
-      input.form-control.address
+      input#street.form-control.address
       i.glyphicon.glyphicon-map-marker.point#point
   p
   li.list-group-item.info-item
     .left-txt 超市规模
     .right-content 
-      select.form-control
+      select#scale.form-control
         option 小型独立超市
   li.list-group-item.info-item
     .left-txt 经营状况
     .right-content 
-      select.form-control
+      select#state.form-control
         option 无法判断
   li.list-group-item.info-item
     .left-txt 备注
     .right-content 
-      textarea.form-control
+      textarea#remark.form-control

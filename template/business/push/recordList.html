@@ -23,15 +23,3 @@ block section
 
 block script
    script(src="/diguaApp/js/push/recordList.js")
-   script.
-      $(function(){
-          $(".point").on("click", function(){
-              window.location.href = "./recordMap.html";
-          });
-          $("#search").on('keyup',function(e){
-              var k = e.keyCode || e.which;
-              if(k == 13){
-                window.location.href = "./recordSearch.html";
-              }
-          });
-      });
