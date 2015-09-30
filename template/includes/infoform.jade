@@ -23,11 +23,11 @@ ul.list-group
     .left-txt.txt-red 地址
     .right-content 
       select#provinces.select.form-control
-        option 全国
+        option 省
       select#city.select.form-control
-        option 四川省四川省
+        option 市
       select#district.select.form-control
-        option 成都市
+        option 区
   li.list-group-item.info-item
     .left-txt
     .right-content 
@@ -38,12 +38,20 @@ ul.list-group
     .left-txt 超市规模
     .right-content 
       select#scale.form-control
-        option 小型独立超市
+        option(value="1") 小卖部
+        option(value="2") 小型独立超市
+        option(value="3") 中型独立超市
+        option(value="4") 连锁超市
+        option(value="5") 饭店
+        option(value="0") 其他
   li.list-group-item.info-item
     .left-txt 经营状况
     .right-content 
       select#state.form-control
-        option 无法判断
+        option(value="1") 好
+        option(value="2") 中
+        option(value="3") 差
+        option(value="0") 无法判断
   li.list-group-item.info-item
     .left-txt 备注
     .right-content 

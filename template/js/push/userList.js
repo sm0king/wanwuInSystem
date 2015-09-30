@@ -9,13 +9,20 @@ $(function(){
       }
   });
 
+  $('#userList').on('click','.user-item',function(){
+      if ($(this).data('id')) {
+          var url = './myUserInfo.html?id='+$(this).data('id');
+          back.go(url);
+      }
+  });
+
   function madeDom(result){
+    console.log(result);
     var list="",dom="",img,phone;
     for (var i = 0; i < result.length; i++) {
-      // result[i];
       img = result[i].shop_url ? result[i].shop_url : '/diguaApp/images/tuwen.png';
       phone = result[i].phone || result[i].mobile;
-      list += '<li class="list-group-item" data-id="">'+
+      list += '<li class="list-group-item user-item" data-id="'+ result[i].user_id +'">'+
               '<div class="media">'+
               '<div class="media-left meida-middle">'+
               '<img src="'+ img +'" alt=""></div>'+
@@ -30,13 +37,10 @@ $(function(){
   }
 
   function load(){
-    service.serviceSaveMyCustomers("",1,10,function(flag,msg){
-        // console.log(flag);
-        // console.log(msg);
+    service.serviceGetMyCustomers("",1,10,function(flag,msg){
         if (flag) {
           madeDom(msg.result);
         }
-
     });
   }
   load();

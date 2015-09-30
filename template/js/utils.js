@@ -110,7 +110,7 @@
                   token: userInfo.token,
                   PageNumber: page || 0,
                   pageSize: pageSize || 10,
-                  keyword: keyValue || ""
+                  keywords: keyValue || ""
               };
               this.getData(url, data, function(isTrue, reContent) {
                   if (isTrue) {
@@ -142,47 +142,54 @@
           };
       },
 
-      /**
-      名称  类型  是否必须    默认值 描述
-      userId  String  是       用户名
-      token   String  是       token
-      taskId  int 否       任务id,如果存在我将执行更新操作，没有我执行插入操作
-      mobile  String  是       手机号
-      shopName    String  是       超市名称
-      shopLogo    String  否       图片url
-      pid String  是       省份id
-      cid String  否       城市id
-      did String  否       区域id
-      parentId    String  否       父级id
-      location    String  是       地址位置
-      address String  否       详细地址
-      scales  String  否       超市规模
-      running_state   String  否       经营状况
-      remark  String  否       备注
-      */
       //保存我的拜访纪录
+      /**
+       * [function description]
+       * @param  {[type]}   record   [{
+       *                             userId  用户名
+       *                             token   token
+       *                             taskId  任务id,如果存在将执行更新操作，没有我执行插入操作
+       *                             mobile  手机号
+       *                             shopName 超市名称
+       *                             shopLogo 图片url
+       *                             pid      省份id
+       *                             cid      城市id
+       *                             did       区域id
+       *                             parentId  父级id
+       *                             location  地址位置
+       *                             address   详细地址
+       *                             scales    超市规模
+       *                             running_state 经营状况
+       *                             remark     备注
+       *
+       * }]
+       * @param  {Function} callback [description]
+       * @return {[type]}            [description]
+       */
       serviceSaveMyRecord: function(record , callback) {
           var url = host + '/service/saveMyRecord';
-          var userInfo = getUserInfo();
+          var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
-                  taskId: record.taskId || "" || 0,
+                  taskId: record.taskId || "",
                   mobile: userInfo.phone,
                   shopName: record.shopName,
-                  shopLogo: record.shopLogo,
-                  pid: record.provinces,
-                  cid: record.city,
-                  did: record.district,
-                  parentId: record.parentId,
-                  location: record.location,
+                  shopLogo: record.shopLogo || "/diguaApp/images/tuwen.png",
+                  consignee: record.consignee,
+                  pid: record.pid,
+                  cid: record.cid,
+                  did: record.did,
+                  parentId: record.parentId || 0,
+                  location: record.location || "",
                   address: record.address,
                   scales: record.scales,
-                  running_state: record.state,
-                  remark: record.remark
+                  runningState: record.state,
+                  remark: record.remark || ""
               };
-              getData(url, data, function(isTrue, reContent) {
+              console.log(data);
+              this.getData(url, data, function(isTrue, reContent) {
                   callback(isTrue, reContent);
               });
           }
@@ -216,7 +223,7 @@
        * @param  {Function} callback [回调函数]
        * @return {[type]}            [description]
        */
-      serviceSaveMyCustomers: function(keyValue, page, pageSize,callback) {
+      serviceGetMyCustomers: function(keyValue, page, pageSize,callback) {
           var url = host + '/service/myCustomers';
           var userInfo = this.getUserInfo();
           if (userInfo) {
@@ -242,22 +249,42 @@
               });
           };
       },
-      //保存我的用户详情
-      serviceSaveMyCustomersDetail: function(id,callback) {
+      //获取我的用户详情
+      serviceGetMyCustomersDetail: function(id,callback) {
           var url = host + '/service/myCustomersDetail';
-          var userInfo = getUserInfo();
+          var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId : userInfo.id,
                   token : userInfo.token,
                   taskId : id
               };
-              getData(url, data, function(isTrue, reContent) {
+              this.getData(url, data, function(isTrue, reContent) {
                   //
                   callback(isTrue,reContent)
               })
           };
       },
+      // 保存我的用户详情
+      serviceSaveCustomersDetail: function(user, callback){
+          var url = host + '/service/myCustomersDetail';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId:,
+                  token:,
+                  taskId:,
+                  mobile:,
+                  shopName:,
+                  shopLogo:,
+                  pid:,
+                  cid:,
+                  did:,
+                  location:,
+
+              };
+          }
+      }
       //获取所有员工
       manageGetEmployeeList: function(keyValue,callback) {
           var url = host + '/service/getEmployeeList';
@@ -266,7 +293,7 @@
               var data = {
                   userId:userInfo.id,
                   token:userInfo.token,
-                  keyword:keyValue || ""
+                  keywords:keyValue || ""
               };
               this.getData(url, data, function(isTrue, reContent) {
                   //
@@ -361,6 +388,26 @@
             '万物数据':'./business/manage/wanwu.html'
           }[url_name] || '#';
           return url;
+      },
+      getScale: function(key){
+          var list = {
+            '0':'其他',
+            '1':'小卖部',
+            '2':'小型独立超市',
+            '3':'中型独立超市',
+            '4':'连锁超市',
+            '5':'饭店'
+          }[key];
+          return list;
+      },
+      getState: function(key){
+          var list = {
+            '0':'无法判断',
+            '1':'好',
+            '2':'中',
+            '3':'差'
+          }[key];
+          return list;
       },
       getSearch: function(key){
           var rep = new RegExp('\\b'+ key + '=(.+?)(&|$)','ig'),

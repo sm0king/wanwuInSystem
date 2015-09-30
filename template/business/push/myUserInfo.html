@@ -13,11 +13,6 @@ block section
   section.main
     .record-form
       include ../../includes/infoform.jade
-      small.time.help-block 注册时间 2015-09-28
+      small#time.time.help-block 注册时间 2015-09-28
 block script
-   script.
-      $(function(){
-          $(".point").on("click", function(){
-              window.location.href = "./myUserMap.html";
-          });
-      });
+    script(src="/diguaApp/js/push/userInfo.js")
