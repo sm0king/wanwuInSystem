@@ -15,8 +15,11 @@ $(function(){
           remark : str($("#remark").val()),
           taskId : $("#marketName").data('id')
         };
-        service.serviceSaveMyRecord(data,function(flag,msg){
+        console.log(data);
+        service.serviceSaveCustomersDetail(data,function(flag,msg){
             // back.to();
+            console.log(flag);
+            console.log(msg);
         });
       }
 
@@ -89,7 +92,7 @@ $(function(){
               if (flag) {
                 console.log(msg);
                 var data = msg.result;
-                $("#marketName").val(data.shop_name).data('id',data.id);
+                $("#marketName").val(data.shop_name).data('id',data.user_id);
                 $("#linkman").val(data.consignee);
                 $("#phone").val(data.phone);
                 $("#street").val(data.address);

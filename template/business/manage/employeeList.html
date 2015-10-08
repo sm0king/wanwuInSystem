@@ -15,18 +15,10 @@ block section
     .record-list
       .search-box
         input#search.form-control(type="text" placeholder="搜索")
-      .list-date.clearfix.bg-warning
-        span 部门
-      include ../../includes/employee.jade
+      #employeeList
+        .list-date.clearfix.bg-warning
+          span 部门
+        include ../../includes/employee.jade
 
 block script
    script(src="/diguaApp/js/manage/employeeList.js")
-   script.
-      $(function(){
-          $("#search").on('keyup',function(e){
-              var k = e.keyCode || e.which;
-              if(k == 13){
-                window.location.href = "./employeeSearch.html";
-              }
-          });
-      });

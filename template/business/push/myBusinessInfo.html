@@ -13,32 +13,27 @@ block section
   section.main
     ul#myTabs.nav.nav-tabs.data-tab(role="tablist")
       li.active(role="presentation")
-        a(href="#day" aria-controls="day" role="tab" data-toggle="tab") 1天
+        a(href="#dayLists" aria-controls="dayLists" role="tab" data-toggle="tab") 1天
       li(role="presentation")
-        a(href="#week" aria-controls="week" role="tab" data-toggle="tab") 1周
+        a(href="#weekLists" aria-controls="weekLists" role="tab" data-toggle="tab") 1周
       li(role="presentation")
-        a(href="#month" aria-controls="month" role="tab" data-toggle="tab") 1月
+        a(href="#monthLists" aria-controls="monthLists" role="tab" data-toggle="tab") 1月
       li(role="presentation")
-        a(href="#total" aria-controls="total" role="tab" data-toggle="tab") 总计
+        a(href="#allLists" aria-controls="allLists" role="tab" data-toggle="tab") 总计
     .tab-content
-      #day.tab-pane.active(role="tabpanel")
+      #dayLists.tab-pane.active(role="tabpanel")
         ul.list-group
           +statistics([{name:"拜访量",num:"3"},{name:"新用户",num:"123"},{name:"下单新用户",num:"31"},{name:"订单数",num:"6"},{name:"订单金额",num:"￥666"}])
-      #week.tab-pane(role="tabpanel")
+      #weekLists.tab-pane(role="tabpanel")
         ul.list-group
           +statistics([{name:"拜访量",num:"3"},{name:"新用户",num:"11"},{name:"下单新用户",num:"36"},{name:"订单数",num:"5"},{name:"订单金额",num:"￥432"}])
-      #month.tab-pane(role="tabpanel")
+      #monthLists.tab-pane(role="tabpanel")
         ul.list-group
           +statistics([{name:"拜访量",num:"12"},{name:"新用户",num:"123"},{name:"下单新用户",num:"36"},{name:"订单数",num:"5"},{name:"订单金额",num:"￥123"}])
-      #total.tab-pane(role="tabpanel")
+      #allLists.tab-pane(role="tabpanel")
         ul.list-group
           +statistics([{name:"拜访量",num:"41"},{name:"新用户",num:"123112"},{name:"下单新用户",num:"36"},{name:"订单数",num:"5"},{name:"订单金额",num:"￥666666"}])
 block script
   script(src="/diguaApp/plugs/bootstrap/bootstrap.js")
+  script(src="/diguaApp/js/push/mybusinessInfo.js")
   script.
-    $(function(){
-      $('#myTabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-      })
-    })

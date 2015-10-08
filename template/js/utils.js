@@ -267,43 +267,110 @@
       },
       // 保存我的用户详情
       serviceSaveCustomersDetail: function(user, callback){
-          var url = host + '/service/myCustomersDetail';
-          var userInfo = this.getUserInfo();
-          if (userInfo) {
-              var data = {
-                  userId:,
-                  token:,
-                  taskId:,
-                  mobile:,
-                  shopName:,
-                  shopLogo:,
-                  pid:,
-                  cid:,
-                  did:,
-                  location:,
-
-              };
-          }
-      }
-      //获取所有员工
-      manageGetEmployeeList: function(keyValue,callback) {
-          var url = host + '/service/getEmployeeList';
+          var url = host + '/service/saveMyCustomers';
           var userInfo = this.getUserInfo();
           if (userInfo) {
               var data = {
                   userId:userInfo.id,
                   token:userInfo.token,
-                  keywords:keyValue || ""
+                  taskId:user.taskId,
+                  mobile:user.phone,
+                  shopName:user.shopName,
+                  shopLogo:user.logo,
+                  consignee:user.consignee,
+                  pid:user.pid,
+                  cid:user.cid,
+                  did:user.did,
+                  location:user.local,
+                  address:user.address,
+                  scales:user.scales,
+                  runningState:user.state,
+                  remark:user.remark,
               };
               this.getData(url, data, function(isTrue, reContent) {
-                  //
+                  callback(isTrue,reContent)
+              })
+          }
+      },
+      // 获取业务数据
+      getAchievement: function(keyValue,callback){
+          var url = host + '/service/getAchievement';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId:userInfo.id,
+                  token:userInfo.token,
+                  isDetail:keyValue || ""
+              };
+              this.getData(url, data, function(isTrue, reContent) {
+                  callback(isTrue,reContent);
+              })
+          }
+      },
+      //获取所有员工
+      manageGetEmployeeList: function(keyValue,isGroup,callback) {
+          var url = host + '/manage/getEmployeeList';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId:userInfo.id,
+                  token:userInfo.token,
+                  keywords:keyValue || "",
+                  isGroup:isGroup || 0
+              };
+              this.getData(url, data, function(isTrue, reContent) {
                   callback(isTrue,reContent);
               })
           };
       },
+      // 获取员工详情
+      getEmployeeDetail:function(id,callback){
+          var url = host + '/manage/getEmployeeDetail';
+          var userInfo = this.getUserInfo();
+          if(userInfo){
+            var data = {
+                userId:userInfo.id,
+                token:userInfo.token,
+                taskId:id
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue,reContent);
+            })
+          }
+      },
+      // 保存员工
+      saveEmployee: function(){
+          var url = host + '/manage/saveEmployee';
+          var userInfo = this.getUserInfo();
+      },
+      // 删除员工
+      delEmployee: function(){
+          var url = host + '/manage/delEmployee';
+          var userInfo = this.getUserInfo();
+      },
+      // 获取职位
+      getJobs: function(){
+          var url = host + '/manage/getJobs';
+          var userInfo = this.getUserInfo();
+      },
+      // 等待接货
+      waitReceiving: function(){
+          var url = host + '/service/waitReceiving';
+          var userInfo = this.getUserInfo();
+      },
+      // 等待接货详情
+      waitReceivingDetail: function(){
+          var url = host + '/service/waitReceivingDetail';
+          var userInfo = this.getUserInfo();
+      },
+      // 确定接货
+      orderReceivingDo: function(){
+          var url = host + '/service/orderReceivingDo';
+          var userInfo = this.getUserInfo();
+      },
       //获取部门列表 关键字 第几页 每页多少个
       departmentList: function(keyValue,page,pageSize,callback) {
-          var url = host + '/service/departmentList';
+          var url = host + '/department/departmentList';
           var data = {
               page:page,
               pageSize:pageSize,
@@ -316,7 +383,7 @@
       },
       //获取部门详情
       departmentDetail: function(id,callback) {
-          var url = host + '/service/departmentDetail';
+          var url = host + '/department/departmentDetail';
           var data = {
               dpId:id
           };
@@ -327,7 +394,7 @@
       },
       //删除部门
       departmentDelete: function(id,callback) {
-          var url = host + '/service/delDepartment';
+          var url = host + '/department/delDepartment';
           var data = {
               dpId:id
           };
@@ -342,7 +409,7 @@
       },
       //获取部门员工
       departmentEmployeeList: function(id,head,page,pageSize,callback) {
-          var url = host + '/service/employeeList';
+          var url = host + '/department/employeeList';
           var data = {
               dpId:id,
               chargeId:head,
@@ -356,7 +423,7 @@
       },
       //添加/编辑部门
       departmentUpdate: function(id,name,images,notice,head,upNotice,callback) {
-          var url = host + '/service/updateDepartment';
+          var url = host + '/department/updateDepartment';
           var userInfo = getUserInfo();
           var data = {
               dpId:id,
@@ -382,7 +449,7 @@
             '我的用户':'./business/push/myUserList.html',
             '业务数据':'./business/push/myBusiness.html',
             '员工管理':'./business/manage/employeeList.html',
-            '部门管理':'./business/manage/departmentList.html',
+            '业务部门':'./business/manage/departmentList.html',
             '业务业绩':'./business/manage/businessList.html',
             '配送业绩':'./business/manage/distributionList.html',
             '万物数据':'./business/manage/wanwu.html'
@@ -412,7 +479,7 @@
       getSearch: function(key){
           var rep = new RegExp('\\b'+ key + '=(.+?)(&|$)','ig'),
               result = rep.exec(window.location.search);
-          return result ? result[ 1 ] : null;
+          return result ? decodeURI(result[1]) : null;
       },
       strCheck : function(str){
           if (/['")><&?\/\.]/.test(str)) {
