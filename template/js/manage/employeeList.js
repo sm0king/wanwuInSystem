@@ -18,6 +18,11 @@ $(function(){
 
   });
 
+  $("#add").on('click',function(){
+      var url = './employeeAdd.html';
+      back.go(url);
+  });
+
   function load(){
       service.manageGetEmployeeList("","1",function(flag,msg){
           if (flag) {

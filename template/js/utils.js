@@ -339,9 +339,33 @@
           }
       },
       // 保存员工
-      saveEmployee: function(){
+      saveEmployee: function(emp,callback){
           var url = host + '/manage/saveEmployee';
           var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                userId:userInfo.id,
+                token:userInfo.token,
+                dp_id:emp.dp_id,
+                name:emp.name,
+                parent_id:emp.parent_id,
+                phone:emp.phone,
+                type:emp.type,
+                img:emp.img || "",
+                pid:emp.pid,
+                cid:emp.cid,
+                did:emp.did,
+                email:emp.email,
+                pushFunction:emp.pushFun,
+                shippingFunction:emp.shipFun,
+                managementFunction:emp.manageFun,
+                employeeCURD:emp.employeeCURD,
+                firmFunction:emp.firmFun,
+              };
+              this.getData(url,data,function(isTrue, reContent){
+                  callback(isTrue, reContent);
+              });
+          }
       },
       // 删除员工
       delEmployee: function(){

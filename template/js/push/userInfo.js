@@ -90,7 +90,6 @@ $(function(){
           var id = service.getSearch('id');
           service.serviceGetMyCustomersDetail(id,function(flag,msg){
               if (flag) {
-                console.log(msg);
                 var data = msg.result;
                 $("#marketName").val(data.shop_name).data('id',data.user_id);
                 $("#linkman").val(data.consignee);

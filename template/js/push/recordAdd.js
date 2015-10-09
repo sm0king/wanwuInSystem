@@ -16,6 +16,7 @@ $(function(){
       };
       service.serviceSaveMyRecord(data,function(flag,msg){
           // back.to();
+          alert('添加成功');
       });
     }
 
