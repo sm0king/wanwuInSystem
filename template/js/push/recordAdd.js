@@ -14,10 +14,23 @@ $(function(){
         state : str($("#state").val()),
         remark : str($("#remark").val())
       };
-      service.serviceSaveMyRecord(data,function(flag,msg){
-          // back.to();
-          alert('添加成功');
+
+      var map = {
+          city: $("#city").find('option:selected').text(),
+          addr: data.address,
+      }
+      service.getAddressLocal(map,function(re){
+        var localArr = re.geocodes[0].location;
+        data.local = {
+                longitude: localArr.split(',')[0],
+                latitude:localArr.split(',')[1]
+              };
+        service.serviceSaveMyRecord(data,function(flag,msg){
+            alert("保存成功");
+            back.to('./recordList.html');
+        });
       });
+
     }
 
     $("#save").on('click',function(){

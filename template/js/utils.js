@@ -170,6 +170,7 @@
           var url = host + '/service/saveMyRecord';
           var userInfo = this.getUserInfo();
           if (userInfo) {
+              console.log(record.local);  
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
@@ -182,7 +183,7 @@
                   cid: record.cid,
                   did: record.did,
                   parentId: record.parentId || 0,
-                  location: record.location || "",
+                  location: record.local,
                   address: record.address,
                   scales: record.scales,
                   runningState: record.state,
@@ -465,6 +466,25 @@
                   callback(isTrue,reContent)
               }
 
+          })
+      },
+      // 获取地理坐标
+      getAddressLocal: function(data,callback){
+          $.ajax({
+            url: 'http://restapi.amap.com/v3/geocode/geo?parameters',
+            type: 'POST',
+            dataType: 'jsonp',
+            data: {
+                key: "6cab3a14d0db6b1c6de21f9d955db963",
+                address: data.addr,
+                city: data.city
+            }
+          })
+          .done(function(re) {
+            callback(re);
+          })
+          .fail(function() {
+            console.log("error");
           })
       },
       getBusinessUrl: function(url_name){

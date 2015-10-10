@@ -12,11 +12,11 @@ $(function(){
       type : $("#type").data('id'),
       parent_id : $("#superior").data('id'),
       dp_id : $("#depart").data('id'),
-      pushFun : str($("#pushFun").val()),
-      shipFun : str($("#shipFun").val()),
-      manageFun : str($("#manageFun").val()),
-      employeeCURD : str($("#employeeCURD").val()),
-      firmFun : str($("#firmFun").val())
+      pushFun : $("#pushFun").prop("checked")? 1:0,
+      shipFun : $("#shipFun").prop("checked")? 1:0,
+      manageFun : $("#manageFun").prop('checked')? 1:0,
+      employeeCURD : $("#employeeCURD").prop('checked')? 1:0,
+      firmFun : $("#firmFun").prop('checked')? 1:0
     };
     console.log(data);
     // service.saveEmployee(data,function(flag,msg){
@@ -85,6 +85,12 @@ $(function(){
       loadDist($(this).val(),function(re){
         re = '<option>请选择</option>' + re;
         $("#district").html(re).show();
+      });
+  });
+
+  $("#type").on('click',function(){
+      service.getJobs(function(re){
+          console.log(re);
       });
   });
 

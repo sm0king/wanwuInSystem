@@ -15,8 +15,21 @@ $(function(){
         remark : str($("#remark").val()),
         taskId : $("#marketName").data('id')
       };
-      service.serviceSaveMyRecord(data,function(flag,msg){
-          // back.to();
+
+      var map = {
+          city: $("#city").find('option:selected').text(),
+          addr: data.address,
+      }
+      service.getAddressLocal(map,function(re){
+        var localArr = re.geocodes[0].location;
+        data.local = {
+                longitude: localArr.split(',')[0],
+                latitude:localArr.split(',')[1]
+              };
+        service.serviceSaveMyRecord(data,function(flag,msg){
+            alert("保存成功");
+            window.location.reload();
+        });
       });
     }
 
