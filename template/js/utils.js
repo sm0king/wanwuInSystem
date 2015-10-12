@@ -3,11 +3,13 @@
   var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
   win.service = {
       catchError: function(error_no) {
+          if (error_no === '401') {
+              window.location.href = '/newosadmin/user/login';
+          }
           var error_messge = {
               '101': '参数错误',
               '301': '后台请联系管理员',
               '400': '您没有相关权限',
-              '401': '/login.html',
               '402': '系统异常，请稍候再试',
               '404': '系统不允许到操作',
               '500': '服务器错误，请稍候再试',
@@ -30,7 +32,7 @@
                   callback(true, result.content);
               } else {
                   //请求失败，无数据
-                  callback(false, serviceThis.catchError(result.error_no));
+                  callback(false, result.error_desc);
               }
           }).fail(function(result) {
               //无返回数据
@@ -59,6 +61,8 @@
               from: from || 'web'
           };
           this.getData(url, data, function(isTrue, reContent) {
+              console.log(isTrue);
+              console.log(reContent);
               if (isTrue) {
                   //获取登陆结果
                   if (reContent) {
@@ -170,7 +174,7 @@
           var url = host + '/service/saveMyRecord';
           var userInfo = this.getUserInfo();
           if (userInfo) {
-              console.log(record.local);  
+              console.log(record.local);
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
@@ -374,9 +378,11 @@
           var userInfo = this.getUserInfo();
       },
       // 获取职位
-      getJobs: function(){
+      getJobs: function(callback){
           var url = host + '/manage/getJobs';
-          var userInfo = this.getUserInfo();
+          this.getData(url,"",function(isTrue, reContent){
+              callback(isTrue, reContent);
+          });
       },
       // 等待接货
       waitReceiving: function(){
@@ -401,7 +407,7 @@
               pageSize:pageSize,
               search:keyValue || ""
           };
-          getData(url, data, function(isTrue, reContent) {
+          this.getData(url, data, function(isTrue, reContent) {
               // reContent.departmentList 为部门信息
               callback(isTrue,reContent);
           });
@@ -412,7 +418,7 @@
           var data = {
               dpId:id
           };
-          getData(url, data, function(isTrue, reContent) {
+          this.getData(url, data, function(isTrue, reContent) {
               //
               callback(isTrue,reContent);
           })
@@ -423,7 +429,7 @@
           var data = {
               dpId:id
           };
-          getData(url, data, function(isTrue, reContent) {
+          this.getData(url, data, function(isTrue, reContent) {
               //
               if (isTrue) {
                   callback(true,"成功")
@@ -441,7 +447,7 @@
               page:page || 1,
               pageSize:pageSize || 10
           };
-          getData(url, data, function(isTrue, reContent) {
+          this.getData(url, data, function(isTrue, reContent) {
               //
               callback(isTrue,reContent);
           })
@@ -458,7 +464,7 @@
               chargeId:head,
               isEditSubDepartmentNotice:upNotice
           };
-          getData(url, data, function(isTrue, reContent) {
+          this.getData(url, data, function(isTrue, reContent) {
               //
               if (isTrue) {
                   callback(true,"成功")
@@ -493,11 +499,11 @@
             '我的用户':'./business/push/myUserList.html',
             '业务数据':'./business/push/myBusiness.html',
             '员工管理':'./business/manage/employeeList.html',
-            '业务部门':'./business/manage/departmentList.html',
+            '部门管理':'./business/manage/departmentList.html',
             '业务业绩':'./business/manage/businessList.html',
             '配送业绩':'./business/manage/distributionList.html',
-            '万物数据':'./business/manage/wanwu.html'
-          }[url_name] || '#';
+            '厂商管理':'#',
+          }[url_name] || 'javascript:;';
           return url;
       },
       getScale: function(key){

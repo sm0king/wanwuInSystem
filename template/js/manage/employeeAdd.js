@@ -9,9 +9,9 @@ $(function(){
       pid : str($('#provinces').val()),
       cid : str($("#city").val()),
       did : str($("#district").val()),
-      type : $("#type").data('id'),
-      parent_id : $("#superior").data('id'),
-      dp_id : $("#depart").data('id'),
+      type : $("#type").val(),
+      parent_id : $("#superior").data('id') || "",
+      dp_id : $("#depart").data('id') || "",
       pushFun : $("#pushFun").prop("checked")? 1:0,
       shipFun : $("#shipFun").prop("checked")? 1:0,
       manageFun : $("#manageFun").prop('checked')? 1:0,
@@ -19,9 +19,13 @@ $(function(){
       firmFun : $("#firmFun").prop('checked')? 1:0
     };
     console.log(data);
-    // service.saveEmployee(data,function(flag,msg){
-    //     alert('添加成功');
-    // });
+    service.saveEmployee(data,function(flag,msg){
+        if (flag) {
+          alert('添加成功');
+        }else {
+          alert(msg);
+        }
+    });
   }
 
   $("#save").on('click',function(){
@@ -88,12 +92,6 @@ $(function(){
       });
   });
 
-  $("#type").on('click',function(){
-      service.getJobs(function(re){
-          console.log(re);
-      });
-  });
-
   function loadData(){
       loadPro(function(re){
         re = '<option>请选择</option>' + re;
@@ -101,6 +99,19 @@ $(function(){
       });
       $("#city").hide();
       $('#district').hide();
+
+      service.getJobs(function(flag,msg){
+          // console.log(msg);
+          if (flag) {
+            var opt = '';
+            for (var i = 0; i < msg.result.length; i++) {
+              // msg[i]
+              opt += '<option value="'+msg.result[i].id+'">'+msg.result[i].name+'</option>';
+            }
+            opt = '<option value="0">请选择</option>' + opt;
+            $("#type").html(opt);
+          }
+      });
   }
   loadData();
 

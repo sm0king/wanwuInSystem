@@ -25,6 +25,7 @@ $(function(){
 
   function load(){
       service.manageGetEmployeeList("","1",function(flag,msg){
+        console.log(msg);
           if (flag) {
               var list = "";
               $.each(msg,function(index, el) {
