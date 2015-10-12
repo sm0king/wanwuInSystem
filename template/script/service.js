@@ -16,6 +16,7 @@ define(['jquery'], function($) {
                 '101': '参数错误',
                 '301': '后台请联系管理员',
                 '400': '您没有相关权限',
+                '401': '/login.html',
                 '402': '系统异常，请稍候再试',
                 '404': '系统不允许到操作',
                 '500': '服务器错误，请稍候再试',
@@ -84,7 +85,7 @@ define(['jquery'], function($) {
         //用户退出 暂无
         userLogout: function() {},
         //请求验证码 传入 手机号
-        userSendCaptcha: function(phoneNum,callback) {
+        userSendCaptcha: function(phoneNum, callback) {
             var url = host + '/user/sendCaptcha';
             var data = {
                 mobile: phoneNum
@@ -101,6 +102,14 @@ define(['jquery'], function($) {
         userReset: function() {},
         //获取拜访纪录列表 传入 关键词 （可无，没有为空 “”）分页信息： 第一页 每页多少条数据
         // 返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果
+        /**
+         * [获取拜访纪录列表]
+         * @param  {[type]}   keyValue [关键词（可无，没有为空 “”）]
+         * @param  {[type]}   page     [页码]
+         * @param  {[type]}   pageSize [每页多少条数据]
+         * @param  {Function} callback [返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果]
+         * @return {[type]}            [description]
+         */
         serviceMyRecord: function(keyValue, page, pageSize, callback) {
             var url = host + '/service/myRecord';
             var userInfo = this.getUserInfo();
@@ -163,26 +172,50 @@ define(['jquery'], function($) {
         remark  String  否       备注
         */
         //保存我的拜访纪录
-        serviceSaveMyRecord: function(taskId, shopName, shopLogo, provinces, city, district, parentId, location, address, scales, running_state, remark, callback) {
+        /**
+         * [function description]
+         * @param  {[type]}   record   [{
+         *                             userId  用户名
+         *                             token   token
+         *                             taskId  任务id,如果存在将执行更新操作，没有我执行插入操作
+         *                             mobile  手机号
+         *                             shopName 超市名称
+         *                             shopLogo 图片url
+         *                             pid      省份id
+         *                             cid      城市id
+         *                             did       区域id
+         *                             parentId  父级id
+         *                             location  地址位置
+         *                             address   详细地址
+         *                             scales    超市规模
+         *                             running_state 经营状况
+         *                             remark     备注
+         *
+         * }]
+         * @param  {Function} callback [description]
+         * @return {[type]}            [description]
+         */
+        serviceSaveMyRecord: function(record, callback) {
             var url = host + '/service/saveMyRecord';
             var userInfo = this.getUserInfo();
             if (userInfo) {
                 var data = {
                     userId: userInfo.id,
                     token: userInfo.token,
-                    taskId: "" || 0,
+                    taskId: record.taskId || "",
                     mobile: userInfo.phone,
-                    shopName: shopName,
-                    shopLogo: shopName,
-                    pid: provinces,
-                    cid: city,
-                    did: district,
-                    parentId: parentId,
-                    location: location,
-                    address: address,
-                    scales: scales,
-                    running_state: running_state,
-                    remark: remark
+                    shopName: record.shopName,
+                    shopLogo: record.shopLogo || "/diguaApp/images/tuwen.png",
+                    consignee: record.consignee,
+                    pid: record.pid,
+                    cid: record.cid,
+                    did: record.did,
+                    parentId: record.parentId || 0,
+                    location: record.local,
+                    address: record.address,
+                    scales: record.scales,
+                    runningState: record.state,
+                    remark: record.remark || ""
                 };
                 this.getData(url, data, function(isTrue, reContent) {
                     callback(isTrue, reContent);
@@ -211,6 +244,14 @@ define(['jquery'], function($) {
             }
         },
         // 获取我的用户列表 提供关键字 如果没有关键字则返回 当前默认列表  分页信息 page pageSize
+        /**
+         * [获取我的用户列表]
+         * @param  {[type]}   keyValue [提供关键字 如果没有关键字则返回 当前默认列表]
+         * @param  {[type]}   page     [页码]
+         * @param  {[type]}   pageSize [单页数量]
+         * @param  {Function} callback [回调函数]
+         * @return {[type]}            [description]
+         */
         serviceSaveMyCustomers: function(keyValue, page, pageSize, callback) {
             var url = host + '/service/myCustomers';
             var userInfo = this.getUserInfo();
@@ -238,14 +279,42 @@ define(['jquery'], function($) {
             }
         },
         //保存我的用户详情
-        serviceSaveMyCustomersDetail: function(id, callback) {
-            var url = host + '/service/myCustomersDetail';
+        serviceSaveCustomersDetail: function(user, callback) {
+            var url = host + '/service/saveMyCustomers';
             var userInfo = this.getUserInfo();
             if (userInfo) {
                 var data = {
                     userId: userInfo.id,
                     token: userInfo.token,
-                    taskId: id
+                    taskId: user.taskId,
+                    mobile: user.phone,
+                    shopName: user.shopName,
+                    shopLogo: user.logo,
+                    consignee: user.consignee,
+                    pid: user.pid,
+                    cid: user.cid,
+                    did: user.did,
+                    location: user.local,
+                    address: user.address,
+                    scales: user.scales,
+                    runningState: user.state,
+                    remark: user.remark,
+                };
+                this.getData(url, data, function(isTrue, reContent) {
+                    callback(isTrue, reContent)
+                })
+            }
+        },
+        //获取所有员工
+        manageGetEmployeeList: function(keyValue, isGroup, callback) {
+            var url = host + '/service/getEmployeeList';
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    keyword: keyValue || "",
+                    isGroup: isGroup || 0
                 };
                 this.getData(url, data, function(isTrue, reContent) {
                     //
@@ -254,20 +323,89 @@ define(['jquery'], function($) {
             }
         },
         //获取所有员工
-        manageGetEmployeeList: function(keyValue, callback) {
-            var url = host + '/service/getEmployeeList';
+        manageGetEmployeeList: function(keyValue, isGroup, callback) {
+            var url = host + '/manage/getEmployeeList';
             var userInfo = this.getUserInfo();
             if (userInfo) {
                 var data = {
                     userId: userInfo.id,
                     token: userInfo.token,
-                    keyword: keyValue || ""
+                    keywords: keyValue || "",
+                    isGroup: isGroup || 0
                 };
                 this.getData(url, data, function(isTrue, reContent) {
-                    //
+                    callback(isTrue, reContent);
+                })
+            };
+        },
+        // 获取员工详情
+        getEmployeeDetail: function(id, callback) {
+            var url = host + '/manage/getEmployeeDetail';
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    taskId: id
+                };
+                this.getData(url, data, function(isTrue, reContent) {
+                    callback(isTrue, reContent);
+                })
+            }
+        },
+        // 保存员工
+        saveEmployee: function(emp, callback) {
+            var url = host + '/manage/saveEmployee';
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    dp_id: emp.dp_id,
+                    name: emp.name,
+                    parent_id: emp.parent_id,
+                    phone: emp.phone,
+                    type: emp.type,
+                    img: emp.img || "",
+                    pid: emp.pid,
+                    cid: emp.cid,
+                    did: emp.did,
+                    email: emp.email,
+                    pushFunction: emp.pushFun,
+                    shippingFunction: emp.shipFun,
+                    managementFunction: emp.manageFun,
+                    employeeCURD: emp.employeeCURD,
+                    firmFunction: emp.firmFun,
+                };
+                this.getData(url, data, function(isTrue, reContent) {
                     callback(isTrue, reContent);
                 });
             }
+        },
+        // 删除员工
+        delEmployee: function() {
+            var url = host + '/manage/delEmployee';
+            var userInfo = this.getUserInfo();
+        },
+        // 获取职位
+        getJobs: function() {
+            var url = host + '/manage/getJobs';
+            var userInfo = this.getUserInfo();
+        },
+        // 等待接货
+        waitReceiving: function() {
+            var url = host + '/service/waitReceiving';
+            var userInfo = this.getUserInfo();
+        },
+        // 等待接货详情
+        waitReceivingDetail: function() {
+            var url = host + '/service/waitReceivingDetail';
+            var userInfo = this.getUserInfo();
+        },
+        // 确定接货
+        orderReceivingDo: function() {
+            var url = host + '/service/orderReceivingDo';
+            var userInfo = this.getUserInfo();
         },
         //获取部门列表 关键字 第几页 每页多少个
         departmentList: function(keyValue, page, pageSize, callback) {
@@ -343,7 +481,126 @@ define(['jquery'], function($) {
                 }
 
             });
-        }
+        },
+        //获取厂商列表
+        getVendorList: function(page, pageSize, search, callback) {
+            var url = host + '/vendor/vendorList';
+            var data = {
+                page: page || 1,
+                pageSize: pageSize || 1,
+                search: keyValue || ""
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                if (isTrue) {
+                    callback(true, reContent.vendorList)
+                } else {
+                    callback(isTrue, reContent);
+                }
+            })
+        },
+        //获取厂商详情
+        getVendorDetail: function(id, callback) {
+            var url = host + '/vendor/vendorDetail';
+            var data = {
+                vendorId: id
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            })
+        },
+        //删除厂商
+        delVendor: function(id, callback) {
+            var url = host + '/vendor/delVendor';
+            var data = {
+                vendorId: id
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                if (isTrue) {
+                    callback(true, "成功")
+                } else {
+                    callback(isTrue, reContent);
+                }
+            })
+        },
+        //添加/编辑厂商
+        //mobile 为必填项
+        //vendor 为需要修改的数据项 对象。
+        updateVendor: function(mobile, vendor, callback) {
+            var url = host + '/vendor/updateVendor';
+            var data = vendor;
+            vendor.mobile = mobile;
+            this.getData(url, data, function(isTrue, reContent) {
+                if (isTrue) {
+                    callback(true, "成功")
+                } else {
+                    callback(isTrue, reContent);
+                }
+            })
+        },
+        // 获取地理坐标
+        getAddressLocal: function(data, callback) {
+            $.ajax({
+                    url: 'http://restapi.amap.com/v3/geocode/geo?parameters',
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: {
+                        key: "6cab3a14d0db6b1c6de21f9d955db963",
+                        address: data.addr,
+                        city: data.city
+                    }
+                })
+                .done(function(re) {
+                    callback(re);
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+        },
+        getBusinessUrl: function(url_name) {
+            var url = {
+                '拜访记录': './business/push/recordList.html',
+                '我的用户': './business/push/myUserList.html',
+                '业务数据': './business/push/myBusiness.html',
+                '员工管理': './business/manage/employeeList.html',
+                '业务部门': './business/manage/departmentList.html',
+                '业务业绩': './business/manage/businessList.html',
+                '配送业绩': './business/manage/distributionList.html',
+                '万物数据': './business/manage/wanwu.html'
+            }[url_name] || '#';
+            return url;
+        },
+        getScale: function(key) {
+            var list = {
+                '0': '其他',
+                '1': '小卖部',
+                '2': '小型独立超市',
+                '3': '中型独立超市',
+                '4': '连锁超市',
+                '5': '饭店'
+            }[key];
+            return list;
+        },
+        getState: function(key) {
+            var list = {
+                '0': '无法判断',
+                '1': '好',
+                '2': '中',
+                '3': '差'
+            }[key];
+            return list;
+        },
+        getSearch: function(key) {
+            var rep = new RegExp('\\b' + key + '=(.+?)(&|$)', 'ig'),
+                result = rep.exec(window.location.search);
+            return result ? decodeURI(result[1]) : null;
+        },
+        strCheck: function(str) {
+            if (/['")><&?\/\.]/.test(str)) {
+                return str.replace(/['"><&?\/\.]/ig, "");
+            } else {
+                return str;
+            }
+        },
     };
     return service;
 });

@@ -39,18 +39,7 @@
               callback(false, serviceThis.catchError('code'));
           })
       },
-      //请求结果处理
-      /*dataHandle:function(url,data,callback){
-          this.getData(url,data,function(isTrue,reData){
-              if (isTrue) {
-                  //有数据
-                  callback(reData);
-              }else{
-                  alert(catchError(reData.errorCode));
-                  callback(false);
-              }
-          })
-      }*/
+
       //用户登录  传入 手机号 登录类型，0 为密码 1 为验证码
       userLogin: function(phoneNum, type, password, from, callback) {
           var url = host + '/user/login';
@@ -333,16 +322,16 @@
           var url = host + '/manage/getEmployeeDetail';
           var userInfo = this.getUserInfo();
           if(userInfo){
-            var data = {
-                userId:userInfo.id,
-                token:userInfo.token,
-                taskId:id
-            };
-            this.getData(url, data, function(isTrue, reContent) {
-                callback(isTrue,reContent);
-            })
-          }
-      },
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    taskId: id
+                };
+                this.getData(url, data, function(isTrue, reContent) {
+                    callback(isTrue, reContent);
+                })
+            }
+        },
       // 保存员工
       saveEmployee: function(emp,callback){
           var url = host + '/manage/saveEmployee';
@@ -471,72 +460,126 @@
               }else{
                   callback(isTrue,reContent)
               }
-
           })
-      },
-      // 获取地理坐标
-      getAddressLocal: function(data,callback){
-          $.ajax({
-            url: 'http://restapi.amap.com/v3/geocode/geo?parameters',
-            type: 'POST',
-            dataType: 'jsonp',
-            data: {
-                key: "6cab3a14d0db6b1c6de21f9d955db963",
-                address: data.addr,
-                city: data.city
+        },
+        // 获取地理坐标
+        getAddressLocal: function(data, callback) {
+            $.ajax({
+                    url: 'http://restapi.amap.com/v3/geocode/geo?parameters',
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: {
+                        key: "6cab3a14d0db6b1c6de21f9d955db963",
+                        address: data.addr,
+                        city: data.city
+                    }
+                })
+                .done(function(re) {
+                    callback(re);
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+        },
+        getBusinessUrl: function(url_name){
+            var url = {
+              '拜访记录':'./business/push/recordList.html',
+              '我的用户':'./business/push/myUserList.html',
+              '业务数据':'./business/push/myBusiness.html',
+              '员工管理':'./business/manage/employeeList.html',
+              '部门管理':'./business/manage/departmentList.html',
+              '业务业绩':'./business/manage/businessList.html',
+              '配送业绩':'./business/manage/distributionList.html',
+              '厂商管理':'#',
+            }[url_name] || 'javascript:;';
+            return url;
+        },
+        getScale: function(key) {
+            var list = {
+                '0': '其他',
+                '1': '小卖部',
+                '2': '小型独立超市',
+                '3': '中型独立超市',
+                '4': '连锁超市',
+                '5': '饭店'
+            }[key];
+            return list;
+        },
+        getState: function(key) {
+            var list = {
+                '0': '无法判断',
+                '1': '好',
+                '2': '中',
+                '3': '差'
+            }[key];
+            return list;
+        },
+        getSearch: function(key) {
+            var rep = new RegExp('\\b' + key + '=(.+?)(&|$)', 'ig'),
+                result = rep.exec(window.location.search);
+            return result ? decodeURI(result[1]) : null;
+        },
+        strCheck: function(str) {
+            if (/['")><&?\/\.]/.test(str)) {
+                return str.replace(/['"><&?\/\.]/ig, "");
+            } else {
+                return str;
             }
-          })
-          .done(function(re) {
-            callback(re);
-          })
-          .fail(function() {
-            console.log("error");
-          })
-      },
-      getBusinessUrl: function(url_name){
-          var url = {
-            '拜访记录':'./business/push/recordList.html',
-            '我的用户':'./business/push/myUserList.html',
-            '业务数据':'./business/push/myBusiness.html',
-            '员工管理':'./business/manage/employeeList.html',
-            '部门管理':'./business/manage/departmentList.html',
-            '业务业绩':'./business/manage/businessList.html',
-            '配送业绩':'./business/manage/distributionList.html',
-            '厂商管理':'#',
-          }[url_name] || 'javascript:;';
-          return url;
-      },
-      getScale: function(key){
-          var list = {
-            '0':'其他',
-            '1':'小卖部',
-            '2':'小型独立超市',
-            '3':'中型独立超市',
-            '4':'连锁超市',
-            '5':'饭店'
-          }[key];
-          return list;
-      },
-      getState: function(key){
-          var list = {
-            '0':'无法判断',
-            '1':'好',
-            '2':'中',
-            '3':'差'
-          }[key];
-          return list;
-      },
-      getSearch: function(key){
-          var rep = new RegExp('\\b'+ key + '=(.+?)(&|$)','ig'),
-              result = rep.exec(window.location.search);
-          return result ? decodeURI(result[1]) : null;
-      },
-      strCheck : function(str){
-          if (/['")><&?\/\.]/.test(str)) {
-              return str.replace(/['"><&?\/\.]/ig,"");
-          }else {
-              return str;
-          }
-      },
-  };
-})(window,jQuery);
+        },
+        //获取厂商列表
+        getVendorList: function(page, pageSize, search, callback) {
+            var url = host + '/vendor/vendorList';
+            var data = {
+                page: page || 1,
+                pageSize: pageSize || 1,
+                search: keyValue || ""
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                if (isTrue) {
+                    callback(true, reContent.vendorList)
+                } else {
+                    callback(isTrue, reContent);
+                }
+            })
+        },
+        //获取厂商详情
+        getVendorDetail: function(id, callback) {
+            var url = host + '/vendor/vendorDetail';
+            var data = {
+                vendorId: id
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            })
+        },
+        //删除厂商
+        delVendor: function(id, callback) {
+            var url = host + '/vendor/delVendor';
+            var data = {
+                vendorId: id
+            };
+            this.getData(url, data, function(isTrue, reContent) {
+                if (isTrue) {
+                    callback(true, "成功")
+                } else {
+                    callback(isTrue, reContent);
+                }
+            })
+        },
+        //添加/编辑厂商
+        //mobile 为必填项
+        //vendor 为需要修改的数据项 对象。
+        updateVendor: function(mobile, vendor, callback) {
+            var url = host + '/vendor/updateVendor';
+            var data = vendor;
+            vendor.mobile = mobile;
+            this.getData(url, data, function(isTrue, reContent) {
+                if (isTrue) {
+                    callback(true, "成功")
+                } else {
+                    callback(isTrue, reContent);
+                }
+            })
+        },
+    };
+})(window, jQuery);
