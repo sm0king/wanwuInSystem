@@ -1,0 +1,26 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 拜访记录
+block topcenter
+  | 商家详情
+block toprightTxt
+  span#save 保存
+
+block section
+  section.main
+    .record-form
+      include ../../includes/infoform.jade
+      small#time.time.help-block 添加时间 2015-09-28
+      div.large-btnbox
+        button.btn.btn-danger.btn-block.btn-lg 删除
+block script
+    script(src="/diguaApp/js/push/recordEdit.js")
+    script.
+      $(function(){
+          $(".point").on("click", function(){
+              window.location.href = "./recordMap.html";
+          });
+      });

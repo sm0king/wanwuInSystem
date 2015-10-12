@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
   // Configurable paths
   var config = {
-    app: 'app',
+    app: 'app/diguaApp',
     dist: 'dist',
     tpl:'template'
   };
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
     watch: {
       bower: {
         files: ['bower.json'],
-        tasks: ['wiredep']
+        tasks: ['wiredep','bower']
       },
       babel: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
@@ -56,6 +56,18 @@ module.exports = function (grunt) {
       jade:{
         files:['<%= config.tpl %>/**/*.{html,jade}'],
         tasks:['jade']
+      },
+      less:{
+        files: ['<%= config.tpl %>/less/**/*.less'],
+        tasks: ['less'],
+      },
+      images:{
+        files: ['<%= config.tpl %>/images/**/*.*'],
+        tasks: ['copy:images'],
+      },
+      js:{
+        files: ['<%= config.tpl %>/**/*.js'],
+        tasks: ['copy:js'],
       }
     },
 
@@ -68,13 +80,13 @@ module.exports = function (grunt) {
         options: {
           files: [
             '<%= config.app %>/{,*/}*.html',
-            '.tmp/styles/{,*/}*.css',
+            // '.tmp/styles/{,*/}*.css',
             '<%= config.app %>/images/{,*/}*',
-            '.tmp/scripts/{,*/}*.js'
+            // '.tmp/scripts/{,*/}*.js'
           ],
           port: 9000,
           server: {
-            baseDir: ['.tmp', config.app],
+            baseDir: ['./app'],
             routes: {
               '/bower_components': './bower_components'
             }
@@ -185,13 +197,12 @@ module.exports = function (grunt) {
 
     // Automatically inject Bower components into the HTML file
     wiredep: {
-      app: {
-        src: ['<%= config.app %>/index.html'],
-        exclude: ['bootstrap.js'],
-        ignorePath: /^(\.\.\/)*\.\./
-      }
+        app: {
+            src: ['<%= config.app %>/index.html'],
+            exclude: ['bootstrap.js'],
+            ignorePath: /^(\.\.\/)*\.\./
+        }
     },
-
     // Renames files for browser caching purposes  取消此部分，暂不对文件重命名
     // filerev: {
     //   dist: {
@@ -328,6 +339,20 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      images:{
+        expand: true,
+        dot: true,
+        cwd: '<%= config.tpl %>/images',
+        dest: '<%= config.app %>/images',
+        src: '{,*/}*.*'
+      },
+      js:{
+        expand: true,
+        dot: true,
+        cwd: '<%= config.tpl %>/',
+        dest: '<%= config.app %>',
+        src: '**/*.js'
       }
     },
 
@@ -358,13 +383,41 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%= config.tpl %>',
                 dest: '<%= config.app%>',
-                src: ['*.html'],//,'*.html'
+                src: ['**/*.html'],//,'*.html'
                 ext: '.html'
             }]
         }
+    },
+    //bower task
+    bower:{
+      install:{
+        options:{
+          targetDir:'<%= config.tpl %>/plugs',
+          layout:'byComponent',
+          install:true,
+          verbose:false,
+          cleanTargerDir:false,
+          cleanBowerDir:false,
+          bowerOptions:{}
+        }
+      }
+    },
+    less:{
+      options:{
+        compress: true,
+        yuicompress: true
+      },
+      main: {
+        expand: true,
+        cwd: '<%= config.tpl %>/less/',
+        src: ['common.less','login.less'],
+        dest: '<%= config.app%>/css/',
+        ext: '.css'
+      },
     }
   });
-
+  // jit 无法加载 只能手动加载bower任务
+  grunt.loadNpmTasks('grunt-bower-task');
 
   grunt.registerTask('serve', 'start the server and preview your app', function (target) {
 
@@ -374,9 +427,10 @@ module.exports = function (grunt) {
     //执行任务
     grunt.task.run([
       //jade 模板编译任务
-      'jade', 
+      'jade',
       'clean:server',
-      'wiredep',
+      // 'wiredep',
+      'less',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',
@@ -388,7 +442,7 @@ module.exports = function (grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
   });
-
+  /*
   grunt.registerTask('test', function (target) {
     if (target !== 'watch') {
       grunt.task.run([
@@ -403,7 +457,7 @@ module.exports = function (grunt) {
       'mocha'
     ]);
   });
-
+  */
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',

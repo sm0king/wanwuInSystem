@@ -1,0 +1,45 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 业务业绩
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group
+      li.list-group-item
+        | 业务人员
+        span.badge 36
+      li.list-group-item
+        | 拜访量
+        span.badge 36
+      li.list-group-item
+        | 新用户
+        span.badge 36
+      li.list-group-item
+        | 下单新用户
+        span.badge 36
+      li.list-group-item
+        | 订单数
+        span.badge 36
+      li.list-group-item
+        | 订单金额
+        span.badge 36
+      p
+      a.block(href="./businessInfo.html")
+        li.list-group-item
+          | 详细数据
+          span.badge >
+block script
+  script(src="/bower_components/bootstrap/js/tab.js")
+  script.
+    $(function(){
+      $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+      })
+    })

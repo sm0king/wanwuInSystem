@@ -1,0 +1,29 @@
+extends common.jade
+
+block section
+  section
+    include includes/infoform.jade
+    include includes/map.jade
+block script
+    script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8760360d4d0f0a29553680c42977a909")
+    script.
+      $(function(){
+        //- html5 获取当前地理坐标经纬度
+        function getCoordinates(call){
+          var local = {};
+          if(!navigator.geolocation){
+              alert("不支持位置定位");
+          }else {
+            var k = navigator.geolocation.getCurrentPosition(function(pos){
+                local.latitude = pos.coords.latitude;
+                local.longitude = pos.coords.longitude;
+                call(local);
+              });
+          }
+        }
+        
+        $('#point').on('click',function(){
+            window.location.href='recordMap.html';
+        });
+      });
+      

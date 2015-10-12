@@ -1,0 +1,38 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 平台收款
+block topcenter
+  | 收款明细
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group
+      li.list-group-item.info-item
+        .left-txt 金额
+        .right-content
+          $12312
+      li.list-group-item.info-item
+        .left-txt 付款时间
+        .right-content
+          2015-9-23 16:34:24
+      li.list-group-item.info-item
+        .left-txt 付款账号
+        .right-content
+          | 123132156
+      li.list-group-item.info-item
+        .left-txt 收款账号
+        .right-content
+          | 123132156
+      p
+      li.list-group-item.info-item
+        .left-txt 订单号
+        .right-content
+          | 123132156
+      li.list-group-item.info-item
+        .left-txt 订单状态
+        .right-content
+          | 待发货

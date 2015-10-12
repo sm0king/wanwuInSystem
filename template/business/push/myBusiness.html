@@ -1,0 +1,36 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 业务数据
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group.data-cont
+      li.list-group-item
+        | 我的邀请码
+        span#recommend_code(style="padding:0 10px") ADFASF
+      li.list-group-item.business-data
+        div.list-flex
+          p 拜访量
+          h2#recordNum.text-center 36
+        div.list-flex
+          p 注册用户
+          h2#regNum.text-center 36
+      li.list-group-item.business-data
+        div.list-flex
+          p 订单数
+          h2#orderNum.text-center 36
+        div.list-flex
+          p 订单金额
+          h2#orderMoney.text-center 36
+      a.block(href="./myBusinessInfo.html")
+        li.list-group-item
+          | 详细数据
+          span.badge >
+block script
+  script(src="/diguaApp/js/push/mybusiness.js")

@@ -1,0 +1,15 @@
+extends ../../common.jade
+
+block top
+
+block section
+  section
+    .record-list
+      .search-box.clearfix
+        input#search.left-input.form-control(type="text" placeholder="搜索")
+        div.right-btn.cancel 取消
+      #searchList.user-list
+        include ../../includes/record.jade
+
+block script
+  script(src="/diguaApp/js/push/userSearch.js")

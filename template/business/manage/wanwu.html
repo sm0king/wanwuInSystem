@@ -1,0 +1,26 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 万物数据
+block toprightTxt
+
+block section
+  section.main
+    div.bg-warning 平台流水
+    ul.list-group
+      a(href="./wanwuReceipt.html")   
+        li.list-group-item
+          span 收款金额
+          span.pull-right ￥12123412
+      a(href="./wanwuPayment.html")
+        li.list-group-item
+          span 付款金额
+          span.pull-right ￥12123412
+      a(href="./wanwuBalance.html")
+        li.list-group-item
+          span 平台余额
+          span.pull-right ￥12123412

@@ -1,0 +1,17 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 拜访记录
+block topcenter
+  | 商家详情
+block toprightTxt
+  span#save 保存
+
+block section
+  section.main
+    .record-form
+      include ../../includes/infoform.jade
+block script
+   script(src="/diguaApp/js/push/recordAdd.js")

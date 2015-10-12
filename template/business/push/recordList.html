@@ -1,0 +1,25 @@
+extends ../../common.jade
+block local
+  - var local = "./recordAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 拜访记录
+
+block section
+  section.main
+    .record-list
+      .search-box
+        input#search.form-control(type="text" placeholder="搜索")
+      .add-record
+        a.btn.btn-primary.btn-lg.btn-block(href="./recordAdd.html") +添加拜访记录
+      #record-list
+        .list-date.bg-warning
+          span 今天（2）
+        include ../../includes/record.jade
+
+block script
+   script(src="/diguaApp/js/push/recordList.js")

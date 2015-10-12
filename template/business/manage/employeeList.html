@@ -1,0 +1,24 @@
+extends ../../common.jade
+block local
+  - var local = "./employeeInfo.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 员工管理
+block toprightTxt
+  span#add 添加
+block section
+  section.main
+    .record-list
+      .search-box
+        input#search.form-control(type="text" placeholder="搜索")
+      #employeeList
+        .list-date.clearfix.bg-warning
+          span 部门
+        include ../../includes/employee.jade
+
+block script
+   script(src="/diguaApp/js/manage/employeeList.js")

@@ -1,0 +1,33 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 万物数据
+block topcenter
+  | 平台付款
+block toprightTxt
+  span#selectDate 选择日期
+block section
+  section.main
+    div 今天
+    ul.list-group
+      a(href="./wanwuReceipt.html")
+        li.list-group-item
+          span 收款金额
+          span.pull-right ￥12123412
+      a(href="./wanwuPayment.html")
+        li.list-group-item
+          span 付款金额
+          span.pull-right ￥12123412
+      a(href="./wanwuBalance.html")
+        li.list-group-item
+          span 平台余额
+          span.pull-right ￥12123412
+block script
+  script.
+    $(function(){
+      $('#selectDate').click(function (e) {
+          window.location.href = "./wanwuSearch.html";
+      })
+    })
