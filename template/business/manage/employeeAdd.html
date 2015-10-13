@@ -36,13 +36,17 @@ block toprightTxt
 block section
   section.main
     div 基本信息
-    + infoList('头像','新增')
+    + infoList('头像','新增')(class="right-tip")
     + infoInput('姓名')(id="name")
     + infoInput('手机号')(id="phone")
     + infoInput('邮箱')(id="email")
     + infoSelect()
     p
-    + infoList('职位','业务员')(id="type",class="right-tip")
+    li.list-group-item.info-item
+      .left-txt 职务
+      .right-content
+        select#type.select.form-control
+          option 请选择
     + infoList('上级','司马')(id="superior",class="right-tip")
     + infoList('部门','推广小分队')(id="depart",class="right-tip")
     div 功能开通
@@ -52,5 +56,7 @@ block section
       + infoSwitch("管理功能")(id="manageFun")
       + infoSwitch("新增/修改/删除员工")(id="employeeCURD")
       + infoSwitch("厂商功能")(id="firmFun")
+    
+          
 block script
    script(src="/diguaApp/js/manage/employeeAdd.js")
