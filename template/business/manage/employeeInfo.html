@@ -35,7 +35,7 @@ block toprightTxt
 
 block section
   section.main
-    div 基本信息
+    li.list 基本信息
     + infoList('头像','新增')(class="right-tip")
     + infoInput('姓名')(id="name")
     + infoInput('手机号')(id="phone")
@@ -49,13 +49,15 @@ block section
           option 请选择
     + infoList('上级','司马')(id="superior",class="right-tip")
     + infoList('部门','推广小分队')(id="depart",class="right-tip")
-    div 功能开通
+    li.list 功能开通
     ul.list-group
       + infoSwitch("地推功能")(id="pushFun")
       + infoSwitch("配送功能")(id="shipFun")
       + infoSwitch("管理功能")(id="manageFun")
       + infoSwitch("新增/修改/删除员工")(id="employeeCURD")
       + infoSwitch("厂商功能")(id="firmFun")
+    .large-btnbox
+      button#del.btn.btn-danger.btn-lg.btn-block 删除员工
 
     #searchPanel.z-panel
       .record-list

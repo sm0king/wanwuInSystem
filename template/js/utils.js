@@ -370,9 +370,19 @@
           }
       },
       // 删除员工
-      delEmployee: function(){
+      delEmployee: function(id,callback){
           var url = host + '/manage/delEmployee';
           var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                userId:userInfo.id,
+                token:userInfo.token,
+                taskId:id
+              }
+              this.getData(url,data,function(isTrue, reContent){
+                  callback(isTrue, reContent);
+              });
+          }
       },
       // 获取职位
       getJobs: function(callback){

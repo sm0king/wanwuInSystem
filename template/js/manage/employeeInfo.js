@@ -171,6 +171,17 @@ $(function(){
         return false;
     });
 
+    $("#del").on('click',function(){
+        var id = $(this).data('id');
+        service.delEmployee(id,function(flag,msg){
+            if (flag) {
+                alert("删除成功");
+            }else {
+              alert(msg);
+            }
+        })
+    })
+
     function load(argument) {
         var id = service.getSearch('id');
         service.getEmployeeDetail(id,function(flag,msg){
@@ -206,7 +217,7 @@ $(function(){
               $("#manageFun").prop('checked', open.managementFunction);
               $("#employeeCURD").prop('checked', open.employeeCURD);
               $("#firmFun").prop('checked', open.firmFunction);
-
+              $("#del").data('id',id);
               service.getJobs(function(flag,msg){
                   if (flag) {
                     var opt = '';
