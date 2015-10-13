@@ -400,63 +400,78 @@ define(['jquery'], function($) {
             if (userInfo) {
                 data.userId = userInfo.id;
                 data.token = userInfo.token;
-                this.getData(url,data,function(isTrue,reContent){
+                this.getData(url, data, function(isTrue, reContent) {
                     if (isTrue) {
-                        callback(true,reContent.result);
-                    }else{
-                        callback(false,reContent);
+                        callback(true, reContent.result);
+                    } else {
+                        callback(false, reContent);
                     }
                 })
             };
         },
         // 等待接货详情
-        waitReceivingDetail: function(order,callback) {
+        waitReceivingDetail: function(order, callback) {
             var url = host + '/service/waitReceivingDetail';
             var userInfo = this.getUserInfo();
             if (userInfo) {
                 var data = {
-                    userId:userInfo.id,
-                    token:userInfo.token,
-                    orderId:order
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    orderId: order
                 }
-                this.getData(url,data,function(isTrue,reData){
-                    callback(isTrue,reData)
+                this.getData(url, data, function(isTrue, reData) {
+                    callback(isTrue, reData)
                 })
             };
         },
         // 确定接货
-        orderReceivingDo: function(order,callback) {
+        orderReceivingDo: function(order, callback) {
             var url = host + '/service/orderReceivingDo';
             var userInfo = this.getUserInfo();
             if (userInfo) {
                 var data = {
-                    userId:userInfo.id,
-                    token:userInfo.token,
-                    orderId:order
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    orderId: order
                 }
-                this.getData(url,data,function(isTrue,reData){
+                this.getData(url, data, function(isTrue, reData) {
                     if (isTrue) {
-                        callback(true,"成功");
-                    }else{
-                        callback(false,reData);
+                        callback(true, "成功");
+                    } else {
+                        callback(false, reData);
                     }
                 })
             };
         },
         //等待送货接口
-        getWaitSending:function(callback, pageNumber){
-            var url = host +'/orders/waitSending';
+        getWaitSending: function(callback, pageNumber) {
+            var url = host + '/orders/waitSending';
             var data = pageNumber || {};
             var userInfo = this.getUserInfo();
             if (userInfo) {
                 data.userId = userInfo.id;
                 data.token = userInfo.token;
-                this.getData(url,data,function(isTrue,reContent){
+                this.getData(url, data, function(isTrue, reContent) {
                     if (isTrue) {
-                        callback(true,reContent.result);
-                    }else{
-                        callback(false,reContent);
+                        callback(true, reContent.result);
+                    } else {
+                        callback(false, reContent);
                     }
+                })
+            };
+        },
+        //获取等待接货详情
+        getWaitSendingDetail: function(order, callback) {
+            var url = host + '/orders/waitSendingDetail';
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    orderId: order
+                }
+                this.getData(url, data, function(isTrue, reData) {
+                    callback(isTrue, reData)
                 })
             };
         },
