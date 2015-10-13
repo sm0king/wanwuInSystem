@@ -18,7 +18,7 @@ $(function(){
       employeeCURD : $("#employeeCURD").prop('checked')? 1:0,
       firmFun : $("#firmFun").prop('checked')? 1:0
     };
-    console.log(data);
+
     service.saveEmployee(data,function(flag,msg){
         if (flag) {
           alert('添加成功');
@@ -92,6 +92,78 @@ $(function(){
       });
   });
 
+  // 上级列表
+  $("#superior").on('click',function(event) {
+    service.manageGetEmployeeList("","1","10","0",function(flag,msg){
+        if (flag) {
+          var list = msg.employeeList;
+          var dom = "",img;
+          for (var i = 0; i < list.length; i++) {
+              img = list[i].img ? list[i].img : "/diguaApp/images/tuwen.png";
+              dom += '<li class="list-group-item employee-item" data-id="'+ (list[i].user_id || list[i].id)+'">'+
+                    '<div class="media">'+
+                      '<div class="media-left meida-middle w20">'+
+                        '<img src="'+img+'" alt=""></div>'+
+                      '<div class="media-body w60">'+
+                        '<div class="employee-name">'+list[i].name+'</div>'+
+                        '<div>'+list[i].phone+'</div>'+
+                        '<div>'+(list[i].departmentName || "暂无部门")+'</div>'+
+                    '</div></div></li>';
+          }
+          dom = '<ul class="list-group">' + dom + '</ul>';
+          $("#searchList").html(dom);
+        }else {
+          $("#searchList").html('<div class="alert alert-danger">'+msg+'</div>');
+        }
+        $(".z-panel").show();
+    });
+  });
+
+  // 部门列表
+  $("#depart").on('click',function(event) {
+    service.departmentList("","1","10",function(flag,msg){
+        if (flag) {
+          var dom = "",img;
+          var list = msg.departmentList;
+          for (var i = 0; i < list.length; i++) {
+              img = list[i].img ? list[i].img : "/diguaApp/images/tuwen.png";
+              dom += '<li class="list-group-item depart-item" data-id="'+ (list[i].user_id || list[i].id)+'">'+
+                    '<div class="media">'+
+                      '<div class="media-left meida-middle w20">'+
+                        '<img src="'+img+'" alt=""></div>'+
+                      '<div class="media-body w60">'+
+                        '<div class="depart-name">'+list[i].name+'</div>'+
+                        '<div>'+(list[i].create_user || "未知负责人")+'</div>'+
+                    '</div></div></li>';
+          }
+          dom = '<ul class="list-group">'+ dom +'</ul>';
+          $("#searchList").html(dom);
+        }else {
+          $("#searchList").html('<div class="alert alert-danger">'+msg+'</div>');
+        }
+        $(".z-panel").show();
+    });
+  });
+
+  $(".cancel").on('click',function(){
+    $("#searchList").html("");
+    $(".z-panel").hide();
+  });
+
+  $('#searchList').on('click','.list-group-item',function(e){
+      e.preventDefault();
+      if ($(this).hasClass('employee-item')) {
+          $("#superior").html($(this).find('.employee-name').text()).data('id',$(this).data('id'));
+          $("#searchList").html("");
+          $(".z-panel").hide();
+      }else if ($(this).hasClass('depart-item')) {
+          $("#depart").html($(this).find('.depart-name').text()).data('id',$(this).data('id'));
+          $("#searchList").html("");
+          $(".z-panel").hide();
+      }
+      return false;
+  });
+
   function loadData(){
       loadPro(function(re){
         re = '<option>请选择</option>' + re;
@@ -101,11 +173,9 @@ $(function(){
       $('#district').hide();
 
       service.getJobs(function(flag,msg){
-          // console.log(msg);
           if (flag) {
             var opt = '';
             for (var i = 0; i < msg.result.length; i++) {
-              // msg[i]
               opt += '<option value="'+msg.result[i].id+'">'+msg.result[i].name+'</option>';
             }
             opt = '<option value="0">请选择</option>' + opt;

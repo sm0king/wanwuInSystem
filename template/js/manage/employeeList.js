@@ -14,7 +14,7 @@ $(function(){
       id = $(this).data('id');
       url = './employeeInfo.html?id='+id;
       back.go(url);
-      console.log(id);
+      // console.log(id);
 
   });
 
@@ -24,26 +24,27 @@ $(function(){
   });
 
   function load(){
-      service.manageGetEmployeeList("","1",function(flag,msg){
-        console.log(msg);
+      service.manageGetEmployeeList("","1","10","1",function(flag,msg){
           if (flag) {
-              var list = "";
-              $.each(msg,function(index, el) {
-                  var data =  el.result,dom = "",img;
-                  for (var i = 0; i < data.length; i++) {
-                    img = data[i].img ? data[i].img : '/diguaApp/images/tuwen.png';
-                    dom += '<li class="list-group-item" data-id="'+ data[i].id +'">'+
-                            '<div class="media">'+
-                              '<div class="media-left meida-middle w20">'+
-                                '<img src="'+ img +'" alt=""></div>'+
-                                '<div class="media-body w60">'+
-                                '<div>'+ data[i].name +'</div>'+
-                                '<div> '+ data[i].phone +' </div></div></div></li>';
-                  }
-                  list +='<div class="list-date clearfix bg-warning">'+
-                          '<span>'+ el.name +'</span></div><ul class="list-group">'+ dom + '</ul>';
-              });
-              $('#employeeList').html(list);
+              var list = "",dom="",img,emp;
+              var dep = msg.departmentList;
+              for (var i = 0; i < dep.length; i++) {
+                emp = dep[i].employeeList;
+                for (var j = 0; j < emp.length; j++) {
+                  img = emp[j].img ? emp[j].img : '/diguaApp/images/tuwen.png';
+                  list += '<li class="list-group-item" data-id="'+ emp[j].id +'">'+
+                          '<div class="media">'+
+                            '<div class="media-left meida-middle w20">'+
+                              '<img src="'+ img +'" alt=""></div>'+
+                              '<div class="media-body w60">'+
+                              '<div>'+ emp[j].name +'</div>'+
+                              '<div> '+ emp[j].phone +' </div></div></div></li>';
+                }
+                dom += '<div class="list-date clearfix bg-warning">'+
+                        '<span>'+ (dep[i].departmentName || "暂无部门") +'</span></div><ul class="list-group">'+ list + '</ul>';
+                list = "";
+              }
+              $('#employeeList').html(dom);
           }
       })
   }

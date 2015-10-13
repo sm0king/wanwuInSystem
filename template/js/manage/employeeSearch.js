@@ -13,18 +13,8 @@ $(function(){
     });
 
     function load(word){
-        var key = word ? word : service.getSearch('key'),
-            act = service.getSearch('act');
+        var key = word ? word : service.getSearch('key') || "",
         $("#search").val(key);
-        if (act) {
-            switch (act) {
-              case boss:
-
-                break;
-              case depart:
-                break;
-            }
-        }else {
           service.manageGetEmployeeList(key,"",function(flag,msg){
              if (flag) {
                 var dom = "",img;
@@ -43,8 +33,6 @@ $(function(){
                 $("#searchList").html(dom);
              }
           });
-        }
-
     }
     load();
 });
