@@ -446,11 +446,11 @@
           });
       },
       //获取部门员工
-      departmentEmployeeList: function(id,head,page,pageSize,callback) {
+      departmentEmployeeList: function(id,leader,page,pageSize,callback) {
           var url = host + '/department/employeeList';
           var data = {
               dpId:id,
-              chargeId:head,
+              chargeId:leader,
               page:page || 1,
               pageSize:pageSize || 10
           };
@@ -460,19 +460,9 @@
           })
       },
       //添加/编辑部门
-      departmentUpdate: function(id,name,images,notice,head,upNotice,callback) {
+      departmentUpdate: function(data,callback) {
           var url = host + '/department/updateDepartment';
-          var userInfo = getUserInfo();
-          var data = {
-              dpId:id,
-              departmentName:name,
-              headImage:images,
-              departmentNotice:notice,
-              chargeId:head,
-              isEditSubDepartmentNotice:upNotice
-          };
           this.getData(url, data, function(isTrue, reContent) {
-              //
               if (isTrue) {
                   callback(true,"成功")
               }else{
@@ -487,7 +477,7 @@
                     type: 'POST',
                     dataType: 'jsonp',
                     data: {
-                        key: "6cab3a14d0db6b1c6de21f9d955db963",
+                        key: "7da2c1565bd041d7236eb88feabec69f",
                         address: data.addr,
                         city: data.city
                     }
@@ -508,7 +498,7 @@
               '部门管理':'./business/manage/departmentList.html',
               '业务业绩':'./business/manage/businessList.html',
               '配送业绩':'./business/manage/distributionList.html',
-              '厂商管理':'#',
+              // '厂商管理':'#',
             }[url_name] || 'javascript:;';
             return url;
         },

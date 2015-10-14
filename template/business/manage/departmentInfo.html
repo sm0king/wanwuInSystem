@@ -2,13 +2,12 @@ extends ../../common.jade
 mixin infoList(lt,rt)
   li.list-group-item.info-item
     .left-txt= lt
-    .right-content.text-right= rt
-      | >
+    div.right-content.text-right.right-tip(id!=attributes.id)= rt
 mixin infoInput(lab)
   li.list-group-item.info-item
     .left-txt= lab
     .right-content
-      input.form-control
+      input.form-control(id!=attributes.id)
 mixin infoSelect
   li.list-group-item.info-item
     .left-txt 所在地区
@@ -36,32 +35,58 @@ block toprightTxt
 
 block section
   section.main
-    div 基本信息
-    + infoList('部门名称','名称')
-    + infoList('头像','')
+    li.list 基本信息
+    + infoInput('部门名称')(id="departName")
+    + infoList('头像',' ')
     p
-    + infoList('部门公告','')
+    li#noticeList.list-group-item.info-item
+      .left-txt
+        div 部门公告
+        div#notice.notice 公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容
+      .text-right.right-align
+        | >
+    li.list 部门成员
+    ul#departEmployee.depart-inline
+      li.depart-list
+        img(src="../../images/tuwen.png")
+        .caption
+          | alonehover
+      li.depart-list
+        img(src="../../images/tuwen.png")
+        .caption
+          | alonehover
+      li.depart-list
+        img(src="../../images/tuwen.png")
+        .caption
+          | alonehover
+      li.depart-list
+        img(src="../../images/tuwen.png")
+        .caption
+          | alonehover
+      li.depart-list
+        img(src="../../images/tuwen.png")
+        .caption
+          | alonehover
     p
-    div 部门成员
-    ul.depart-inline
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-    p
-    + infoList('负责人','某某')
+    + infoList('负责人','某某')(id="leader")
     small.time.help-block 注册时间 2015-09-28
+
+    #searchPanel.z-panel
+      .record-list
+        .search-box.clearfix
+          input#search.left-input.form-control(type="text" placeholder="搜索")
+          div.right-btn.cancel 取消
+        #searchList.search-list
+
+    #noticePanel.z-panel
+      div.notice-box
+        textarea.form-control(name="name")
+        label
+          input(type="checkbox")
+          small 公告到所有下属部门
+      .large-btnbox
+        button#addNotice.btn.btn-lg.btn-primary.btn-block 确定
+      .large-btnbox
+        button#cancel.btn.btn-lg.btn-block 取消
 block script
    script(src="/diguaApp/js/manage/departmentInfo.js")

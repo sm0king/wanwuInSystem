@@ -2,23 +2,26 @@ $(function(){
     $("#search").on('keyup',function(e){
         var k = e.keyCode || e.which;
         if(k == 13){
-          window.location.href = "./departmentSearch.html";
+          var w = service.strCheck($(this).val());
+          var url = "./departmentSearch.html?key=" + w;
+          back.go(url);
         }
     });
-    $('.depart-inline').on('click',function(){
-        window.location.href = "./departmentInfo.html";
-    });
+
 
     $("#departList").on('click','.depart-box',function(){
-        // console.log($(this).data('id'));
         var url = './departmentInfo.html?id='+ $(this).data('id');
         back.go(url);
     });
 
+    $("#add").on('click',function(){
+        var url = './departmentAdd.html';
+        back.go(url);
+    })
+
     function load(argument) {
       service.departmentList("","","",function(flag,msg){
           if (flag) {
-            // console.log(msg);
             var data = msg.departmentList;
             var list = "",dom = "",img;
             for (var i = 0; i < data.length; i++) {
