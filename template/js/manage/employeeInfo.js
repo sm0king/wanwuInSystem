@@ -5,6 +5,7 @@ $(function(){
       var data = {
         name : str($("#name").val()),
         phone : str($("#phone").val()),
+        img : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
         email : str($("#email").val()),
         pid : str($('#provinces').val()),
         cid : str($("#city").val()),

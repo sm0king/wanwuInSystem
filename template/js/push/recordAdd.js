@@ -4,6 +4,7 @@ $(function(){
       var str = service.strCheck;
       var data = {
         shopName : str($("#marketName").val()),
+        shopLogo : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
         consignee : str($("#linkman").val()),
         phone : str($("#phone").val()),
         pid : str($('#provinces').val()),

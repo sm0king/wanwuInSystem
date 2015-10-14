@@ -33,7 +33,7 @@ $(function(){
                       dom += '<li class="list-group-item" data-id="'+ data[i].id +'">'+
                               '<div class="media">'+
                                 '<div class="media-left meida-middle w20">'+
-                                  '<img src="'+ img +'" alt=""></div>'+
+                                  '<img src="'+ img +'" style="max-height:60px;"></div>'+
                                   '<div class="media-body w60">'+
                                   '<div>'+ data[i].name +'</div>'+
                                   '<div> '+ data[i].phone +' </div>'+

@@ -31,7 +31,7 @@ $(function(){
                     if (j < 5) {
                       img = data[i].employeeList.employeeList[j].img ? data[i].employeeList.employeeList[j].img : '/diguaApp/images/tuwen.png';
                       dom += '<li class="depart-list">'+
-                             '<img src="' + img +'">'+
+                             '<img src="' + img +'" >'+
                              '<div class="caption">'+data[i].employeeList.employeeList[j].name+'</div></li>';
                     }
                   }

@@ -43,7 +43,7 @@ $(function(){
                   list += '<li class="list-group-item '+ control +'" data-id="'+ emp[j].id +'">'+
                           '<div class="media">'+
                             '<div class="media-left meida-middle w20">'+
-                              '<img src="'+ img +'" alt=""></div>'+
+                              '<img src="'+ img +'" style="max-height:60px;"></div>'+
                               '<div class="media-body w60">'+
                               '<div>'+ emp[j].name +'</div>'+
                               '<div> '+ emp[j].phone +' </div></div></div></li>';

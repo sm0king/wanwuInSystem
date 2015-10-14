@@ -30,7 +30,7 @@ $(function(){
                 list += '<li class="list-group-item record-item" data-id="'+ msg.result[i].id +'">'+
                         '<div class="media">'+
                         '<div class="media-left meida-middle">'+
-                        '<img src="'+img+'" alt=""></div>'+
+                        '<img src="'+img+'" style="max-height:80px"></div>'+
                         '<div class="media-body">'+
                         '<div>'+msg.result[i].shop_name+'</div>'+
                         '<div>'+msg.result[i].phone+'</div>'+

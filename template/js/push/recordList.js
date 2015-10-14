@@ -57,7 +57,7 @@ $(function(){
               list += '<li class="list-group-item record-item" data-id="'+ data[i].result[j].id +'">'+
                       '<div class="media">'+
                       '<div class="media-left meida-middle">'+
-                      '<img src="'+img+'" alt=""></div>'+
+                      '<img src="'+img+'" style="max-height:80px"></div>'+
                       '<div class="media-body">'+
                       '<div>'+data[i].result[j].shop_name+'</div>'+
                       '<div>'+data[i].result[j].phone+'</div>'+

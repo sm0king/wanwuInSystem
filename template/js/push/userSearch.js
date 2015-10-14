@@ -27,7 +27,7 @@ $(function(){
       list += '<li class="list-group-item user-item" data-id="'+ result[i].user_id +'">'+
               '<div class="media">'+
               '<div class="media-left meida-middle">'+
-              '<img src="'+ img +'" alt=""></div>'+
+              '<img src="'+ img +'" style="max-height:80px;"></div>'+
               '<div class="media-body">'+
               '<div>'+ (result[i].shop_name || "") +'</div>'+
               '<div>'+ phone +'</div>'+

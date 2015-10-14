@@ -4,6 +4,7 @@ $(function(){
       var str = service.strCheck;
       var data = {
         shopName : str($("#marketName").val()),
+        shopLogo : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
         consignee : str($("#linkman").val()),
         phone : str($("#phone").val()),
         pid : str($('#provinces').val()),
@@ -15,7 +16,6 @@ $(function(){
         remark : str($("#remark").val()),
         taskId : $("#marketName").data('id')
       };
-
       var map = {
           city: $("#city").find('option:selected').text(),
           addr: data.address,
@@ -28,7 +28,6 @@ $(function(){
               };
         service.serviceSaveMyRecord(data,function(flag,msg){
             alert("保存成功");
-            // back.go('./recordList.html');
             history.go(-1);
         });
       });
@@ -179,6 +178,7 @@ $(function(){
               // 运营状况
               $("#state").val(data.running_state);
               $("#time").html("添加时间  " + data.add_time);
+              $("#addImage").css('background-image','url('+ data.shop_url +')');
             }
         });
     }

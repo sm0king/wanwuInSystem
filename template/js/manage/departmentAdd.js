@@ -5,7 +5,7 @@ $(function(){
         var str = service.strCheck,id = service.getSearch('id');
         data = {
           departmentName:str($("#departName").val()),
-          headImage:"",
+          headImage : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
           departmentNotice:str($("#notice").text()),
           chargeId:$("#leader").data('id'),
           isEditSubDepartmentNotice:$("#notice").data('flag')||'0',
