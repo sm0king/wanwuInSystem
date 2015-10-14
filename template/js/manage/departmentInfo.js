@@ -15,8 +15,9 @@ $(function(){
         service.departmentUpdate(data,function(flag,msg){
             if (flag) {
               alert('编辑成功');
-              var url = './departmentList.html';
-              back.go(url);
+              // var url = './departmentList.html';
+              // back.go(url);
+              history.go(-1);
             }else {
               alert(msg);
             }
@@ -139,4 +140,5 @@ $(function(){
     }
 
     load();
+    HybridJS.init(document.getElementById('addImage'));
 });

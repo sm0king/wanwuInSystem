@@ -27,7 +27,8 @@ $(function(){
               };
         service.serviceSaveMyRecord(data,function(flag,msg){
             alert("保存成功");
-            back.go('./recordList.html');
+            // back.go('./recordList.html');
+            history.go(-1);
         });
       });
 
@@ -115,7 +116,7 @@ $(function(){
              var proName = msg.addressComponent.province,
                  cityName = msg.addressComponent.city,
                  districtName = msg.addressComponent.district,
-                 streetName = msg.addressComponent.township,
+                 streetName = msg.addressComponent.township + msg.addressComponent.streetNumber.street,
                  pid,cid,did;
              $("#tips").hide();
              service.serviceGetAddress("",function(p_flag,p_msg){
@@ -153,7 +154,7 @@ $(function(){
              });
          })
      }
-     
+
     function location(callback){
     	var data={};
     	if(!navigator.geolocation){

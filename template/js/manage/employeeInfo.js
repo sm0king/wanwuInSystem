@@ -22,7 +22,8 @@ $(function(){
       service.saveEmployee(data,function(flag,msg){
           if (flag) {
             alert('修改成功');
-            back.go('./employeeList.html');
+            // back.go('./employeeList.html');
+            history.go(-1);
           }else {
             alert(msg);
           }

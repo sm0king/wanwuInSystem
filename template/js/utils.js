@@ -514,8 +514,8 @@
               '业务数据':'./business/push/myBusiness.html',
               '员工管理':'./business/manage/employeeList.html',
               '部门管理':'./business/manage/departmentList.html',
-              '业务业绩':'./business/manage/businessList.html',
-              '配送业绩':'./business/manage/distributionList.html',
+              // '业务业绩':'./business/manage/businessList.html',
+              // '配送业绩':'./business/manage/distributionList.html',
               // '厂商管理':'#',
             }[url_name] || 'javascript:;';
             return url;

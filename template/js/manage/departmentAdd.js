@@ -10,13 +10,13 @@ $(function(){
           chargeId:$("#leader").data('id'),
           isEditSubDepartmentNotice:$("#notice").data('flag')||'0',
         }
-        // console.log(data);
         if (checkData(data)) {
           service.departmentUpdate(data,function(flag,msg){
               if (flag) {
                 alert('添加成功');
-                var url = './departmentList.html';
-                back.go(url);
+                // var url = './departmentList.html';
+                // back.go(url);
+                history.go(-1);
               }else {
                 alert(msg);
               }
@@ -97,4 +97,5 @@ $(function(){
           $("#searchPanel").hide();
           return false;
       });
+      HybridJS.init(document.getElementById('addImage'));
 })

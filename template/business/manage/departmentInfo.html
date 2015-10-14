@@ -37,38 +37,39 @@ block section
   section.main
     li.list 基本信息
     + infoInput('部门名称')(id="departName")
-    + infoList('头像',' ')
+    + infoList('头像',' ')(id="addImage")
     p
     li#noticeList.list-group-item.info-item
       .left-txt
         div 部门公告
-        div#notice.notice 公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容
+        div#notice.notice 
       .text-right.right-align
         | >
     li.list 部门成员
     ul#departEmployee.depart-inline
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
-      li.depart-list
-        img(src="../../images/tuwen.png")
-        .caption
-          | alonehover
+      //
+        li.depart-list
+          img(src="../../images/tuwen.png")
+          .caption
+            | alonehover
+        li.depart-list
+          img(src="../../images/tuwen.png")
+          .caption
+            | alonehover
+        li.depart-list
+          img(src="../../images/tuwen.png")
+          .caption
+            | alonehover
+        li.depart-list
+          img(src="../../images/tuwen.png")
+          .caption
+            | alonehover
+        li.depart-list
+          img(src="../../images/tuwen.png")
+          .caption
+            | alonehover
     p
-    + infoList('负责人','某某')(id="leader")
+    + infoList('负责人','')(id="leader")
     small#creatTime.time.help-block
 
     #searchPanel.z-panel
