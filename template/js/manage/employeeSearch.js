@@ -13,24 +13,32 @@ $(function(){
     });
 
     function load(word){
-        var key = word ? word : service.getSearch('key') || "",
+        var key = word ? word : service.getSearch('key') || "";
         $("#search").val(key);
-          service.manageGetEmployeeList(key,"",function(flag,msg){
+          service.manageGetEmployeeList(key,'1','10','0',function(flag,msg){
              if (flag) {
+                // console.log(msg);
                 var dom = "",img;
-                for (var i = 0; i < msg.length; i++) {
-                    img = msg[i].img ? msg[i].img : '/diguaApp/images/tuwen.png';
-                    dom += '<li class="list-group-item" data-id="'+ msg[i].id +'">'+
-                            '<div class="media">'+
-                              '<div class="media-left meida-middle w20">'+
-                                '<img src="'+ img +'" alt=""></div>'+
-                                '<div class="media-body w60">'+
-                                '<div>'+ msg[i].name +'</div>'+
-                                '<div> '+ msg[i].phone +' </div>'+
-                                '<div>'+ msg[i].dpname +'</div></div></div></li>';
+                var data = msg.employeeList;
+                if (data.length) {
+                  for (var i = 0; i < data.length; i++) {
+                      img = data[i].img ? data[i].img : '/diguaApp/images/tuwen.png';
+                      dom += '<li class="list-group-item" data-id="'+ data[i].id +'">'+
+                              '<div class="media">'+
+                                '<div class="media-left meida-middle w20">'+
+                                  '<img src="'+ img +'" alt=""></div>'+
+                                  '<div class="media-body w60">'+
+                                  '<div>'+ data[i].name +'</div>'+
+                                  '<div> '+ data[i].phone +' </div>'+
+                                  '<div>'+ (data[i].departmentName || "暂无部门") +'</div></div></div></li>';
+                  }
+                }else {
+                  dom = '<p class="alert alert-danger text-center">没有该员工</p>'
                 }
                 list = '<ul class="list-group">' + dom + '</ul>';
                 $("#searchList").html(dom);
+             }else{
+               $("#searchList").html("<p class='alert alert-danger text-center'>"+msg+"</p>");
              }
           });
     }

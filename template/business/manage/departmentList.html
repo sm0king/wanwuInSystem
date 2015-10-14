@@ -8,12 +8,14 @@ block topleft
     span 业务
 block topcenter
   | 部门管理
+block toprightTxt
+  span#add 添加
 
 block section
   section.main
     .record-list
       .search-box
-        input#search.form-control(type="text" placeholder="搜索")
+        input#search.form-control(type="text" placeholder="部门名称")
       #departList
         .list-date.clearfix.bg-warning
           span 部门
