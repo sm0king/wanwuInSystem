@@ -38,7 +38,7 @@ define(['jquery'], function($) {
                     callback(true, result.content);
                 } else {
                     //请求失败，无数据
-                    callback(false, serviceThis.catchError(result.error_no));
+                    callback(false, result.error_desc);
                 }
             }).fail(function(result) {
                 //无返回数据
@@ -392,20 +392,88 @@ define(['jquery'], function($) {
             var url = host + '/manage/getJobs';
             var userInfo = this.getUserInfo();
         },
-        // 等待接货
-        waitReceiving: function() {
+        // 获取等待接货
+        waitReceiving: function(callback, pageNumber) {
             var url = host + '/service/waitReceiving';
+            var data = pageNumber || {};
             var userInfo = this.getUserInfo();
+            if (userInfo) {
+                data.userId = userInfo.id;
+                data.token = userInfo.token;
+                this.getData(url, data, function(isTrue, reContent) {
+                    if (isTrue) {
+                        callback(true, reContent.result);
+                    } else {
+                        callback(false, reContent);
+                    }
+                })
+            };
         },
         // 等待接货详情
-        waitReceivingDetail: function() {
+        waitReceivingDetail: function(order, callback) {
             var url = host + '/service/waitReceivingDetail';
             var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    orderId: order
+                }
+                this.getData(url, data, function(isTrue, reData) {
+                    callback(isTrue, reData)
+                })
+            };
         },
         // 确定接货
-        orderReceivingDo: function() {
+        orderReceivingDo: function(order, callback) {
             var url = host + '/service/orderReceivingDo';
             var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    orderId: order
+                }
+                this.getData(url, data, function(isTrue, reData) {
+                    if (isTrue) {
+                        callback(true, "成功");
+                    } else {
+                        callback(false, reData);
+                    }
+                })
+            };
+        },
+        //等待送货接口
+        getWaitSending: function(callback, pageNumber) {
+            var url = host + '/orders/waitSending';
+            var data = pageNumber || {};
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                data.userId = userInfo.id;
+                data.token = userInfo.token;
+                this.getData(url, data, function(isTrue, reContent) {
+                    if (isTrue) {
+                        callback(true, reContent.result);
+                    } else {
+                        callback(false, reContent);
+                    }
+                })
+            };
+        },
+        //获取等待接货详情
+        getWaitSendingDetail: function(order, callback) {
+            var url = host + '/orders/waitSendingDetail';
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                var data = {
+                    userId: userInfo.id,
+                    token: userInfo.token,
+                    orderId: order
+                }
+                this.getData(url, data, function(isTrue, reData) {
+                    callback(isTrue, reData)
+                })
+            };
         },
         //获取部门列表 关键字 第几页 每页多少个
         departmentList: function(keyValue, page, pageSize, callback) {
@@ -483,13 +551,9 @@ define(['jquery'], function($) {
             });
         },
         //获取厂商列表
-        getVendorList: function(page, pageSize, search, callback) {
+        getVendorList: function(callback, vendor) {
             var url = host + '/vendor/vendorList';
-            var data = {
-                page: page || 1,
-                pageSize: pageSize || 1,
-                search: keyValue || ""
-            };
+            var data = vendor || {};
             this.getData(url, data, function(isTrue, reContent) {
                 if (isTrue) {
                     callback(true, reContent.vendorList)
@@ -524,11 +588,11 @@ define(['jquery'], function($) {
         },
         //添加/编辑厂商
         //mobile 为必填项
-        //vendor 为需要修改的数据项 对象。
-        updateVendor: function(mobile, vendor, callback) {
+        //vendor 为需要修改的数据项 对象。 {} callback
+        updateVendor: function(mobile, callback, vendor) {
             var url = host + '/vendor/updateVendor';
-            var data = vendor;
-            vendor.mobile = mobile;
+            var data = vendor || {};
+            data.mobile = mobile;
             this.getData(url, data, function(isTrue, reContent) {
                 if (isTrue) {
                     callback(true, "成功")
