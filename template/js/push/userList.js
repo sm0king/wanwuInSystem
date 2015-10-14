@@ -17,7 +17,6 @@ $(function(){
   });
 
   function madeDom(result){
-    console.log(result);
     var list="",dom="",img,phone;
     for (var i = 0; i < result.length; i++) {
       img = result[i].shop_url ? result[i].shop_url : '/diguaApp/images/tuwen.png';
@@ -27,9 +26,9 @@ $(function(){
               '<div class="media-left meida-middle">'+
               '<img src="'+ img +'" alt=""></div>'+
               '<div class="media-body">'+
-              '<div>'+ result[i].shop_name +'</div>'+
+              '<div>'+ (result[i].shop_name || "") +'</div>'+
               '<div>'+ phone +'</div>'+
-              '<div>'+ result[i].address +'</div>'+
+              '<div>'+ (result[i].address || "") +'</div>'+
               '<div>'+ result[i].add_time +'</div>';
     }
     dom = '<ul class="list-group">'+list+'</ul>';

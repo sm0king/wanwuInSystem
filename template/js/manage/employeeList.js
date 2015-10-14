@@ -10,12 +10,14 @@ $(function(){
   });
 
   $('#employeeList').on('click','.list-group-item',function(e){
-      var id,url;
-      id = $(this).data('id');
-      url = './employeeInfo.html?id='+id;
-      back.go(url);
-      // console.log(id);
-
+      if (!$(this).hasClass('disabled')) {
+        var id,url;
+        id = $(this).data('id');
+        url = './employeeInfo.html?id='+id;
+        back.go(url);
+      }else {
+        alert('不能编辑');
+      }
   });
 
   $("#add").on('click',function(){
@@ -25,14 +27,20 @@ $(function(){
 
   function load(){
       service.manageGetEmployeeList("","1","10","1",function(flag,msg){
+          var  my = service.getUserInfo();
           if (flag) {
-              var list = "",dom="",img,emp;
+              var list = "",dom="",img,emp,control;
               var dep = msg.departmentList;
               for (var i = 0; i < dep.length; i++) {
                 emp = dep[i].employeeList;
                 for (var j = 0; j < emp.length; j++) {
+                  if (emp[j].phone == my.phone ) {
+                      control = "disabled";
+                  }else {
+                      control = "";
+                  }
                   img = emp[j].img ? emp[j].img : '/diguaApp/images/tuwen.png';
-                  list += '<li class="list-group-item" data-id="'+ emp[j].id +'">'+
+                  list += '<li class="list-group-item '+ control +'" data-id="'+ emp[j].id +'">'+
                           '<div class="media">'+
                             '<div class="media-left meida-middle w20">'+
                               '<img src="'+ img +'" alt=""></div>'+

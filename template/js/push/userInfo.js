@@ -15,11 +15,11 @@ $(function(){
           remark : str($("#remark").val()),
           taskId : $("#marketName").data('id')
         };
-        console.log(data);
         service.serviceSaveCustomersDetail(data,function(flag,msg){
-            // back.to();
-            console.log(flag);
-            console.log(msg);
+            if (flag) {
+                alert('保存成功');
+                back.go('./myUserList.html');
+            }
         });
       }
 
@@ -93,7 +93,7 @@ $(function(){
                 var data = msg.result;
                 $("#marketName").val(data.shop_name).data('id',data.user_id);
                 $("#linkman").val(data.consignee);
-                $("#phone").val(data.phone);
+                $("#phone").val(data.phone || data.mobile);
                 $("#street").val(data.address);
                 $("#remark").val(data.remark);
                 loadPro(function(re){

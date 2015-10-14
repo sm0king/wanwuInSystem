@@ -1,12 +1,5 @@
 $(function(){
 
-    $("#search").on('keyup',function(e){
-        var k = e.keyCode || e.which;
-        if(k == 13){
-          // window.location.href = "./employeeSearch.html";
-        }
-    });
-
     function saveDate() {
       var str = service.strCheck, id = service.getSearch('id');
       var data = {
@@ -29,6 +22,7 @@ $(function(){
       service.saveEmployee(data,function(flag,msg){
           if (flag) {
             alert('修改成功');
+            back.go('./employeeList.html');
           }else {
             alert(msg);
           }
@@ -172,14 +166,18 @@ $(function(){
     });
 
     $("#del").on('click',function(){
-        var id = $(this).data('id');
-        service.delEmployee(id,function(flag,msg){
-            if (flag) {
-                alert("删除成功");
-            }else {
-              alert(msg);
-            }
-        })
+        if (confirm('确定')) {
+            var id = $(this).data('id');
+            service.delEmployee(id,function(flag,msg){
+                if (flag) {
+                    alert("删除成功");
+                    back.go('./employeeList.html');
+                }else {
+                  alert(msg);
+                  back.go('./employeeList.html');
+                }
+            })
+        }
     })
 
     function load(argument) {

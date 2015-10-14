@@ -22,6 +22,7 @@ $(function(){
     service.saveEmployee(data,function(flag,msg){
         if (flag) {
           alert('添加成功');
+          back.go('./employeeList.html');
         }else {
           alert(msg);
         }

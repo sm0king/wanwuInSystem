@@ -50,8 +50,6 @@
               from: from || 'web'
           };
           this.getData(url, data, function(isTrue, reContent) {
-              console.log(isTrue);
-              console.log(reContent);
               if (isTrue) {
                   //获取登陆结果
                   if (reContent) {
@@ -163,7 +161,6 @@
           var url = host + '/service/saveMyRecord';
           var userInfo = this.getUserInfo();
           if (userInfo) {
-              console.log(record.local);
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
@@ -182,7 +179,6 @@
                   runningState: record.state,
                   remark: record.remark || ""
               };
-              console.log(data);
               this.getData(url, data, function(isTrue, reContent) {
                   callback(isTrue, reContent);
               });
@@ -470,7 +466,29 @@
               }
           })
         },
-        // 获取地理坐标
+
+        // 逆地理编码 定位当前位置
+        getNowLocal: function(data,callback){
+            var url = 'http://restapi.amap.com/v3/geocode/regeo?parameters'
+            $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: {
+                        key: "7da2c1565bd041d7236eb88feabec69f",
+                        location:data,
+                    }
+                })
+                .done(function(re) {
+                    if (re.status) {
+                        callback(true,re.regeocode)
+                    }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+        },
+        // 地理编码 获取地理坐标
         getAddressLocal: function(data, callback) {
             $.ajax({
                     url: 'http://restapi.amap.com/v3/geocode/geo?parameters',

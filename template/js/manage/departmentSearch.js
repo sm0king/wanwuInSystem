@@ -12,6 +12,11 @@ $(function(){
         }
     });
 
+    $("#searchList").on('click','.depart-box',function(){
+        var url = './departmentInfo.html?id='+ $(this).data('id');
+        back.go(url);
+    });
+
     function load(word){
         var key = word ? word : service.getSearch('key') || "";
         $("#search").val(key);

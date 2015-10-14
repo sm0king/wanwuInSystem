@@ -62,7 +62,8 @@ $(function(){
     });
 
     $("#leader").on('click',function(){
-        service.manageGetEmployeeList("","1","10","0",function(flag,msg){
+        var id = service.getSearch('id');
+        service.departmentEmployeeList(id,"","1","10",function(flag,msg){
             if (flag) {
               var list = msg.employeeList;
               var dom = "",img;
@@ -103,6 +104,7 @@ $(function(){
         var id = service.getSearch('id');
         service.departmentDetail(id,function(flag,msg){
             if (flag) {
+              console.log(msg);
                 $("#departName").val(msg.name || "");
                 $("#notice").html(msg.department_notice || "");
                 service.departmentEmployeeList(id,msg.charge_employee_id,'1','10',function(status,data){
@@ -121,6 +123,8 @@ $(function(){
                         }
                         $("#departEmployee").html(dom);
                         $("#leader").html(msg.chargeEmployeeName).data('id',msg.charge_employee_id);
+                        $("#creatTime").html('由 '+ msg.createPersionName + ' 在 ' + msg.create_time + ' 创建');
+
                     }else {
                       console.log(data);
                       $("#departEmployee").html(data);

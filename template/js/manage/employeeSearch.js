@@ -12,6 +12,13 @@ $(function(){
         }
     });
 
+    $('#searchList').on('click','.list-group-item',function(e){
+        var id,url;
+        id = $(this).data('id');
+        url = './employeeInfo.html?id='+id;
+        back.go(url);
+    });
+
     function load(word){
         var key = word ? word : service.getSearch('key') || "";
         $("#search").val(key);
