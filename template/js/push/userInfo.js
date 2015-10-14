@@ -185,6 +185,7 @@ $(function(){
                 // 运营状况
                 $("#state").val(data.running_state);
                 $("#time").html("注册时间  " + data.add_time);
+                $("#addImage").css('background-image','url('+ data.shop_url +')');
               }
           });
       }

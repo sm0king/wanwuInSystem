@@ -186,7 +186,6 @@ $(function(){
         var id = service.getSearch('id');
         service.getEmployeeDetail(id,function(flag,msg){
             if (flag) {
-              console.log(msg);
               var data = msg.result;
               $("#name").val(data.name);
               $("#phone").val(data.phone);
@@ -194,6 +193,7 @@ $(function(){
               $("#type").html(data.typeName).data('id',data.type);
               $("#depart").html(data.departName).data('id',data.dp_id);
               $("#superior").html(data.parentName).data('id',data.supervisor_id);
+              $("#addImage").css('background-image','url('+ data.img +')');
               loadPro(function(re){
                 $("#provinces").html(re).val(data.province);
               });

@@ -105,9 +105,9 @@ $(function(){
         var id = service.getSearch('id');
         service.departmentDetail(id,function(flag,msg){
             if (flag) {
-              console.log(msg);
                 $("#departName").val(msg.name || "");
                 $("#notice").html(msg.department_notice || "");
+                $("#addImage").css('background-image','url('+ (msg.img || "/diguaApp/images/tuwen.png") +')');
                 service.departmentEmployeeList(id,msg.charge_employee_id,'1','10',function(status,data){
                     if (status) {
                         var empList = data.employeeList;
