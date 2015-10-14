@@ -47,8 +47,8 @@ block section
       .right-content
         select#type.select.form-control
           option 请选择
-    + infoList('上级','司马')(id="superior",class="right-tip")
-    + infoList('部门','推广小分队')(id="depart",class="right-tip")
+    + infoList('上级','请选择')(id="superior",class="right-tip")
+    + infoList('部门','请选择')(id="depart",class="right-tip")
     div 功能开通
     ul.list-group
       + infoSwitch("地推功能")(id="pushFun")
@@ -56,8 +56,14 @@ block section
       + infoSwitch("管理功能")(id="manageFun")
       + infoSwitch("新增/修改/删除员工")(id="employeeCURD")
       + infoSwitch("厂商功能")(id="firmFun")
-    
-          
+
+    #searchPanel.z-panel
+      .record-list
+        .search-box.clearfix
+          input#search.left-input.form-control(type="text" placeholder="搜索")
+          div.right-btn.cancel 取消
+        #searchList.search-list
+
 block script
    script(src="/diguaApp/js/Hybrid.js")
    script(src="/diguaApp/js/manage/employeeAdd.js")

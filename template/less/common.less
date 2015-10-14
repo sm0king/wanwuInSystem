@@ -19,6 +19,37 @@
   -ms-flex: @x;                    /* IE 10 */
   flex: @x;
 }
+
+// 定义flex布局
+.showflex{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+/**
+ * [设置或检索弹性盒子元素在侧轴（纵轴）方向上的对齐方式。]
+ * @param  {[type]} @align:center [默认值居中 center]
+ * 属性值 flex-start | flex-end | center | baseline | stretch
+ */
+.flex-alignItems(@align:center){
+  -webkit-box-align: @align;
+  -ms-flex-align: @align;
+  -webkit-align-items: @align;
+  align-items: @align;
+}
+
+/**
+ * [设置或检索弹性盒子元素在主轴（横轴）方向上的对齐方式。]
+ * @param  {[type]} @space:space-between [默认值平均分布space-between]
+ * 属性值 flex-start | flex-end | center | space-between | space-around
+ */
+.flex-justifyContent(@space:space-between){
+  -webkit-justify-content:@space;
+  justify-content: @space;
+}
+
 body{
   background-color: #f4f4f4;
 }
@@ -57,6 +88,11 @@ a:focus,a:hover,a:active{
   padding: 10px;
 }
 
+li.list{
+  padding: 10px;
+  list-style: none;
+}
+
 .right-tip::after{
   content: ">";
   padding: 0 5px;
@@ -65,6 +101,38 @@ a:focus,a:hover,a:active{
   background-repeat: no-repeat;
   background-position: right 46px top;
   background-size: contain;
+}
+
+.pages {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+.z-panel{
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 10000;
+  overflow: auto;
+
+  .search-box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10001;
+    width: 100%;
+  }
+
+  .search-list{
+    padding-top: 55px;
+  }
 }
 
 // 重置bootstrap

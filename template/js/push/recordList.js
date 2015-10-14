@@ -34,7 +34,8 @@ $(function(){
           dom = "",
           title,
           img,
-          date;
+          date,
+          time;
 
       for (var i = 0; i < data.length; i++) {
 
@@ -52,7 +53,7 @@ $(function(){
           list = "";
           for (var j = 0; j < data[i].result.length; j++) {
               img = data[i].result[j].shop_url ? data[i].result[j].shop_url : '/diguaApp/images/tuwen.png';
-              // date = new Date(data[i].result[j].add_time);
+              time = data[i].result[j].update_time ? data[i].result[j].update_time : data[i].result[j].add_time;
               list += '<li class="list-group-item record-item" data-id="'+ data[i].result[j].id +'">'+
                       '<div class="media">'+
                       '<div class="media-left meida-middle">'+
@@ -61,7 +62,7 @@ $(function(){
                       '<div>'+data[i].result[j].shop_name+'</div>'+
                       '<div>'+data[i].result[j].phone+'</div>'+
                       '<div>'+data[i].result[j].address+'</div>'+
-                      '<div>'+data[i].result[j].add_time+'</div></div></li>';
+                      '<div>'+time+'</div></div></li>';
           }
           list = '<ul class="list-group">' + list + '</ul>';
         }

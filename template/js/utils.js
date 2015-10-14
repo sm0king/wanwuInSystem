@@ -229,16 +229,6 @@
                   PageSize: pageSize
               };
               this.getData(url, data, function(isTrue, reContent) {
-                  //
-                  /*if (isTrue) {
-                      if (keyValue.length > 0) {
-                          callback(true,[reContent.todayLists,reContent.beforeLists]);
-                      }else{
-                          callback(true,reContent.searchLists);
-                      }
-                  }else{
-                      callback(false,reContent);
-                  }*/
                   callback(isTrue,reContent);
               });
           };
@@ -254,7 +244,6 @@
                   taskId : id
               };
               this.getData(url, data, function(isTrue, reContent) {
-                  //
                   callback(isTrue,reContent)
               })
           };
@@ -301,8 +290,8 @@
               })
           }
       },
-      //获取所有员工
-      manageGetEmployeeList: function(keyValue,isGroup,callback) {
+      //获取所有员工（老接口）
+      manageGetEmployeeListOld: function(keyValue,isGroup,callback) {
           var url = host + '/manage/getEmployeeList';
           var userInfo = this.getUserInfo();
           if (userInfo) {
@@ -310,6 +299,24 @@
                   userId:userInfo.id,
                   token:userInfo.token,
                   keywords:keyValue || "",
+                  isGroup:isGroup || 0
+              };
+              this.getData(url, data, function(isTrue, reContent) {
+                  callback(isTrue,reContent);
+              })
+          };
+      },
+      // 获取员工列表
+      manageGetEmployeeList: function(keyValue,page,pageSize,isGroup,callback) {
+          var url = host + '/manage/employeeListNew';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId:userInfo.id,
+                  token:userInfo.token,
+                  phone:keyValue || "",
+                  page:page,
+                  pageSize:pageSize,
                   isGroup:isGroup || 0
               };
               this.getData(url, data, function(isTrue, reContent) {
@@ -340,6 +347,7 @@
               var data = {
                 userId:userInfo.id,
                 token:userInfo.token,
+                taskId:emp.taskId || "",
                 dp_id:emp.dp_id,
                 name:emp.name,
                 parent_id:emp.parent_id,
@@ -362,9 +370,19 @@
           }
       },
       // 删除员工
-      delEmployee: function(){
+      delEmployee: function(id,callback){
           var url = host + '/manage/delEmployee';
           var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                userId:userInfo.id,
+                token:userInfo.token,
+                taskId:id
+              }
+              this.getData(url,data,function(isTrue, reContent){
+                  callback(isTrue, reContent);
+              });
+          }
       },
       // 获取职位
       getJobs: function(callback){

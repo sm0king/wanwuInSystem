@@ -47,29 +47,21 @@ block section
       li.depart-list
         img(src="../../images/tuwen.png")
         .caption
-          div alonehover
+          | alonehover
       li.depart-list
         img(src="../../images/tuwen.png")
         .caption
-          div alonehover
+          | alonehover
       li.depart-list
         img(src="../../images/tuwen.png")
         .caption
-          div alonehover
+          | alonehover
       li.depart-list
         img(src="../../images/tuwen.png")
         .caption
-          div alonehover
+          | alonehover
     p
     + infoList('负责人','某某')
     small.time.help-block 注册时间 2015-09-28
 block script
-   script.
-      $(function(){
-          $("#search").on('keyup',function(e){
-              var k = e.keyCode || e.which;
-              if(k == 13){
-                window.location.href = "./employeeSearch.html";
-              }
-          });
-      });
+   script(src="/diguaApp/js/manage/departmentInfo.js")
