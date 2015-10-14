@@ -116,4 +116,5 @@ $(function(){
       }
 
       loadData();
+      HybridJS.init(document.getElementById('addImage'));
 });

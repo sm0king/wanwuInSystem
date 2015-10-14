@@ -106,4 +106,5 @@ $(function(){
         $('#district').hide();
     }
     loadData();
+    HybridJS.init(document.getElementById('addImage'));
 });
