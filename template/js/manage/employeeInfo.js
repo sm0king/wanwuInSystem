@@ -233,4 +233,5 @@ $(function(){
 
     }
     load();
+    HybridJS.init(document.getElementById('addImage'));
 });

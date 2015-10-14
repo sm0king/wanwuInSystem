@@ -33,6 +33,24 @@ define(function() {
                     delete HybridJS.callbacks[callbackId];
                 }
             }
+        },
+        init: function(domNode) {
+            domNode.addEventListener('click', function(ev) {
+                // $('#hidden_uploadImg_button').click();
+                //更换为，调用 Android 拍照接口
+                // var ar = new Array();
+                HybridJS.execAndroid(function(imgUrl) {
+                    //成功返回参数
+                    //imgUrl 为android返回的图片地址
+                    imgUrl = eval(imgUrl);
+                    var imgUrl = "http://imgcdn.wanwu.com" + imgUrl[0];
+                    $('._imged')[0].src = imgUrl;
+                    $('#_shopLogo').val(imgUrl);
+                }, function(e) {
+                    //失败
+                    alert('图片获取失败,失败原因为：' + e);
+                }, "Wanwu", "openCamera", '{["name":"tom","sex":"男","age":"24"]}');
+            }, false)
         }
     };
     return HybridJS;

@@ -36,7 +36,7 @@ block toprightTxt
 block section
   section.main
     div 基本信息
-    + infoList('头像','新增')(class="right-tip")
+    + infoList('头像','新增')(class="right-tip addImage",id="addImage")
     + infoInput('姓名')(id="name")
     + infoInput('手机号')(id="phone")
     + infoInput('邮箱')(id="email")
@@ -65,4 +65,5 @@ block section
         #searchList.search-list
 
 block script
+   script(src="/diguaApp/js/Hybrid.js")
    script(src="/diguaApp/js/manage/employeeAdd.js")
