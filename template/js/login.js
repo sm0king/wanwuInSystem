@@ -27,14 +27,13 @@ $(function(){
   });
 
   function madeDom(data){
-    console.log(data);
     var menu = "",list = "",myclass = "",url,status;
     for (var i = 0; i < data.length; i++) {
       url = service.getBusinessUrl(data[i].title);
       myclass = url == 'javascript:;' ? 'no-right' : "";
-      status = url == 'javascript:;' ? '<span class="badge">未开通</span>' : "";
+      status = url == 'javascript:;' ? '<span class="text-right right-content txt-red">暂未开通</span>' : "";
       list += '<a href="'+ url +'">'+
-              '<li class="list-group-item '+ myclass +'">'+ data[i].title +
+              '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title +
               status + '</li></a>';
     }
     menu = '<ul class="list-group">'+list+'</ul>';

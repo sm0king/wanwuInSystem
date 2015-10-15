@@ -127,12 +127,12 @@ $(function(){
                         $("#creatTime").html('由 '+ msg.createPersionName + ' 在 ' + msg.create_time + ' 创建');
 
                     }else {
-                      console.log(data);
+                      // console.log(data);
                       $("#departEmployee").html(data);
                     }
                 });
             }else {
-              console.log(msg);
+              // console.log(msg);
               alert(msg);
             }
         });
