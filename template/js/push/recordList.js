@@ -19,15 +19,6 @@ $(function(){
         }
     });
 
-   function load(){
-     service.serviceMyRecord("",1,10,function(flag,msg){
-        if (flag) {
-          var dom = madeDom(msg);
-          $("#record-list").html(dom);
-        }
-     });
-   }
-
    function madeDom(data){
       var list = "",
           top = "",
@@ -69,6 +60,15 @@ $(function(){
         dom += top + list ;
       }
       $('#record-list').html(dom);
+   }
+
+   function load(){
+     service.serviceMyRecord("",1,10,function(flag,msg){
+        if (flag) {
+          var dom = madeDom(msg);
+          $("#record-list").html(dom);
+        }
+     });
    }
 
    load();
