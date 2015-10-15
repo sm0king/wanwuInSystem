@@ -1,6 +1,6 @@
 (function(win,$){
   //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
+  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://www.wanwu.com/newosadmin';
   win.service = {
       catchError: function(error_no) {
           if (error_no === '401') {
