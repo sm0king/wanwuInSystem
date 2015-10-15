@@ -96,16 +96,22 @@ $(function(){
         showMap();
     });
 
+    //  确定
     $("#mapPage").on('click', '.addLocal', function(event) {
-      /* Act on the event */
-        if (!$("#addrInfo").data('local')) {
+        var poi = $("#addrInfo").data('local');
+        if (!poi) {
+          // console.log('1');
           Mypoint();
-          $("#mapPage").removeClass('show');
+        }else {
+          var str = poi.lng + ',' + poi.lat;
+          // console.log(str);
+          madeAddress(str);
         }
+        $("#mapPage").removeClass('show');
     });
     // HTML5 地理位置定位
     function Mypoint(){
-      console.log('sss');
+      // console.log('sss');
      var data={};
      if(!navigator.geolocation){
          alert("不支持位置定位");
@@ -115,14 +121,20 @@ $(function(){
      }
     }
 
+    //加载地图
+    var map = new AMap.Map('mapContainer', {
+        resizeEnable: true,
+        zoom:18
+    });
+
     function showMap(){
       $("#mapPage").addClass('show');
-      var map, geolocation, marker;
+      var geolocation, marker;
       //加载地图
-      map = new AMap.Map('mapContainer', {
-          resizeEnable: true,
-          zoom:18
-      });
+      // map = new AMap.Map('mapContainer', {
+      //     resizeEnable: true,
+      //     zoom:18
+      // });
       map.plugin('AMap.Geolocation', function() {
           geolocation = new AMap.Geolocation({
               enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -143,76 +155,120 @@ $(function(){
           map.addControl(geolocation);
           // console.log(map.getCenter());
           AMap.event.addListener(geolocation, 'complete', onComplete);
-          map.getCity(function(result){
-            console.log(result);
-          })
-      });
+          // map.getCenter(function(result){
+          //   console.log(result);
+          // })
 
-      // map.on( 'dragstart', function(e) {
-      //   //- addMarker();
-      //   marker && marker.setMap(null);
-      // });
-      // map.on( 'dragend', function(e) {
-      //   addMarker();
-      // });
-      // 实例化点标记
-      // function addMarker() {
-      //   marker = new AMap.Marker({
-      //     icon: "http://webapi.amap.com/images/marker_sprite.png",
-      //     position: map.getCenter()
-      //   });
-      //   marker.setMap(map);
-      // }
+          map.on( 'dragstart', function(e) {
+            //- addMarker();
+            marker && marker.setMap(null);
+          });
+          map.on( 'dragend', function(e) {
+            addMarker();
+          });
+          //实例化点标记
+          function addMarker() {
+            marker = new AMap.Marker({
+              icon: "http://webapi.amap.com/images/marker_sprite.png",
+              position: map.getCenter()
+            });
+            marker.setMap(map);
+            geocoder();
+          }
+      });
     }
+      function geocoder() {
+          var MGeocoder,lnglatXY;
+          var center = map.getCenter();
+          // console.log(center);
+          lnglatXY = [center.lng,center.lat];
+          var poi = {lng:center.lng,lat:center.lat};
+          //加载地理编码插件
+          AMap.service(["AMap.Geocoder"], function() {
+              MGeocoder = new AMap.Geocoder({
+                  radius: 1000,
+                  extensions: "all"
+              });
+              //逆地理编码
+              MGeocoder.getAddress(lnglatXY, function(status, result) {
+                  if (status === 'complete' && result.info === 'OK') {
+                      geocoder_CallBack(result);
+                      // $("#addLocal").data('poi',poi);
+                      $("#addrInfo").data('local',poi);
+                  }else {
+                    console.log('error');
+                  }
+              });
+          });
+          //加点
+          // var marker = new AMap.Marker({
+          //     map: map,
+          //     position: lnglatXY
+          // });
+          // map.setFitView();
+      }
+
+
+      function geocoder_CallBack(result){
+          // console.log(result.regeocode);
+          $("#addrInfo").html(result.regeocode.formattedAddress);
+      }
+
 
     //解析定位结果
     function onComplete(data) {
-        // map.setZoom(18);
-        // console.log(data);
+        var poi = [data.position.lng,data.position.lat];
+        geocoder();
     }
 
     // 根据地理坐标遍历填充地址选择器
     function showPosition(poi){
+        // console.log(poi);
         var coords = poi.coords.longitude + ',' + poi.coords.latitude;
-        service.getNowLocal(coords,function(flag,msg){
-            var proName = msg.addressComponent.province,
-                cityName = msg.addressComponent.city,
-                districtName = msg.addressComponent.district,
-                streetName = msg.addressComponent.township + msg.addressComponent.streetNumber.street,
-                pid,cid,did;
-            $("#tips").hide();
-            service.serviceGetAddress("",function(p_flag,p_msg){
-                if (p_flag) {
-                     for (var i = 0; i < p_msg.regions.length; i++) {
-                         if (p_msg.regions[i].regionName == proName) {
-                             pid = p_msg.regions[i].regionId;
-                             $("#provinces").val(pid);
-                             service.serviceGetAddress(pid,function(c_flag,c_msg){
-                                 if (c_flag) {
-                                     for (var j = 0; j < c_msg.regions.length; j++) {
-                                       if (c_msg.regions[j].regionName == cityName) {
-                                           cid = c_msg.regions[j].regionId;
-                                           $("#city").html(madeOption(c_msg.regions)).val(cid).show();
-                                           service.serviceGetAddress(cid,function(d_flag,d_msg){
-                                               if (d_flag) {
-                                                 for (var s = 0; s < d_msg.regions.length; s++) {
-                                                     if (d_msg.regions[s].regionName == districtName) {
-                                                         did = d_msg.regions[s].regionId;
-                                                         $("#district").html(madeOption(d_msg.regions)).val(did).show();
-                                                         $("#street").val(streetName);
-                                                     }
-                                                 }
+        madeAddress(coords);
+    }
+
+    function madeAddress(str){
+      service.getNowLocal(str,function(flag,msg){
+        // console.log(msg);
+          var proName = msg.addressComponent.province,
+              cityName = msg.addressComponent.city,
+              districtName = msg.addressComponent.district,
+              streetName = msg.addressComponent.township + msg.addressComponent.neighborhood.name,
+              pid,cid,did;
+          $("#tips").hide();
+          service.serviceGetAddress("",function(p_flag,p_msg){
+              if (p_flag) {
+                   for (var i = 0; i < p_msg.regions.length; i++) {
+                       if (p_msg.regions[i].regionName == proName) {
+                           pid = p_msg.regions[i].regionId;
+                           $("#provinces").val(pid);
+                           service.serviceGetAddress(pid,function(c_flag,c_msg){
+                               if (c_flag) {
+                                   for (var j = 0; j < c_msg.regions.length; j++) {
+                                     if (c_msg.regions[j].regionName == cityName) {
+                                         cid = c_msg.regions[j].regionId;
+                                         $("#city").html(madeOption(c_msg.regions)).val(cid).show();
+                                         service.serviceGetAddress(cid,function(d_flag,d_msg){
+                                             if (d_flag) {
+                                               for (var s = 0; s < d_msg.regions.length; s++) {
+                                                   if (d_msg.regions[s].regionName == districtName) {
+                                                       did = d_msg.regions[s].regionId;
+                                                       $("#district").html(madeOption(d_msg.regions)).val(did).show();
+                                                       $("#street").val(streetName);
+                                                   }
                                                }
-                                           });
-                                       }
+                                             }
+                                         });
                                      }
-                                 }
-                             });
-                         }
-                     }
-                }
-            });
-        })
+                                   }
+                               }
+                           });
+                       }
+                   }
+              }
+          });
+      })
     }
 
     function loadData(){
