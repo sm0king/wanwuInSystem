@@ -1,0 +1,29 @@
+#mapPage{
+  position: fixed;
+  top:0;
+  width: 100%;
+  height: 100%;
+  z-index: 1040;
+  display: none;
+
+  &.show{
+    display: block;
+  }
+
+  #mapContainer{
+    width: 100%;
+    height: 100%;
+  }
+
+  .option{
+    width: 100%;
+    position: absolute;
+    bottom: 50px;
+    line-height: 36px;
+    height: 36px;
+    background: #eee;
+    opacity: 0.8;
+    z-index: 1041;
+    padding: 0 5px;
+  }
+}
