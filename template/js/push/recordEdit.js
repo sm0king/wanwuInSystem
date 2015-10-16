@@ -110,7 +110,7 @@ $(function(){
     //实例化地图
     var map = new AMap.Map('mapContainer', {
         resizeEnable: true,
-        zoom:18
+        zoom:16
     });
 
     //  地图地址确定
@@ -160,7 +160,7 @@ $(function(){
         geocoder();
         var circle = new AMap.Circle({
                 center: new AMap.LngLat(data.position.lng, data.position.lat), // 当前位置作为圆心位置
-                radius: 50, //半径
+                radius: 300, //半径
                 strokeColor: "#666", //线颜色
                 strokeOpacity: 1, //线透明度
                 strokeWeight: 3, //线粗细度
@@ -222,7 +222,6 @@ $(function(){
 
     function madeAddress(str){
       service.getNowLocal(str,function(flag,msg){
-        console.log(msg);
           var proName = msg.addressComponent.province,
               cityName = msg.addressComponent.city,
               districtName = msg.addressComponent.district,
@@ -230,7 +229,6 @@ $(function(){
               pid,cid,did;
           $("#tips").hide();
           streetName = msg.addressComponent.township + msg.addressComponent.streetNumber.street + msg.addressComponent.streetNumber.number;
-          console.log(streetName);
           service.serviceGetAddress("",function(p_flag,p_msg){
               if (p_flag) {
                    for (var i = 0; i < p_msg.regions.length; i++) {
