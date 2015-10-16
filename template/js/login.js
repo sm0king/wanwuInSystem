@@ -27,18 +27,14 @@ $(function(){
   });
 
   function madeDom(data){
-    var menu = "",list = "",myclass = "",url,status = "";
+    var menu = "",list = "",myclass = "",url,status;
     for (var i = 0; i < data.length; i++) {
       url = service.getBusinessUrl(data[i].title);
-      if (url != 'javascript:;') {
-        list += '<a href="'+ url +'">'+
-                '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title +'</li></a>';
-      }
-      // myclass = url == 'javascript:;' ? 'no-right' : "";
-      // status = url == 'javascript:;' ? '<span class="text-right right-content txt-red">暂未开通</span>' : "";
-      // list += '<a href="'+ url +'">'+
-      //         '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title +
-      //         status + '</li></a>';
+      myclass = url == 'javascript:;' ? 'no-right' : "";
+      status = url == 'javascript:;' ? '<span class="text-right right-content txt-red">暂未开通</span>' : "";
+      list += '<a href="'+ url +'">'+
+              '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title +
+              status + '</li></a>';
     }
     menu = '<ul class="list-group">'+list+'</ul>';
     return menu;

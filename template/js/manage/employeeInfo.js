@@ -168,7 +168,7 @@ $(function(){
     });
 
     $("#del").on('click',function(){
-        if (confirm('确认删除员工吗? 删除后将无法恢复，相关数据也会一并清除。')) {
+        if (confirm('确定')) {
             var id = $(this).data('id');
             service.delEmployee(id,function(flag,msg){
                 if (flag) {
