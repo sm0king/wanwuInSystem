@@ -28,11 +28,9 @@ $(function(){
               };
         service.serviceSaveMyRecord(data,function(flag,msg){
             alert("保存成功");
-            // back.go('./recordList.html');
             history.go(-1);
         });
       });
-
     }
 
     $("#save").on('click',function(){
@@ -114,6 +112,7 @@ $(function(){
      function showPosition(poi){
          var coords = poi.coords.longitude + ',' + poi.coords.latitude;
          service.getNowLocal(coords,function(flag,msg){
+            // console.log(msg);
              var proName = msg.addressComponent.province,
                  cityName = msg.addressComponent.city,
                  districtName = msg.addressComponent.district,
