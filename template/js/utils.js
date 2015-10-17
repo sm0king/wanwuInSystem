@@ -165,7 +165,7 @@
                   userId: userInfo.id,
                   token: userInfo.token,
                   taskId: record.taskId || "",
-                  mobile: userInfo.phone,
+                  mobile: record.phone,
                   shopName: record.shopName,
                   shopLogo: record.shopLogo || "/diguaApp/images/tuwen.png",
                   consignee: record.consignee,
