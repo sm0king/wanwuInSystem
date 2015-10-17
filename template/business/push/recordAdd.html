@@ -1,4 +1,10 @@
 extends ../../common.jade
+mixin infoList(lt,rt)
+  li.list-group-item.info-item
+    .left-txt= lt
+    .right-content.text-right.addImage#addImage= rt
+      | >
+
 
 block topleft
   div.navbar-back
@@ -12,7 +18,65 @@ block toprightTxt
 block section
   section.main
     .record-form
-      include ../../includes/infoform.jade
+      ul.list-group
+        + infoList('门店图片','新增')
+        li.list-group-item.info-item
+          .left-txt.txt-red 超市名称
+          .right-content
+            input#marketName.form-control
+        p
+        li.list-group-item.info-item
+          .left-txt 联系人
+          .right-content
+            input#linkman.form-control
+        li.list-group-item.info-item
+          .left-txt 联系电话
+          .right-content
+            input#phone.form-control(type="tel")
+        li.list-group-item.info-item
+          .left-txt.txt-red 地址
+          .right-content
+            select#provinces.select.form-control
+              option 省
+            select#city.select.form-control
+              option 市
+            select#district.select.form-control
+              option 区
+        li.list-group-item.info-item
+          .left-txt
+          .right-content
+            input#street.form-control.address
+            i.glyphicon.glyphicon-map-marker.point#point
+        p
+        li.list-group-item.info-item
+          .left-txt 超市规模
+          .right-content
+            select#scale.form-control
+              option(value="1") 小卖部
+              option(value="2") 小型独立超市
+              option(value="3") 中型独立超市
+              option(value="4") 连锁超市
+              option(value="5") 饭店
+              option(value="0") 其他
+        li.list-group-item.info-item
+          .left-txt 经营状况
+          .right-content
+            select#state.form-control
+              option(value="1") 好
+              option(value="2") 中
+              option(value="3") 差
+              option(value="0") 无法判断
+        li.list-group-item.info-item
+          .left-txt 备注
+          .right-content
+            textarea#remark.form-control
+
+     #mapPage
+       #mapContainer
+       div#option.option
+           span#addrInfo 正在定位中...
+           button.btn.pull-right.addLocal 确定
+       img#pointImg(src="http://webapi.amap.com/images/marker_sprite.png")
 block script
+   script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1abff9b9417a4c2a1b5ee2bba67abc4b")
    script(src="/diguaApp/js/push/recordAdd.js")
-   script(src="/diguaApp/js/Hybrid.js")

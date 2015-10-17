@@ -16,9 +16,10 @@ block section
       .search-box
         input#search.form-control(type="text" placeholder="搜索")
       #employeeList
-        .list-date.clearfix.bg-warning
-          span 部门
-        include ../../includes/employee.jade
+        //
+          .list-date.clearfix.bg-warning
+            span 部门
+          include ../../includes/employee.jade
 
 block script
    script(src="/diguaApp/js/manage/employeeList.js")

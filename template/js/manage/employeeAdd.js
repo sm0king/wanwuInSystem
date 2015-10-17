@@ -5,6 +5,7 @@ $(function(){
     var data = {
       name : str($("#name").val()),
       phone : str($("#phone").val()),
+      img : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
       email : str($("#email").val()),
       pid : str($('#provinces').val()),
       cid : str($("#city").val()),
@@ -22,6 +23,7 @@ $(function(){
     service.saveEmployee(data,function(flag,msg){
         if (flag) {
           alert('添加成功');
+          history.go(-1);
         }else {
           alert(msg);
         }

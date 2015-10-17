@@ -167,12 +167,11 @@
           var url = host + '/service/saveMyRecord';
           var userInfo = this.getUserInfo();
           if (userInfo) {
-              console.log(record.local);
               var data = {
                   userId: userInfo.id,
                   token: userInfo.token,
                   taskId: record.taskId || "",
-                  mobile: userInfo.phone,
+                  mobile: record.phone,
                   shopName: record.shopName,
                   shopLogo: record.shopLogo || "/diguaApp/images/tuwen.png",
                   consignee: record.consignee,
@@ -186,7 +185,6 @@
                   runningState: record.state,
                   remark: record.remark || ""
               };
-              console.log(data);
               this.getData(url, data, function(isTrue, reContent) {
                   callback(isTrue, reContent);
               });
@@ -263,7 +261,7 @@
                   taskId:user.taskId,
                   mobile:user.phone,
                   shopName:user.shopName,
-                  shopLogo:user.logo,
+                  shopLogo:user.shopLogo,
                   consignee:user.consignee,
                   pid:user.pid,
                   cid:user.cid,
@@ -357,7 +355,7 @@
                 parent_id:emp.parent_id,
                 phone:emp.phone,
                 type:emp.type,
-                img:emp.img || "",
+                img:emp.img || "/diguaApp/images/tuwen.png",
                 pid:emp.pid,
                 cid:emp.cid,
                 did:emp.did,
@@ -450,11 +448,11 @@
           });
       },
       //获取部门员工
-      departmentEmployeeList: function(id,head,page,pageSize,callback) {
+      departmentEmployeeList: function(id,leader,page,pageSize,callback) {
           var url = host + '/department/employeeList';
           var data = {
               dpId:id,
-              chargeId:head,
+              chargeId:leader,
               page:page || 1,
               pageSize:pageSize || 10
           };
@@ -464,19 +462,9 @@
           })
       },
       //添加/编辑部门
-      departmentUpdate: function(id,name,images,notice,head,upNotice,callback) {
+      departmentUpdate: function(data,callback) {
           var url = host + '/department/updateDepartment';
-          var userInfo = getUserInfo();
-          var data = {
-              dpId:id,
-              departmentName:name,
-              headImage:images,
-              departmentNotice:notice,
-              chargeId:head,
-              isEditSubDepartmentNotice:upNotice
-          };
           this.getData(url, data, function(isTrue, reContent) {
-              //
               if (isTrue) {
                   callback(true,"成功")
               }else{
@@ -484,14 +472,36 @@
               }
           })
         },
-        // 获取地理坐标
+
+        // 逆地理编码 定位当前位置
+        getNowLocal: function(data,callback){
+            var url = 'http://restapi.amap.com/v3/geocode/regeo?parameters'
+            $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: {
+                        key: "7da2c1565bd041d7236eb88feabec69f",
+                        location:data,
+                    }
+                })
+                .done(function(re) {
+                    if (re.status) {
+                        callback(true,re.regeocode)
+                    }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+        },
+        // 地理编码 获取地理坐标
         getAddressLocal: function(data, callback) {
             $.ajax({
                     url: 'http://restapi.amap.com/v3/geocode/geo?parameters',
                     type: 'POST',
                     dataType: 'jsonp',
                     data: {
-                        key: "6cab3a14d0db6b1c6de21f9d955db963",
+                        key: "7da2c1565bd041d7236eb88feabec69f",
                         address: data.addr,
                         city: data.city
                     }
@@ -510,9 +520,9 @@
               '业务数据':'./business/push/myBusiness.html',
               '员工管理':'./business/manage/employeeList.html',
               '部门管理':'./business/manage/departmentList.html',
-              '业务业绩':'./business/manage/businessList.html',
-              '配送业绩':'./business/manage/distributionList.html',
-              '厂商管理':'#',
+              // '业务业绩':'./business/manage/businessList.html',
+              // '配送业绩':'./business/manage/distributionList.html',
+              // '厂商管理':'#',
             }[url_name] || 'javascript:;';
             return url;
         },

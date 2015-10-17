@@ -1,8 +1,8 @@
 $(function(){
     function load() {
         service.getAchievement("",function(flag,msg){
-            console.log(flag);
-            console.log(msg);
+            // console.log(flag);
+            // console.log(msg);
             if (msg.result) {
                 var data = msg.result;
                 $("#recommend_code").html(data.recommend_code);

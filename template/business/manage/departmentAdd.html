@@ -2,7 +2,7 @@ extends ../../common.jade
 mixin infoList(lt,rt)
   li.list-group-item.info-item
     .left-txt= lt
-    div.right-content.text-right.right-tip(id!=attributes.id)= rt
+    div.right-content.text-right.right-tip(id!=attributes.id,class!=attributes.class)= rt
 mixin infoInput(lab)
   li.list-group-item.info-item
     .left-txt= lab
@@ -37,40 +37,19 @@ block section
   section.main
     li.list 基本信息
     + infoInput('部门名称')(id="departName")
-    + infoList('头像','编辑')(id="addImage")
+    + infoList('头像','新增')(id="addImage",class="addImage")
     p
     li#noticeList.list-group-item.info-item
       .left-txt
         div 部门公告
         div#notice.notice
-      .text-right.right-align
-        | >
+      .text-right.right-align.right-tip
     li.list 部门成员
     ul#departEmployee.depart-inline
-      //
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            | alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            | alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            | alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            | alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            | alonehover
+      .text-center 暂无成员
     p
-    + infoList('负责人','')(id="leader")
-    small#creatTime.time.help-block
+    + infoList('负责人','请选择')(id="leader")
+    small.time.help-block 注册时间 2015-09-28
 
     #searchPanel.z-panel
       .record-list
@@ -90,4 +69,4 @@ block section
       .large-btnbox
         button#cancel.btn.btn-lg.btn-block 取消
 block script
-   script(src="/diguaApp/js/manage/departmentInfo.js")
+   script(src="/diguaApp/js/manage/departmentAdd.js")

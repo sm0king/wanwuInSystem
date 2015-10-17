@@ -8,6 +8,8 @@ block topleft
     span 业务
 block topcenter
   | 部门管理
+block toprightTxt
+  span#add 添加
 
 block section
   section.main
@@ -15,6 +17,7 @@ block section
       .search-box
         input#search.form-control(type="text" placeholder="搜索")
       #departList
+      //
         .list-date.clearfix.bg-warning
           span 部门
         ul.depart-inline

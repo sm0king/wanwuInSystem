@@ -1,17 +1,11 @@
 $(function(){
 
-    $("#search").on('keyup',function(e){
-        var k = e.keyCode || e.which;
-        if(k == 13){
-          // window.location.href = "./employeeSearch.html";
-        }
-    });
-
     function saveDate() {
       var str = service.strCheck, id = service.getSearch('id');
       var data = {
         name : str($("#name").val()),
         phone : str($("#phone").val()),
+        img : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
         email : str($("#email").val()),
         pid : str($('#provinces').val()),
         cid : str($("#city").val()),
@@ -29,6 +23,8 @@ $(function(){
       service.saveEmployee(data,function(flag,msg){
           if (flag) {
             alert('修改成功');
+            // back.go('./employeeList.html');
+            history.go(-1);
           }else {
             alert(msg);
           }
@@ -172,21 +168,24 @@ $(function(){
     });
 
     $("#del").on('click',function(){
-        var id = $(this).data('id');
-        service.delEmployee(id,function(flag,msg){
-            if (flag) {
-                alert("删除成功");
-            }else {
-              alert(msg);
-            }
-        })
+        if (confirm('确认删除员工吗? 删除后将无法恢复，相关数据也会一并清除。')) {
+            var id = $(this).data('id');
+            service.delEmployee(id,function(flag,msg){
+                if (flag) {
+                    alert("删除成功");
+                    back.go('./employeeList.html');
+                }else {
+                  alert(msg);
+                  back.go('./employeeList.html');
+                }
+            })
+        }
     })
 
     function load(argument) {
         var id = service.getSearch('id');
         service.getEmployeeDetail(id,function(flag,msg){
             if (flag) {
-              console.log(msg);
               var data = msg.result;
               $("#name").val(data.name);
               $("#phone").val(data.phone);
@@ -194,6 +193,7 @@ $(function(){
               $("#type").html(data.typeName).data('id',data.type);
               $("#depart").html(data.departName).data('id',data.dp_id);
               $("#superior").html(data.parentName).data('id',data.supervisor_id);
+              $("#addImage").css('background-image','url('+ data.img +')');
               loadPro(function(re){
                 $("#provinces").html(re).val(data.province);
               });

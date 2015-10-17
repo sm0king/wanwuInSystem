@@ -9,23 +9,24 @@ block section
   section.mar-bottom.main
     ul.list-group
       a(href="./myInfo.html")
-        li.list-group-item
+        li.list-group-item.info-item
           | 我的资料
-          span.badge >
-      a(href="./mySetting.html")
-        li.list-group-item
-          | 设置
-          span.badge >
-      a(href="./about.html")
-        li.list-group-item
-          | 关于
-          span.badge >
-      a(href="./feedback.html")
-        li.list-group-item
-          | 意见反馈
-          span.badge >
+          span.right-content.text-right >
+      //
+        a(href="./mySetting.html")
+          li.list-group-item
+            | 设置
+            span.text-right >
+        a(href="./about.html")
+          li.list-group-item
+            | 关于
+            span.badge >
+        a(href="./feedback.html")
+          li.list-group-item
+            | 意见反馈
+            span.badge >
     .large-btnbox
-        #sign-out.btn.btn-primary.btn-block.btn-lg 退出
+        #sign-out.btn.btn-danger.btn-block.btn-lg 退出
 block tag
   include ../includes/foot.jade
 

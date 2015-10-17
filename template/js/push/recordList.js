@@ -19,15 +19,6 @@ $(function(){
         }
     });
 
-   function load(){
-     service.serviceMyRecord("",1,10,function(flag,msg){
-        if (flag) {
-          var dom = madeDom(msg);
-          $("#record-list").html(dom);
-        }
-     });
-   }
-
    function madeDom(data){
       var list = "",
           top = "",
@@ -57,7 +48,7 @@ $(function(){
               list += '<li class="list-group-item record-item" data-id="'+ data[i].result[j].id +'">'+
                       '<div class="media">'+
                       '<div class="media-left meida-middle">'+
-                      '<img src="'+img+'" alt=""></div>'+
+                      '<img src="'+img+'" style="max-height:80px"></div>'+
                       '<div class="media-body">'+
                       '<div>'+data[i].result[j].shop_name+'</div>'+
                       '<div>'+data[i].result[j].phone+'</div>'+
@@ -69,6 +60,15 @@ $(function(){
         dom += top + list ;
       }
       $('#record-list').html(dom);
+   }
+
+   function load(){
+     service.serviceMyRecord("",1,10,function(flag,msg){
+        if (flag) {
+          var dom = madeDom(msg);
+          $("#record-list").html(dom);
+        }
+     });
    }
 
    load();
