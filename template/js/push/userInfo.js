@@ -14,30 +14,27 @@ $(function(){
           scales : str($("#scale").val()),
           state : str($("#state").val()),
           remark : str($("#remark").val()),
-          taskId : $("#marketName").data('id')
+          taskId : $("#marketName").data('id'),
+          local: $("#point").data('nowpoi')
         };
         if (!data.address) {
             alert('请填写详细地址');
             return false;
         }
-        var map = {
-            city: $("#city").find('option:selected').text(),
-            addr: data.address,
+        if (!data.shopName) {
+            alert("请填写超市名称");
+        }else if(!data.local){
+            alert("当前无法定位，无法添加地址");
+        }else{
+            service.serviceSaveCustomersDetail(data,function(flag,msg){
+                if (flag) {
+                    alert("保存成功");
+                    history.go(-1);
+                }else {
+                    alert('保存失败');
+                }
+            });
         }
-
-        service.getAddressLocal(map,function(re){
-          var localArr = re.geocodes[0].location;
-          data.local = {
-                  longitude: localArr.split(',')[0],
-                  latitude:localArr.split(',')[1]
-                };
-          service.serviceSaveCustomersDetail(data,function(flag,msg){
-              if (flag) {
-                  alert('保存成功');
-                  history.go(-1);
-              }
-          });
-        });
       }
 
       $("#save").on('click',function(){
@@ -114,11 +111,22 @@ $(function(){
             alert('请在有效范围内选择地址');
           }else {
             var str = poi.lng + ',' + poi.lat;
+            var savePoi = {
+                longitude: poi.lng,
+                latitude: poi.lat
+            }
+            $("#point").data('nowpoi',savePoi);
             madeAddress(str);
             map.clearMap();
             $("#mapPage").removeClass('show');
           }
       });
+
+      // 取消地图选择
+      $("#mapPage").on('click','#cancel',function(){
+          map.clearMap();
+          $("#mapPage").removeClass('show');
+      })
 
       // 加载地图
       function showMap(){
@@ -289,12 +297,15 @@ $(function(){
                   $("#district").html(re).val(data.district_id);
                 });
 
+                $("#point").data('nowpoi',eval('(' + data.location + ')'));
+
                 // 超市规模
                 $("#scale").val(data.scales);
                 // 运营状况
                 $("#state").val(data.running_state);
                 $("#time").html("注册时间  " + data.add_time);
                 $("#addImage").css('background-image','url('+ data.shop_url +')');
+                $("#addImage").data('imgUrl',data.shop_url);
               }
           });
       }

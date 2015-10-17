@@ -1,5 +1,11 @@
 $(function(){
 
+    //实例化地图
+    var map = new AMap.Map('mapContainer', {
+        resizeEnable: true,
+        zoom:9
+    });
+
     $('#record-list').on('click','.record-item',function(){
         if ($(this).data('id')) {
             var url = './recordEdit.html?id='+$(this).data('id');
@@ -7,9 +13,97 @@ $(function(){
         }
     });
 
-    // $(".point").on("click", function(){
-    //     window.location.href = "./recordMap.html";
-    // });
+    $("#record-list").on("click",'.point',function(){
+        showMap();
+    });
+
+    // 取消地图
+    $("#mapPage").on('click','#cancel',function(){
+        map.clearMap();
+        $("#mapPage").removeClass('show');
+    })
+
+
+
+    // 加载地图
+    function showMap(){
+        $("#mapPage").addClass('show');
+        addMarker();
+    }
+
+
+
+    // 实例化点标记
+    function addMarker() {
+
+        var todayMaker=[],lastMaker=[],allPoi,todayPoi,lastPoi;
+
+        allPoi = $("#record-list").data('localArr');
+        todayPoi = allPoi.today;
+        lastPoi = allPoi.last;
+
+        for (var i = 0; i < todayPoi.length; i++) {
+            var todayItem =  [todayPoi[i].longitude,todayPoi[i].latitude];
+            var markertoday = new AMap.Marker({
+                 position: todayItem,
+                 icon: "http://webapi.amap.com/images/marker_sprite.png",
+                 offset: {
+                   x: -8,
+                   y: -34
+                 }
+            });
+            markertoday.setMap(map);
+        //    todayMaker.push(markertoday);
+        }
+
+        for (var i = 0; i < lastPoi.length; i++) {
+            lastItem = [lastPoi[i].longitude,lastPoi[i].latitude];
+            var markerlast = new AMap.Marker({
+                 position: lastItem,
+                 icon: "http://webapi.amap.com/images/3.png",
+                 offset: {
+                   x: -8,
+                   y: -34
+                 }
+            });
+            markerlast.setMap(map);
+            // lastMaker.push(markerlast);
+        }
+        // addCluster(todayMaker,0);
+        // addCluster(lastMaker,1);
+    }
+
+
+    // 添加点聚合
+    function addCluster(arr,tag) {
+      if (tag == 1) {
+        var sts = [{
+          url: "http://developer.amap.com/wp-content/uploads/2014/06/1.png",
+          size: new AMap.Size(32, 32),
+          offset: new AMap.Pixel(-16, -30)
+        }, {
+          url: "http://developer.amap.com/wp-content/uploads/2014/06/2.png",
+          size: new AMap.Size(32, 32),
+          offset: new AMap.Pixel(-16, -30)
+        }, {
+          url: "http://developer.amap.com/wp-content/uploads/2014/06/3.png",
+          size: new AMap.Size(48, 48),
+          offset: new AMap.Pixel(-24, -45),
+          textColor: '#CC0066'
+        }];
+        map.plugin(["AMap.MarkerClusterer"], function () {
+          cluster = new AMap.MarkerClusterer(map, arr, {
+            styles: sts
+          });
+        });
+      } else {
+        map.plugin(["AMap.MarkerClusterer"], function () {
+          cluster = new AMap.MarkerClusterer(map, arr);
+        });
+      }
+      var newCenter = map.setFitView();
+    }
+
     $("#search").on('keyup',function(e){
         var k = e.keyCode || e.which;
         if(k == 13){
@@ -26,40 +120,60 @@ $(function(){
           title,
           img,
           date,
-          time;
+          time,
+          localArr = {},
+          todayLocal = [],
+          lastLocal = [];
 
       for (var i = 0; i < data.length; i++) {
 
         if (i === 0) {
             title = '今天';
-        }else if (i == 1) {
+        }else if (i === 1) {
             title = '以前';
         }
-        top = '<div class="list-date bg-warning"><span>'+title+'('+ data[i].totalCount +')</span></div>';
+        top = '<div class="list-date bg-warning"><span>'+title+'('+ data[i].totalCount +')</span><i class="glyphicon glyphicon-map-marker point text-right"></i></div>';
 
         if (data[i].totalCount === 0) {
-          list = '<li class="list-group-item">'+
-                  '暂无数据</li>';
+            list = '<li class="list-group-item">'+
+                    '暂无数据</li>';
         }else {
-          list = "";
-          for (var j = 0; j < data[i].result.length; j++) {
-              img = data[i].result[j].shop_url ? data[i].result[j].shop_url : '/diguaApp/images/tuwen.png';
-              time = data[i].result[j].update_time ? data[i].result[j].update_time : data[i].result[j].add_time;
-              list += '<li class="list-group-item record-item" data-id="'+ data[i].result[j].id +'">'+
-                      '<div class="media">'+
-                      '<div class="media-left meida-middle">'+
-                      '<img src="'+img+'" style="max-height:80px"></div>'+
-                      '<div class="media-body">'+
-                      '<div>'+data[i].result[j].shop_name+'</div>'+
-                      '<div>'+data[i].result[j].phone+'</div>'+
-                      '<div>'+data[i].result[j].address+'</div>'+
-                      '<div>'+time+'</div></div></li>';
+            list = "";
+            for (var j = 0; j < data[i].result.length; j++) {
+                img = data[i].result[j].shop_url ? data[i].result[j].shop_url : '/diguaApp/images/tuwen.png';
+                time = data[i].result[j].update_time ? data[i].result[j].update_time : data[i].result[j].add_time;
+                list += '<li class="list-group-item record-item" data-id="'+ data[i].result[j].id +'">'+
+                        '<div class="media">'+
+                        '<div class="media-left meida-middle">'+
+                        '<img src="'+img+'" style="max-height:80px"></div>'+
+                        '<div class="media-body">'+
+                        '<div>'+data[i].result[j].shop_name+'</div>'+
+                        '<div>'+data[i].result[j].phone+'</div>'+
+                        '<div>'+data[i].result[j].address+'</div>'+
+                        '<div>'+time+'</div></div></li>';
+                if (data[i].result[j].location) {
+                    var local = eval('('+ data[i].result[j].location +')');
+                    if (local.longitude && local.latitude) {
+                        if (i === 0) {
+                            todayLocal.push(local);
+                        }else {
+                            lastLocal.push(local);
+                        }
+                    }
+                }
           }
+
           list = '<ul class="list-group">' + list + '</ul>';
         }
         dom += top + list ;
       }
-      $('#record-list').html(dom);
+
+        localArr  = {
+            today : todayLocal,
+            last : lastLocal
+        }
+
+        $('#record-list').html(dom).data('localArr',localArr);
    }
 
    function load(){
