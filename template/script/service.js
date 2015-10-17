@@ -70,6 +70,8 @@ define(['jquery'], function($) {
                 if (isTrue) {
                     //获取登陆结果
                     if (reContent) {
+                        //登录成功，iOS调用一下 saveLoginCookie 
+                        window.saveLoginCookie();
                         var userInfo = JSON.stringify(reContent.userInfo);
                         window.localStorage.setItem('userInfo', userInfo);
                         //将获取的用户信息存在本地存储中 获取方式为：var  useuInfo = JSON.parse(window.localStorage.getItem('userInfo')); 这样，获取的就是数据对象。
@@ -239,7 +241,7 @@ define(['jquery'], function($) {
                 return JSON.parse(localItem);
             } else {
                 //
-                this.catchError('error_login');
+                this.catchError('401');
                 return false;
             }
         },
