@@ -1,10 +1,16 @@
 (function(win,$){
   //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
+  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://www.wanwu.com/newosadmin';
   win.service = {
       catchError: function(error_no) {
-          if (error_no === '401') {
-              window.location.href = '/newosadmin/user/login';
+          if (error_no == '401') {
+            //未登录 分两种情况 一种 有本地 存储一种没有，当有本地存储的时候 自动登录
+            if (window.localStorage.getItem('userInfo')) {
+              //自动登录
+              this.autoLogin();
+            }else{
+              window.location.href = '/diguaApp/index.html';
+            }
           }
           var error_messge = {
               '101': '参数错误',
@@ -32,7 +38,7 @@
                   callback(true, result.content);
               } else {
                   //请求失败，无数据
-                  callback(false, result.error_desc);
+                  callback(false, serviceThis.catchError(result.error_no));
               }
           }).fail(function(result) {
               //无返回数据
@@ -50,8 +56,6 @@
               from: from || 'web'
           };
           this.getData(url, data, function(isTrue, reContent) {
-              console.log(isTrue);
-              console.log(reContent);
               if (isTrue) {
                   //获取登陆结果
                   if (reContent) {
@@ -205,7 +209,7 @@
               return JSON.parse(localItem);
           } else {
               //
-              catchError('error_login');
+              this.catchError('401');
               return false;
           }
       },
@@ -598,6 +602,29 @@
                     callback(isTrue, reContent);
                 }
             })
-        },
+        },autoLogin:function(){
+          var url = host + '/user/autoLogin';
+          var userInfo = this.getUserInfo();
+          data={
+            userId:userInfo.id,
+            token:userInfo.token
+          }
+          this.getData(url,data,function(isTrue,reContent){
+            if (isTrue) {
+                  //获取登陆结果
+                  if (reContent) {
+                      var userInfo = JSON.stringify(reContent);
+                      window.localStorage.setItem('userInfo', userInfo);
+                      //将获取的用户信息存在本地存储中 获取方式为：var  useuInfo = JSON.parse(window.localStorage.getItem('userInfo')); 这样，获取的就是数据对象。
+                      window.location.reload()
+                      return;
+                  } else {
+                      window.location.href = '/diguaApp/index.html';
+                  }
+              } else {
+                  window.location.href = '/diguaApp/index.html';
+              }
+          })
+        }
     };
 })(window, jQuery);
