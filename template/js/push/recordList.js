@@ -23,15 +23,11 @@ $(function(){
         $("#mapPage").removeClass('show');
     })
 
-
-
     // 加载地图
     function showMap(){
         $("#mapPage").addClass('show');
         addMarker();
     }
-
-
 
     // 实例化点标记
     function addMarker() {
@@ -42,31 +38,56 @@ $(function(){
         todayPoi = allPoi.today;
         lastPoi = allPoi.last;
 
+        var infoWindow = new AMap.InfoWindow({
+            size: new AMap.Size(300, 0),
+            autoMove: true,
+            offset: {x: 0, y: -20}
+        });
         for (var i = 0; i < todayPoi.length; i++) {
             var todayItem =  [todayPoi[i].longitude,todayPoi[i].latitude];
             var markertoday = new AMap.Marker({
-                 position: todayItem,
-                 icon: "http://webapi.amap.com/images/marker_sprite.png",
-                 offset: {
+                position: todayItem,
+                icon: "http://webapi.amap.com/images/marker_sprite.png",
+                offset: {
                    x: -8,
                    y: -34
-                 }
+                },
+                extData : {'id':todayPoi[i].id,'name':todayPoi[i].name}
             });
             markertoday.setMap(map);
         //    todayMaker.push(markertoday);
+            markertoday.on( "click", function(e) {
+                var thisData = this.Rd.extData;
+                var inforWindow = new AMap.InfoWindow({
+                     autoMove: true,
+                     content: "<a href='./recordEdit.html?id="+ thisData.id +"'>"+ thisData.name +"</a>"
+                 });
+                inforWindow.open(map, [e.lnglat.lng, e.lnglat.lat]);
+            });
         }
 
-        for (var i = 0; i < lastPoi.length; i++) {
-            lastItem = [lastPoi[i].longitude,lastPoi[i].latitude];
+        // console.log(lastPoi);
+        for (var j = 0; j < lastPoi.length; j++) {
+            lastItem = [lastPoi[j].longitude,lastPoi[j].latitude];
             var markerlast = new AMap.Marker({
-                 position: lastItem,
-                 icon: "http://webapi.amap.com/images/3.png",
-                 offset: {
+                position: lastItem,
+                icon: "http://webapi.amap.com/images/3.png",
+                offset: {
                    x: -8,
                    y: -34
-                 }
+                },
+                extData : {'id':lastPoi[j].id,'name':lastPoi[j].name}
             });
             markerlast.setMap(map);
+            markerlast.on( "click", function(e) {
+                var thisData = this.Rd.extData;
+                var inforWindow = new AMap.InfoWindow({
+                     autoMove: true,
+                     content: "<a href='./recordEdit.html?id="+ thisData.id +"'>"+ thisData.name +"</a>"
+                 });
+                inforWindow.open(map, [e.lnglat.lng, e.lnglat.lat]);
+            });
+
             // lastMaker.push(markerlast);
         }
         // addCluster(todayMaker,0);
@@ -124,7 +145,6 @@ $(function(){
           localArr = {},
           todayLocal = [],
           lastLocal = [];
-
       for (var i = 0; i < data.length; i++) {
 
         if (i === 0) {
@@ -154,6 +174,8 @@ $(function(){
                 if (data[i].result[j].location) {
                     var local = eval('('+ data[i].result[j].location +')');
                     if (local.longitude && local.latitude) {
+                        local.id = data[i].result[j].id;
+                        local.name = data[i].result[j].shop_name;
                         if (i === 0) {
                             todayLocal.push(local);
                         }else {
@@ -172,7 +194,6 @@ $(function(){
             today : todayLocal,
             last : lastLocal
         }
-
         $('#record-list').html(dom).data('localArr',localArr);
    }
 

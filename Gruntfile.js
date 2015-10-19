@@ -353,6 +353,13 @@ module.exports = function (grunt) {
         cwd: '<%= config.tpl %>/',
         dest: '<%= config.app %>',
         src: '**/*.js'
+      },
+      plugs:{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.tpl %>/plugs',
+          dest: '<%= config.app %>',
+          src: '**/*.*'
       }
     },
 
@@ -431,6 +438,7 @@ module.exports = function (grunt) {
       'clean:server',
       // 'wiredep',
       'less',
+      'copy',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',
