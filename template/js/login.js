@@ -9,12 +9,15 @@ $(function(){
               $('#msg').addClass('alert-danger').removeClass('alert-success').removeClass('hide').html(reMsg);
             }else {
               $('#msg').removeClass('alert-danger').addClass('alert-success').removeClass('hide').html("登录成功");
-                var dom = madeDom(reMsg);
-                setTimeout(function(){
-                  $('#main').removeClass('hide');
-                  $('#login').remove();
-                  $('.main').html(dom);
-                },1000);
+                getUserRight(function(dom){
+                  if (dom) {
+                    setTimeout(function(){
+                      $('#main').removeClass('hide');
+                      $('#login').remove();
+                      $('.main').html(dom);
+                    },1000);
+                  };
+                })
             }
             hideAlert();
         });
@@ -32,7 +35,11 @@ $(function(){
       url = service.getBusinessUrl(data[i].title);
       if (url != 'javascript:;') {
         list += '<a href="'+ url +'">'+
-                '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title +'</li></a>';
+                '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title;
+        if (data[i].isNum) {
+          list += '<span class="badge">'+data[i].isNum+'</span>';
+        };
+        list +='</li></a>';
       }
       // myclass = url == 'javascript:;' ? 'no-right' : "";
       // status = url == 'javascript:;' ? '<span class="text-right right-content txt-red">暂未开通</span>' : "";
@@ -76,16 +83,34 @@ $(function(){
       return false;
     }
   }
-
+  function getUserRight(callback){
+    service.getMyMessage(function(isTrue,rightData){
+      if (isTrue) {
+        var dom = madeDom(rightData);
+        callback(dom)
+      }else{
+        rightData && alert(rightData);
+        callback(false);
+      }
+    })
+  }
   function load() {
     if (window.localStorage.getItem('userInfo')) {
         $('#login').remove();
         $('#main').removeClass('hide');
         var data = service.getUserInfo(),menu ="",list="",myclass="",url;
-        if (data.rights.length > 0) {
-          var dom = madeDom(data.rights);
-          $('.main').html(dom);
-        }
+        /*
+          //废弃，用户权限相关信息不再存储在本地存储，而是每次页面加载的时候进行请求。
+          if (data.rights.length > 0) {
+            var dom = madeDom(data.rights);
+            $('.main').html(dom);
+          }
+        */
+        getUserRight(function(dom){
+          if (dom) {
+            $('.main').html(dom)
+          };
+        })
     }else {
         $('#main').addClass('hide');
         $('#login').removeClass('hide');

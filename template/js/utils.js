@@ -606,7 +606,8 @@
                     callback(isTrue, reContent);
                 }
             })
-        },autoLogin:function(){
+        },
+        autoLogin:function(){
           var url = host + '/user/autoLogin';
           var userInfo = this.getUserInfo();
           data={
@@ -629,6 +630,20 @@
                   window.location.href = '/diguaApp/index.html';
               }
           })
+        },
+        // 获取用户权限表。新接口，不再是再登录的时候进行操作。
+        getMyMessage: function(callback) {
+            var url = host + '/my/getMyMessage';
+            var data = {};
+            this.getData(url, data, function(isTrue, reContent) {
+                // var userRight = JSON.stringify(reContent.result);
+                // window.localStorage.setItem('userRight', userRight);
+                if (isTrue) {
+                    callback(true,reContent.result)
+                }else{
+                    callback(false,reContent);
+                }
+            })
         }
     };
 })(window, jQuery);
