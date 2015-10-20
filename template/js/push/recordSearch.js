@@ -19,26 +19,79 @@ $(function(){
       }
   });
 
-  function load(word){
-      var key = word ? word : service.getSearch('key');
-      $("#search").val(key);
-      service.serviceMyRecord(key,1,10,function(flag,msg){
+  $(window).scroll(function(){
+      loadOther();
+  });
+
+  function loadOther(){
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+          if ($("#load").data('status') == 1 && $("#record-list").data('page') != 0) {
+              var page  =  parseInt($("#record-list").data('page')) + 1;
+              $("#load").data('status','0');
+              load("",page);
+          }else {
+              $("#load").removeClass('show');
+          }
+      }
+  }
+
+
+  function madeDom(data){
+       var list = "",
+           top = "",
+           dom = "",
+           title,
+           img,
+           date,
+           time;
+
+       if (data.totalCount === 0) {
+           list = '<li class="list-group-item">暂无数据</li>';
+       }else {
+           for (var i = 0; i < data.result.length; i++) {
+               img = data.result[i].shop_url ? data.result[i].shop_url : '/diguaApp/images/tuwen.png';
+               time = data.result[i].update_time ? data.result[i].update_time : data.result[i].add_time;
+               list += '<li class="list-group-item record-item" data-id="'+ data.result[i].id +'">'+
+                       '<div class="media">'+
+                       '<div class="media-left meida-middle">'+
+                       '<img src="'+img+'" style="max-height:80px"></div>'+
+                       '<div class="media-body">'+
+                       '<div>'+data.result[i].shop_name+'</div>'+
+                       '<div>'+data.result[i].phone+'</div>'+
+                       '<div>'+data.result[i].address+'</div>'+
+                       '<div>'+time+'</div></div></li>';
+           }
+           dom = '<ul class="list-group">' + list + '</ul><li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+           return dom;
+       }
+  }
+
+  function load(word,page,pageSize){
+      var data = {
+        PageNumber: page || 1,
+        PageSize: pageSize || 10,
+      }
+      data.key = word ? word : service.getSearch('key');
+      $("#search").val(data.key);
+      service.serviceMyRecord(data,function(flag,msg){
          if (flag) {
-            var list = "";
-            for (var i = 0; i < msg.result.length; i++) {
-                img = msg.result[i].shop_url ? msg.result[i].shop_url : '/diguaApp/images/tuwen.png';
-                list += '<li class="list-group-item record-item" data-id="'+ msg.result[i].id +'">'+
-                        '<div class="media">'+
-                        '<div class="media-left meida-middle">'+
-                        '<img src="'+img+'" style="max-height:80px"></div>'+
-                        '<div class="media-body">'+
-                        '<div>'+msg.result[i].shop_name+'</div>'+
-                        '<div>'+msg.result[i].phone+'</div>'+
-                        '<div>'+msg.result[i].address+'</div>'+
-                        '<div>'+msg.result[i].add_time+'</div></div></li>';
-            }
-            list = '<ul class="list-group">' + list + '</ul>';
-            $("#record-list").html(list);
+             console.log(msg);
+             $("#load").remove();
+             var dom = madeDom(msg);
+             var totalPage = Math.ceil(parseInt(msg.totalCount)/parseInt(msg.PageSize));
+             if (totalPage > 1) {
+                 if(msg.PageNumber < totalPage){
+                     $("#record-list").append(dom).data('page',data.PageNumber);
+                     $("#load").data('status','1');
+                 }else if(msg.PageNumber == totalPage){
+                     $("#record-list").append(dom).data('page',data.PageNumber);
+                     $("#load").data('status','0');
+                 }
+             }else {
+                 $("#record-list").html(dom).data('page','1');
+                 $("#load").data('status','0');
+             }
          }
       });
   }

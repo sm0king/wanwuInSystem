@@ -106,9 +106,7 @@ $(function() {
   }
 
   function load() {
-     var arg = {
-         isGroup:    1
-     }
+     var arg = {};
     service.manageGetEmployeeList(arg, function(flag, msg) {
       if (flag) {
         var list = madeDom(msg.employeeList);

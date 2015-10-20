@@ -20,9 +20,10 @@ $(function(){
     });
 
     function load(word){
-        var key = word ? word : service.getSearch('key') || "";
-        $("#search").val(key);
-          service.manageGetEmployeeList(key,'1','10','0',function(flag,msg){
+        var data = {};
+        data.phone = word ? word : service.getSearch('key') || "";
+        $("#search").val(data.phone);
+          service.manageGetEmployeeList(data,function(flag,msg){
              if (flag) {
                 // console.log(msg);
                 var dom = "",img;
