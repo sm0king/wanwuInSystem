@@ -15,6 +15,15 @@ block section
       include ../../includes/infoform.jade
       small#time.time.help-block 注册时间 2015-09-28
       #mapPage
+        nav.navbar.navbar-default.navbar-fixed-top
+            .container-fluid
+                .navbar-header
+                    div#cancel.cancel
+                        i.glyphicon.glyphicon-chevron-left
+                        span 返回
+                    div.navbar-content
+                        | 地图详情
+                    div.navbar-info
         #mapContainer
         div#option.option
             span#addrInfo 正在定位中...

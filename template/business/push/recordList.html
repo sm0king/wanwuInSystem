@@ -23,8 +23,17 @@ block section
             i.glyphicon.glyphicon-map-marker.point.text-right
           include ../../includes/record.jade
     #mapPage
+        nav.navbar.navbar-default.navbar-fixed-top
+            .container-fluid
+              .navbar-header
+                  div#cancel.cancel
+                    i.glyphicon.glyphicon-chevron-left
+                    span 返回
+                  div.navbar-content
+                    | 地图详情
+                  div.navbar-info
         #mapContainer
-        button.btn#cancel 返回
+
 block script
     script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1abff9b9417a4c2a1b5ee2bba67abc4b")
     script(src="/diguaApp/js/push/recordList.js?201510171751")

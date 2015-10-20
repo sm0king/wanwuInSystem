@@ -46,7 +46,6 @@
               callback(false, serviceThis.catchError('code'));
           })
       },
-
       //用户登录  传入 手机号 登录类型，0 为密码 1 为验证码
       userLogin: function(phoneNum, type, password, from, callback) {
           var url = host + '/user/login';
@@ -122,6 +121,18 @@
                   }
               })
           }
+      },
+      // 获取拜访记录坐标列表
+      serviceGetLocation: function(data,callback){
+          var url = host + '/service/getLocation';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+                data.userId= userInfo.id,
+                data.token= userInfo.token,
+                this.getData(url, data, function(isTrue, reContent) {
+                    callback(isTrue, reContent);
+                });
+          };
       },
       //获取拜访纪录详情
       serviceMyRecordDetail: function(id, callback) {
@@ -278,7 +289,7 @@
               })
           }
       },
-      // 获取业务数据
+      // 【废弃】获取业务数据
       getAchievement: function(keyValue,callback){
           var url = host + '/service/getAchievement';
           var userInfo = this.getUserInfo();
@@ -293,6 +304,7 @@
               })
           }
       },
+      //   获取业务数据
       singleEmployeeDtCount: function(callback){
           var url = host + '/count/singleEmployeeDtCount';
           var userInfo = this.getUserInfo();

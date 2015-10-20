@@ -25,18 +25,22 @@ $(function(){
 
     // 加载地图
     function showMap(){
-        $("#mapPage").addClass('show');
-        addMarker();
+        service.serviceGetLocation("",function(flag,msg){
+            if (flag) {
+                addMarker(msg);
+            }else{
+                alert("请求不到数据！");
+            }
+        })
     }
 
     // 实例化点标记
-    function addMarker() {
+    function addMarker(allPoi) {
 
         var todayMaker=[],lastMaker=[],allPoi,todayPoi,lastPoi;
 
-        allPoi = $("#record-list").data('localArr');
-        todayPoi = allPoi.today;
-        lastPoi = allPoi.last;
+        todayPoi = allPoi.todayLists;
+        lastPoi = allPoi.beforeLists;
 
         var infoWindow = new AMap.InfoWindow({
             size: new AMap.Size(300, 0),
@@ -44,7 +48,7 @@ $(function(){
             offset: {x: 0, y: -20}
         });
         for (var i = 0; i < todayPoi.length; i++) {
-            var todayItem =  [todayPoi[i].longitude,todayPoi[i].latitude];
+            var todayItem =  [todayPoi[i].location.longitude,todayPoi[i].location.latitude];
             var markertoday = new AMap.Marker({
                 position: todayItem,
                 icon: "http://webapi.amap.com/images/marker_sprite.png",
@@ -52,7 +56,7 @@ $(function(){
                    x: -8,
                    y: -34
                 },
-                extData : {'id':todayPoi[i].id,'name':todayPoi[i].name}
+                extData : {'id':todayPoi[i].id,'name':todayPoi[i].shop_name}
             });
             markertoday.setMap(map);
         //    todayMaker.push(markertoday);
@@ -66,9 +70,8 @@ $(function(){
             });
         }
 
-        // console.log(lastPoi);
         for (var j = 0; j < lastPoi.length; j++) {
-            lastItem = [lastPoi[j].longitude,lastPoi[j].latitude];
+            lastItem = [lastPoi[j].location.longitude,lastPoi[j].location.latitude];
             var markerlast = new AMap.Marker({
                 position: lastItem,
                 icon: "http://webapi.amap.com/images/3.png",
@@ -76,7 +79,7 @@ $(function(){
                    x: -8,
                    y: -34
                 },
-                extData : {'id':lastPoi[j].id,'name':lastPoi[j].name}
+                extData : {'id':lastPoi[j].id,'name':lastPoi[j].shop_name}
             });
             markerlast.setMap(map);
             markerlast.on( "click", function(e) {
@@ -92,10 +95,11 @@ $(function(){
         }
         // addCluster(todayMaker,0);
         // addCluster(lastMaker,1);
+        $("#mapPage").addClass('show');
     }
 
 
-    // 添加点聚合
+    // 添加点聚合【暂时不用】
     function addCluster(arr,tag) {
       if (tag == 1) {
         var sts = [{
@@ -171,18 +175,7 @@ $(function(){
                         '<div>'+data[i].result[j].phone+'</div>'+
                         '<div>'+data[i].result[j].address+'</div>'+
                         '<div>'+time+'</div></div></li>';
-                if (data[i].result[j].location) {
-                    var local = eval('('+ data[i].result[j].location +')');
-                    if (local.longitude && local.latitude) {
-                        local.id = data[i].result[j].id;
-                        local.name = data[i].result[j].shop_name;
-                        if (i === 0) {
-                            todayLocal.push(local);
-                        }else {
-                            lastLocal.push(local);
-                        }
-                    }
-                }
+
           }
 
           list = '<ul class="list-group">' + list + '</ul>';
@@ -190,11 +183,7 @@ $(function(){
         dom += top + list ;
       }
 
-        localArr  = {
-            today : todayLocal,
-            last : lastLocal
-        }
-        $('#record-list').html(dom).data('localArr',localArr);
+    $('#record-list').html(dom);
    }
 
    function load(){
