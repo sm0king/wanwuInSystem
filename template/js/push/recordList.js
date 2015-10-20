@@ -138,59 +138,80 @@ $(function(){
         }
     });
 
-   function madeDom(data){
-      var list = "",
-          top = "",
-          dom = "",
-          title,
-          img,
-          date,
-          time,
-          localArr = {},
-          todayLocal = [],
-          lastLocal = [];
-      for (var i = 0; i < data.length; i++) {
+    $(window).scroll(function(){
+        loadOther();
+    });
 
-        if (i === 0) {
-            title = '今天';
-        }else if (i === 1) {
-            title = '以前';
+    function loadOther(){
+        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+        if ($(document).height() <= totalheight) {
+            if ($("#load").data('status') == 1 && $("#record-list").data('page') != 0) {
+                var page  =  parseInt($("#record-list").data('page')) + 1;
+                $("#load").data('status','0');
+                load(page);
+            }else {
+                $("#load").removeClass('show');
+            }
         }
-        top = '<div class="list-date bg-warning"><span>'+title+'('+ data[i].totalCount +')</span><i class="glyphicon glyphicon-map-marker point text-right"></i></div>';
+    }
 
-        if (data[i].totalCount === 0) {
-            list = '<li class="list-group-item">'+
-                    '暂无数据</li>';
+   function madeDom(data){
+        var list = "",
+            top = "",
+            dom = "",
+            title,
+            img,
+            date,
+            time;
+
+        if (data.totalCount === 0) {
+            list = '<li class="list-group-item">暂无数据</li>';
         }else {
-            list = "";
-            for (var j = 0; j < data[i].result.length; j++) {
-                img = data[i].result[j].shop_url ? data[i].result[j].shop_url : '/diguaApp/images/tuwen.png';
-                time = data[i].result[j].update_time ? data[i].result[j].update_time : data[i].result[j].add_time;
-                list += '<li class="list-group-item record-item" data-id="'+ data[i].result[j].id +'">'+
+            if (data.PageNumber == 1) {
+                top = '<div class="list-date bg-warning"><span>拜访列表('+ data.totalCount +')</span><i class="glyphicon glyphicon-map-marker point text-right"></i></div>';
+            }else {
+                top = "";
+            }
+            for (var i = 0; i < data.result.length; i++) {
+                img = data.result[i].shop_url ? data.result[i].shop_url : '/diguaApp/images/tuwen.png';
+                time = data.result[i].update_time ? data.result[i].update_time : data.result[i].add_time;
+                list += '<li class="list-group-item record-item" data-id="'+ data.result[i].id +'">'+
                         '<div class="media">'+
                         '<div class="media-left meida-middle">'+
                         '<img src="'+img+'" style="max-height:80px"></div>'+
                         '<div class="media-body">'+
-                        '<div>'+data[i].result[j].shop_name+'</div>'+
-                        '<div>'+data[i].result[j].phone+'</div>'+
-                        '<div>'+data[i].result[j].address+'</div>'+
+                        '<div>'+data.result[i].shop_name+'</div>'+
+                        '<div>'+data.result[i].phone+'</div>'+
+                        '<div>'+data.result[i].address+'</div>'+
                         '<div>'+time+'</div></div></li>';
-
-          }
-
-          list = '<ul class="list-group">' + list + '</ul>';
+            }
+            dom = top + '<ul class="list-group">' + list + '</ul><li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+            return dom;
         }
-        dom += top + list ;
-      }
-
-    $('#record-list').html(dom);
    }
 
-   function load(){
-     service.serviceMyRecord("",1,10,function(flag,msg){
+   function load(page,pageSize){
+     var data = {
+       PageNumber: page || 1,
+       PageSize: pageSize || 20,
+     }
+     service.serviceMyRecord(data,function(flag,msg){
         if (flag) {
+          $("#load").remove();
           var dom = madeDom(msg);
-          $("#record-list").html(dom);
+          var totalPage = Math.ceil(parseInt(msg.totalCount)/parseInt(msg.PageSize));
+          if (totalPage > 1) {
+              if(msg.PageNumber < totalPage){
+                  $("#record-list").append(dom).data('page',data.PageNumber);
+                  $("#load").data('status','1');
+              }else if(msg.PageNumber == totalPage){
+                  $("#record-list").append(dom).data('page',data.PageNumber);
+                  $("#load").data('status','0');
+              }
+          }else {
+              $("#record-list").html(dom).data('page','1');
+              $("#load").data('status','0');
+          }
         }
      });
    }

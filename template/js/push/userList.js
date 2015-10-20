@@ -16,6 +16,18 @@ $(function(){
       }
   });
 
+  $(window).scroll(function(){
+      loadOther();
+  });
+
+  function loadOther(){
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+          console.log("到底了");
+          
+      }
+  }
+
   function madeDom(result){
     var list="",dom="",img,phone;
     for (var i = 0; i < result.length; i++) {

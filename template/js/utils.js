@@ -98,28 +98,23 @@
        * @param  {Function} callback [返回数据为数组，如果是空关键字，则返回 今天和之前的列表，如果是包含关键字 则返回 搜索结果]
        * @return {[type]}            [description]
        */
-      serviceMyRecord: function(keyValue, page, pageSize, callback) {
+      serviceMyRecord: function(data, callback) {
           var url = host + '/service/myRecord';
           var userInfo = this.getUserInfo();
           if (userInfo) {
-              var data = {
-                  userId: userInfo.id,
-                  token: userInfo.token,
-                  PageNumber: page || 0,
-                  pageSize: pageSize || 10,
-                  keywords: keyValue || ""
-              };
-              this.getData(url, data, function(isTrue, reContent) {
+                data.userId= userInfo.id,
+                data.token= userInfo.token,
+                this.getData(url, data, function(isTrue, reContent) {
                   if (isTrue) {
-                      if (keyValue.length > 0) {
+                      if (data.keyValue) {
                           callback(true, reContent.searchLists);
                       } else {
-                          callback(true, [reContent.todayLists, reContent.beforeLists]);
+                          callback(true, reContent.allLists);
                       }
                   } else {
                       callback(false, reContent);
                   }
-              })
+                });
           }
       },
       // 获取拜访记录坐标列表
