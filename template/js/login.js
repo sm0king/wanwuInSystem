@@ -95,6 +95,9 @@ $(function(){
     })
   }
   function load() {
+    if (window.location.hostname == 'www.wanwu.com') {
+      $('#titleName').html('地瓜');
+    };
     if (window.localStorage.getItem('userInfo')) {
         $('#login').remove();
         $('#main').removeClass('hide');
