@@ -13,26 +13,26 @@ block section
   section.main
     ul#myTabs.nav.nav-tabs.data-tab(role="tablist")
       li.active(role="presentation")
-        a(href="#dayLists" aria-controls="dayLists" role="tab" data-toggle="tab") 1天
+        a(href="#oneDay" aria-controls="oneDay" role="tab" data-toggle="tab") 1天
       li(role="presentation")
-        a(href="#weekLists" aria-controls="weekLists" role="tab" data-toggle="tab") 1周
+        a(href="#oneWeek" aria-controls="oneweek" role="tab" data-toggle="tab") 1周
       li(role="presentation")
-        a(href="#monthLists" aria-controls="monthLists" role="tab" data-toggle="tab") 1月
+        a(href="#oneMonth" aria-controls="oneMonth" role="tab" data-toggle="tab") 1月
       li(role="presentation")
-        a(href="#allLists" aria-controls="allLists" role="tab" data-toggle="tab") 总计
+        a(href="#total" aria-controls="total" role="tab" data-toggle="tab") 总计
     .tab-content
-      #dayLists.tab-pane.active(role="tabpanel")
+      #oneDay.tab-pane.active(role="tabpanel")
         ul.list-group
-          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"订单数",num:"0"},{name:"订单金额",num:"￥0"}])
-      #weekLists.tab-pane(role="tabpanel")
+          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"新增订单数",num:"0"},{name:"新增订单金额",num:"￥0"},{name:"取消订单数",num:"0"},{name:"取消订单金额",num:"￥0"}])
+      #oneWeek.tab-pane(role="tabpanel")
         ul.list-group
-          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"订单数",num:"0"},{name:"订单金额",num:"￥0"}])
-      #monthLists.tab-pane(role="tabpanel")
+          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"新增订单数",num:"0"},{name:"新增订单金额",num:"￥0"},{name:"取消订单数",num:"0"},{name:"取消订单金额",num:"￥0"}])
+      #oneMonth.tab-pane(role="tabpanel")
         ul.list-group
-          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"订单数",num:"0"},{name:"订单金额",num:"￥0"}])
-      #allLists.tab-pane(role="tabpanel")
+          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"新增订单数",num:"0"},{name:"新增订单金额",num:"￥0"},{name:"取消订单数",num:"0"},{name:"取消订单金额",num:"￥0"}])
+      #total.tab-pane(role="tabpanel")
         ul.list-group
-          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"订单数",num:"0"},{name:"订单金额",num:"￥0"}])
+          +statistics([{name:"拜访量",num:"0"},{name:"新用户",num:"0"},{name:"下单新用户",num:"0"},{name:"新增订单数",num:"0"},{name:"新增订单金额",num:"￥0"},{name:"取消订单数",num:"0"},{name:"取消订单金额",num:"￥0"}])
 block script
   script(src="/diguaApp/plugs/bootstrap/bootstrap.js")
   script(src="/diguaApp/js/push/mybusinessInfo.js")

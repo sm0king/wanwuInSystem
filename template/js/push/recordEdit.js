@@ -14,23 +14,23 @@ $(function(){
         scales : str($("#scale").val()),
         state : str($("#state").val()),
         remark : str($("#remark").val()),
-        taskId : $("#marketName").data('id')
+        taskId : $("#marketName").data('id'),
+        local: $("#point").data('nowpoi')
       };
-      var mapDate = {
-          city: $("#city").find('option:selected').text(),
-          addr: data.address,
+      if (!data.shopName) {
+          alert("请填写超市名称");
+      }else if(!data.local){
+          alert("当前无法定位，无法添加地址");
+      }else{
+          service.serviceSaveMyRecord(data,function(flag,msg){
+              if (flag) {
+                  alert("保存成功");
+                  history.go(-1);
+              }else {
+                  alert(msg);
+              }
+          });
       }
-      service.getAddressLocal(mapDate,function(re){
-        var localArr = re.geocodes[0].location;
-        data.local = {
-                longitude: localArr.split(',')[0],
-                latitude:localArr.split(',')[1]
-              };
-        service.serviceSaveMyRecord(data,function(flag,msg){
-            alert("保存成功");
-            history.go(-1);
-        });
-      });
     }
 
     $("#save").on('click',function(){
@@ -120,11 +120,22 @@ $(function(){
           alert('请在有效范围内选择地址');
         }else {
           var str = poi.lng + ',' + poi.lat;
+          var savePoi = {
+              longitude: poi.lng,
+              latitude: poi.lat
+          }
+          $("#point").data('nowpoi',savePoi);
           madeAddress(str);
           map.clearMap();
           $("#mapPage").removeClass('show');
         }
     });
+
+    // 取消地图
+    $("#mapPage").on('click','#cancel',function(){
+        map.clearMap();
+        $("#mapPage").removeClass('show');
+    })
 
     // 加载地图
     function showMap(){
@@ -267,6 +278,7 @@ $(function(){
         var id = service.getSearch('id');
         service.serviceMyRecordDetail(id,function(flag,msg){
             if (flag) {
+                console.log(msg);
               var data = msg.result;
               $("#marketName").val(data.shop_name).data('id',data.id);
               $("#linkman").val(data.consignee);
@@ -283,12 +295,15 @@ $(function(){
                 $("#district").html(re).val(data.district_id);
               });
 
+              $("#point").data('nowpoi',eval('(' + data.location + ')'));
+
               // 超市规模
               $("#scale").val(data.scales);
               // 运营状况
               $("#state").val(data.running_state);
               $("#time").html("添加时间  " + data.add_time);
               $("#addImage").css('background-image','url('+ data.shop_url +')');
+              $("#addImage").data('imgUrl',data.shop_url);
             }
         });
     }

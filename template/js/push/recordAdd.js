@@ -1,36 +1,36 @@
 $(function(){
 
     function saveDate() {
-      var str = service.strCheck;
-      var data = {
-        shopName : str($("#marketName").val()),
-        shopLogo : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
-        consignee : str($("#linkman").val()),
-        phone : str($("#phone").val()),
-        pid : str($('#provinces').val()),
-        cid : str($("#city").val()),
-        did : str($("#district").val()),
-        address : str($("#street").val()),
-        scales : str($("#scale").val()),
-        state : str($("#state").val()),
-        remark : str($("#remark").val())
-      };
+        var str = service.strCheck;
+        var data = {
+            shopName : str($("#marketName").val()),
+            shopLogo : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
+            consignee : str($("#linkman").val()),
+            phone : str($("#phone").val()),
+            pid : str($('#provinces').val()),
+            cid : str($("#city").val()),
+            did : str($("#district").val()),
+            address : str($("#street").val()),
+            scales : str($("#scale").val()),
+            state : str($("#state").val()),
+            remark : str($("#remark").val()),
+            local: $("#point").data('nowpoi')
+        };
 
-      var map = {
-          city: $("#city").find('option:selected').text(),
-          addr: data.address,
-      }
-      service.getAddressLocal(map,function(re){
-        var localArr = re.geocodes[0].location;
-        data.local = {
-                longitude: localArr.split(',')[0],
-                latitude:localArr.split(',')[1]
-              };
-        service.serviceSaveMyRecord(data,function(flag,msg){
-            alert("保存成功");
-            history.go(-1);
-        });
-      });
+        if (!data.shopName) {
+            alert("请填写超市名称");
+        }else if(!data.local){
+            alert("当前无法定位，无法添加地址");
+        }else{
+            service.serviceSaveMyRecord(data,function(flag,msg){
+                if (flag) {
+                    alert("保存成功");
+                    history.go(-1);
+                }else {
+                    alert(msg);
+                }
+            });
+        }
     }
 
     $("#save").on('click',function(){
@@ -122,11 +122,22 @@ $(function(){
            alert('请在有效范围内选择地址');
          }else {
            var str = poi.lng + ',' + poi.lat;
+           var savePoi = {
+               longitude: poi.lng,
+               latitude: poi.lat
+           }
+           $("#point").data('nowpoi',savePoi);
            madeAddress(str);
            map.clearMap();
            $("#mapPage").removeClass('show');
          }
      });
+
+     // 取消地图选择
+     $("#mapPage").on('click','#cancel',function(){
+         map.clearMap();
+         $("#mapPage").removeClass('show');
+     })
 
      // 加载地图
      function showMap(){
@@ -218,6 +229,11 @@ $(function(){
      // 根据地理坐标遍历填充地址选择器
      function showPosition(poi){
          var coords = poi.coords.longitude + ',' + poi.coords.latitude;
+         var savePoi = {
+             latitude: poi.coords.longitude,
+             latitude: poi.coords.latitude
+         }
+         $("#point").data('nowpoi',savePoi);
          madeAddress(coords);
      }
 
@@ -287,6 +303,7 @@ $(function(){
         });
         $("#city").hide();
         $('#district').hide();
+        Mypoint();
     }
     loadData();
     HybridJS.init(document.getElementById('addImage'));
