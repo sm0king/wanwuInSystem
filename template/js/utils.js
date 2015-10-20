@@ -8,6 +8,7 @@
             if (window.localStorage.getItem('userInfo')) {
               //自动登录
               this.autoLogin();
+              return;
             }else{
               window.location.href = '/diguaApp/index.html';
             }
@@ -250,7 +251,7 @@
               })
           };
       },
-      // 保存我的用户详情
+      // 保存我的用户详情`
       serviceSaveCustomersDetail: function(user, callback){
           var url = host + '/service/saveMyCustomers';
           var userInfo = this.getUserInfo();
@@ -559,13 +560,9 @@
             }
         },
         //获取厂商列表
-        getVendorList: function(page, pageSize, search, callback) {
+        getVendorList: function(callback, vendor) {
             var url = host + '/vendor/vendorList';
-            var data = {
-                page: page || 1,
-                pageSize: pageSize || 1,
-                search: keyValue || ""
-            };
+            var data = vendor || {};
             this.getData(url, data, function(isTrue, reContent) {
                 if (isTrue) {
                     callback(true, reContent.vendorList)
@@ -600,11 +597,11 @@
         },
         //添加/编辑厂商
         //mobile 为必填项
-        //vendor 为需要修改的数据项 对象。
-        updateVendor: function(mobile, vendor, callback) {
+        //vendor 为需要修改的数据项 对象。 {} callback
+        updateVendor: function(mobile, callback, vendor) {
             var url = host + '/vendor/updateVendor';
-            var data = vendor;
-            vendor.mobile = mobile;
+            var data = vendor || {};
+            data.mobile = mobile;
             this.getData(url, data, function(isTrue, reContent) {
                 if (isTrue) {
                     callback(true, "成功")
@@ -612,7 +609,8 @@
                     callback(isTrue, reContent);
                 }
             })
-        },autoLogin:function(){
+        },
+        autoLogin:function(){
           var url = host + '/user/autoLogin';
           var userInfo = this.getUserInfo();
           data={
@@ -635,6 +633,20 @@
                   window.location.href = '/diguaApp/index.html';
               }
           })
+        },
+        // 获取用户权限表。新接口，不再是再登录的时候进行操作。
+        getMyMessage: function(callback) {
+            var url = host + '/my/getMyMessage';
+            var data = {};
+            this.getData(url, data, function(isTrue, reContent) {
+                // var userRight = JSON.stringify(reContent.result);
+                // window.localStorage.setItem('userRight', userRight);
+                if (isTrue) {
+                    callback(true,reContent.result)
+                }else{
+                    callback(false,reContent);
+                }
+            })
         }
     };
 })(window, jQuery);
