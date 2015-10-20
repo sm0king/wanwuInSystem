@@ -59,7 +59,7 @@ $(function(){
 
   function checkForm(){
     if($('#inputTel').val().length == 11  && !isNaN($('#inputTel').val())){
-      var reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+      var reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[6|7|8]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
       if (reg.test($('#inputTel').val())) {
         if ($('#inputPassword').val() == 0) {
           alert('密码不能为空');

@@ -292,6 +292,19 @@
               })
           }
       },
+      singleEmployeeDtCount: function(callback){
+          var url = host + '/count/singleEmployeeDtCount';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId:userInfo.id,
+                  token:userInfo.token,
+              };
+              this.getData(url, data, function(isTrue, reContent) {
+                  callback(isTrue,reContent);
+              })
+          }
+      },
       //获取所有员工（老接口）
       manageGetEmployeeListOld: function(keyValue,isGroup,callback) {
           var url = host + '/manage/getEmployeeList';

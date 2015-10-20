@@ -18,27 +18,26 @@ $(function() {
         } else {
           alert('不能编辑');
         }
-    }).on('click','.guys-link',function(){
+    }).on('click','.link-more.conceal',function(){
         var arg = {
             isGroup:    1,
             employeeId: $(this).data('id')
         }
         var _this = $(this);
-        $(this).addClass('on');
+        _this.addClass('on').removeClass('conceal');
+        _this.siblings('.myguys').addClass('have')
         service.manageGetEmployeeList(arg, function(flag, msg) {
-            // console.log(flag);
-            // console.log(msg);
             if (flag) {
                 var list = madeDom(msg.employeeList);
-                console.log(_this.children('.myguys'));
-                // list = '<ul class="list-group">'+list+'</ul>';
-                _this.children('.myguys').html(list);
-                _this.children('.link-more').html("收起下级列表");
+                _this.siblings('.myguys').html(list);
+                _this.html("收起下级列表");
             }
         })
-    }).on('click','.guys-link.on',function(){
-        $(this).children('.myguys').html("");
-        $(this).children('.link-more').html("点击查看他的");
+    }).on('click','.link-more.on',function(){
+        $(this).siblings('.myguys').html("");
+        $(this).html("点击查看他的"+$(this).data('num')+"个下级");
+        $(this).addClass('conceal').removeClass('on');
+        $(this).siblings('.myguys').removeClass('have')
     });
 
   $("#add").on('click', function() {
@@ -91,7 +90,7 @@ $(function() {
           } else {
               control = "";
           }
-          guys = emp[i].guysNumber ? '<div class="guys-link" data-id="'+ emp[i].id +'"><div class="myguys"></div><p class="link-more">点击查看他的'+ emp[i].guysNumber +'个下级</p></div>' : "";
+          guys = emp[i].guysNumber ? '<div class="guys-link"><div class="myguys"></div><p class="link-more conceal" data-id="'+ emp[i].id +'" data-num="'+ emp[i].guysNumber +'">点击查看他的'+ emp[i].guysNumber +'个下级</p></div>' : "";
           img = emp[i].img ? emp[i].img : '/diguaApp/images/tuwen.png';
           list += '<li class="list-group-item ' + control + '" data-id="' + emp[i].id + '">' +
               '<div class="media">' +

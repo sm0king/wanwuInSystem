@@ -1,15 +1,13 @@
 $(function(){
     function load() {
-        service.getAchievement("",function(flag,msg){
-            // console.log(flag);
-            // console.log(msg);
-            if (msg.result) {
-                var data = msg.result;
-                $("#recommend_code").html(data.recommend_code);
-                $("#recordNum").html(data.recordNum);
-                $("#regNum").html(data.regNum);
-                $("#orderNum").html(data.orderNum);
-                $("#orderMoney").html(data.orderMoney);
+        service.singleEmployeeDtCount(function(flag,msg){
+            if (flag) {
+                var data = msg.countData.oneDay;
+                $("#recommend_code").html(msg.countData.recommendCode);
+                $("#recordNum").html(data.recordNumber);
+                $("#regNum").html(data.newUser);
+                $("#orderNum").html(data.newOrder);
+                $("#orderMoney").html(data.newOrderAmount);
             }
         });
     }

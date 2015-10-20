@@ -358,7 +358,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= config.tpl %>/plugs',
-          dest: '<%= config.app %>',
+          dest: '<%= config.app %>/plugs',
           src: '**/*.*'
       }
     },
