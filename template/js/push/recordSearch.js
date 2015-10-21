@@ -8,6 +8,7 @@ $(function(){
       var k = e.keyCode || e.which;
       if(k == 13){
         var w = service.strCheck($(this).val());
+        $("#record-list").html("");
         load(w);
       }
   });
@@ -26,16 +27,17 @@ $(function(){
   function loadOther(){
       var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
       if ($(document).height() <= totalheight) {
-          if ($("#load").data('status') == 1 && $("#record-list").data('page') != 0) {
+          if ($("#load") && $("#load").data('status') == '0') {
               var page  =  parseInt($("#record-list").data('page')) + 1;
-              $("#load").data('status','0');
-              load("",page);
-          }else {
-              $("#load").removeClass('show');
+                  $("#load").data('status','1');
+                  load("",page);
           }
       }
   }
 
+  $("#record-list").on('click','#load',function(){
+      loadOther();
+  })
 
   function madeDom(data){
        var list = "",
@@ -45,7 +47,6 @@ $(function(){
            img,
            date,
            time;
-
        if (data.totalCount === 0) {
            list = '<li class="list-group-item">暂无数据</li>';
        }else {
@@ -62,7 +63,7 @@ $(function(){
                        '<div>'+data.result[i].address+'</div>'+
                        '<div>'+time+'</div></div></li>';
            }
-           dom = '<ul class="list-group">' + list + '</ul><li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+           dom = '<ul class="list-group">' + list + '</ul>';
            return dom;
        }
   }
@@ -72,25 +73,19 @@ $(function(){
         PageNumber: page || 1,
         PageSize: pageSize || 10,
       }
-      data.key = word ? word : service.getSearch('key');
-      $("#search").val(data.key);
+      data.keywords = word ? word : service.getSearch('key');
+      $("#search").val(data.keywords);
       service.serviceMyRecord(data,function(flag,msg){
          if (flag) {
-             console.log(msg);
              $("#load").remove();
              var dom = madeDom(msg);
              var totalPage = Math.ceil(parseInt(msg.totalCount)/parseInt(msg.PageSize));
-             if (totalPage > 1) {
-                 if(msg.PageNumber < totalPage){
-                     $("#record-list").append(dom).data('page',data.PageNumber);
-                     $("#load").data('status','1');
-                 }else if(msg.PageNumber == totalPage){
-                     $("#record-list").append(dom).data('page',data.PageNumber);
-                     $("#load").data('status','0');
-                 }
-             }else {
-                 $("#record-list").html(dom).data('page','1');
+             if(msg.PageNumber < totalPage){
+                 dom  = dom + '<li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+                 $("#record-list").append(dom).data('page',data.PageNumber);
                  $("#load").data('status','0');
+             }else if(msg.PageNumber == totalPage){
+                 $("#record-list").append(dom);
              }
          }
       });

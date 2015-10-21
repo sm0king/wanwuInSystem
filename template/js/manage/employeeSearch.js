@@ -38,7 +38,7 @@ $(function(){
                                   '<div class="media-body w60">'+
                                   '<div>'+ data[i].name +'</div>'+
                                   '<div> '+ data[i].phone +' </div>'+
-                                  '<div>'+ (data[i].departmentName || "暂无部门") +'</div></div></div></li>';
+                                  '<div>'+ (data[i].departName || "暂无部门") +'</div></div></div></li>';
                   }
                 }else {
                   dom = '<p class="alert alert-danger text-center">没有该员工</p>'

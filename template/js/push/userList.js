@@ -24,7 +24,29 @@ $(function(){
       var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
       if ($(document).height() <= totalheight) {
           console.log("到底了");
-          
+
+      }
+  }
+
+  $(window).scroll(function(){
+      loadOther();
+  });
+
+  function loadOther(){
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+        //   if ($("#load").data('status') == 1 && $("#userList").data('page') != 0) {
+        //       var page  =  parseInt($("#userList").data('page')) + 1;
+        //       $("#load").data('status','0');
+        //       load(page);
+        //   }else {
+        //       $("#load").removeClass('show');
+        //   }
+          if ($("#load") && $("#load").data('status') == '0') {
+              var page  =  parseInt($("#userList").data('page')) + 1;
+                  $("#load").data('status','1');
+                  load(page);
+          }
       }
   }
 
@@ -44,13 +66,26 @@ $(function(){
               '<div>'+ result[i].add_time +'</div>';
     }
     dom = '<ul class="list-group">'+list+'</ul>';
-    $("#userList").html(dom);
+    return dom;
   }
 
-  function load(){
-    service.serviceGetMyCustomers("",1,10,function(flag,msg){
+  function load(page,pageSize){
+    var data = {
+        PageNumber: page || 1,
+        PageSize: pageSize || 5,
+    }
+    service.serviceGetMyCustomers(data,function(flag,msg){
         if (flag) {
-          madeDom(msg.result);
+          $("#load").remove();
+          var dom = madeDom(msg.result);
+          var totalPage = Math.ceil(parseInt(msg.totalCount)/parseInt(msg.PageSize));
+          if(msg.PageNumber < totalPage){
+              dom  = dom + '<li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+              $("#userList").append(dom).data('page',data.PageNumber);
+              $("#load").data('status','0');
+          }else if(msg.PageNumber == totalPage){
+              $("#userList").append(dom);
+          }
         }
     });
   }

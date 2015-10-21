@@ -140,37 +140,21 @@ $(function(){
     // 加载地图
     function showMap(){
       $("#mapPage").addClass('show');
-      var geolocation, marker;
-      map.plugin('AMap.Geolocation', function() {
-          geolocation = new AMap.Geolocation({
-              enableHighAccuracy: true,//是否使用高精度定位，默认:true
-              timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-              maximumAge: 0,           //定位结果缓存0毫秒，默认：0
-              convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-              showButton: true,        //显示定位按钮，默认：true
-              buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
-              buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-              showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
-              showCircle: false,        //定位成功后用圆圈表示定位精度范围，默认：true
-              panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
-              zoomToAccuracy: true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-          });
-          geolocation.getCurrentPosition(); // 获取当前位置信息
-          map.addControl(geolocation);
-          AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-          // 地图拖拽前触发
-          // map.on( 'dragstart', function(e) {
-          // });
+      var startPoi = $("#point").data('nowpoi'),
+          showPoi = [startPoi.longitude,startPoi.latitude];
+      map.setCenter(showPoi);
+      geocoder();
+      var marker = new AMap.Marker({
+          position: showPoi
       });
+      marker.setMap(map);
+      onComplete(startPoi);
     }
-
 
     //解析定位结果
     function onComplete(data) {
-        var poi = [data.position.lng,data.position.lat];
-        geocoder();
         var circle = new AMap.Circle({
-                center: new AMap.LngLat(data.position.lng, data.position.lat), // 当前位置作为圆心位置
+                center: new AMap.LngLat(data.longitude, data.latitude), // 当前位置作为圆心位置
                 radius: 300, //半径
                 strokeColor: "#666", //线颜色
                 strokeOpacity: 1, //线透明度
@@ -188,8 +172,6 @@ $(function(){
             var flag = circle.contains(lnglatXY);
             if(!flag){
               $("#addrInfo").html("<span class='txt-red'>请在圆圈范围内选择！</span>").data('local',"");
-              // alert("请在圆圈范围内选择！");
-
             }else {
               geocoder();
             }

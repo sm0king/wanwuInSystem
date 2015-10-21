@@ -51,7 +51,7 @@ $(function(){
             var todayItem =  [todayPoi[i].location.longitude,todayPoi[i].location.latitude];
             var markertoday = new AMap.Marker({
                 position: todayItem,
-                icon: "http://webapi.amap.com/images/marker_sprite.png",
+                icon: "/diguaApp/images/map-today.png",
                 offset: {
                    x: -8,
                    y: -34
@@ -74,7 +74,7 @@ $(function(){
             lastItem = [lastPoi[j].location.longitude,lastPoi[j].location.latitude];
             var markerlast = new AMap.Marker({
                 position: lastItem,
-                icon: "http://webapi.amap.com/images/3.png",
+                icon: "/diguaApp/images/map-before.png",
                 offset: {
                    x: -8,
                    y: -34
@@ -145,15 +145,17 @@ $(function(){
     function loadOther(){
         var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
         if ($(document).height() <= totalheight) {
-            if ($("#load").data('status') == 1 && $("#record-list").data('page') != 0) {
+            if ($("#load") && $("#load").data('status') == '0') {
                 var page  =  parseInt($("#record-list").data('page')) + 1;
-                $("#load").data('status','0');
-                load(page);
-            }else {
-                $("#load").removeClass('show');
+                    $("#load").data('status','1');
+                    load(page);
             }
         }
     }
+
+    $("#record-list").on('click','#load',function(){
+        loadOther();
+    })
 
    function madeDom(data){
         var list = "",
@@ -185,7 +187,7 @@ $(function(){
                         '<div>'+data.result[i].address+'</div>'+
                         '<div>'+time+'</div></div></li>';
             }
-            dom = top + '<ul class="list-group">' + list + '</ul><li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+            dom = top + '<ul class="list-group">' + list + '</ul>';
             return dom;
         }
    }
@@ -193,24 +195,19 @@ $(function(){
    function load(page,pageSize){
      var data = {
        PageNumber: page || 1,
-       PageSize: pageSize || 20,
+       PageSize: pageSize || 10,
      }
      service.serviceMyRecord(data,function(flag,msg){
         if (flag) {
           $("#load").remove();
           var dom = madeDom(msg);
           var totalPage = Math.ceil(parseInt(msg.totalCount)/parseInt(msg.PageSize));
-          if (totalPage > 1) {
-              if(msg.PageNumber < totalPage){
-                  $("#record-list").append(dom).data('page',data.PageNumber);
-                  $("#load").data('status','1');
-              }else if(msg.PageNumber == totalPage){
-                  $("#record-list").append(dom).data('page',data.PageNumber);
-                  $("#load").data('status','0');
-              }
-          }else {
-              $("#record-list").html(dom).data('page','1');
+          if(msg.PageNumber < totalPage){
+              dom  = dom + '<li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+              $("#record-list").append(dom).data('page',data.PageNumber);
               $("#load").data('status','0');
+          }else if(msg.PageNumber == totalPage){
+              $("#record-list").append(dom);
           }
         }
      });

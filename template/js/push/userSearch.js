@@ -19,6 +19,29 @@ $(function(){
       }
   });
 
+  $(window).scroll(function(){
+      loadOther();
+  });
+
+  function loadOther(){
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+        //   if ($("#load").data('status') == 1 && $("#userList").data('page') != 0) {
+        //       var page  =  parseInt($("#userList").data('page')) + 1;
+        //       $("#load").data('status','0');
+        //       load("",page);
+        //   }else {
+        //       $("#load").removeClass('show');
+        //   }
+          if ($("#load") && $("#load").data('status') == '0') {
+              var page  =  parseInt($("#searchList").data('page')) + 1;
+                  $("#load").data('status','1');
+                  load("",page);
+          }
+      }
+  }
+
+
   function madeDom(result){
     var list="",dom="",img,phone;
     for (var i = 0; i < result.length; i++) {
@@ -35,17 +58,30 @@ $(function(){
               '<div>'+ result[i].add_time +'</div>';
     }
     dom = '<ul class="list-group">'+list+'</ul>';
-    $("#searchList").html(dom);
+    return dom;
   }
 
-  function load(word) {
-    var key = word ? word : service.getSearch('key');
-    $("#search").val(key);
-    service.serviceGetMyCustomers(key,1,10,function(flag,msg){
-       if (flag) {
-          madeDom(msg.result);
-       }
-    });
+  function load(word,page,pageSize) {
+        var data = {
+            PageNumber: page || 1,
+            PageSize: pageSize || 5,
+        }
+        data.keywords = word ? word : service.getSearch('key');
+        $("#search").val(data.keywords);
+        service.serviceGetMyCustomers(data,function(flag,msg){
+            if (flag) {
+              $("#load").remove();
+              var dom = madeDom(msg.result);
+              var totalPage = Math.ceil(parseInt(msg.totalCount)/parseInt(msg.PageSize));
+                if(msg.PageNumber < totalPage){
+                    dom  = dom + '<li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+                    $("#searchList").append(dom).data('page',data.PageNumber);
+                    $("#load").data('status','0');
+                }else if(msg.PageNumber == totalPage){
+                    $("#searchList").append(dom);
+                }
+            }
+        });
   }
 
   load();

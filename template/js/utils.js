@@ -15,6 +15,7 @@
           }
           var error_messge = {
               '101': '参数错误',
+              '100': '暂无数据',
               '301': '后台错误请联系管理员',
               '400': '您没有相关权限',
               '402': '系统异常，请稍候再试',
@@ -106,7 +107,7 @@
                 data.token= userInfo.token,
                 this.getData(url, data, function(isTrue, reContent) {
                   if (isTrue) {
-                      if (data.keyValue) {
+                      if (data.keywords) {
                           callback(true, reContent.searchLists);
                       } else {
                           callback(true, reContent.allLists);
@@ -226,21 +227,16 @@
        * @param  {Function} callback [回调函数]
        * @return {[type]}            [description]
        */
-      serviceGetMyCustomers: function(keyValue, page, pageSize,callback) {
-          var url = host + '/service/myCustomers';
-          var userInfo = this.getUserInfo();
-          if (userInfo) {
-              var data = {
-                  userId: userInfo.id,
-                  token: userInfo.token,
-                  keywords: keyValue || "",
-                  PageNumber: page || 0,
-                  PageSize: pageSize
-              };
-              this.getData(url, data, function(isTrue, reContent) {
-                  callback(isTrue,reContent);
-              });
-          };
+      serviceGetMyCustomers: function(data,callback) {
+            var url = host + '/service/myCustomers';
+            var userInfo = this.getUserInfo();
+            if (userInfo) {
+                data.userId= userInfo.id,
+                data.token= userInfo.token,
+                this.getData(url, data, function(isTrue, reContent) {
+                    callback(isTrue,reContent);
+                });
+            };
       },
       //获取我的用户详情
       serviceGetMyCustomersDetail: function(id,callback) {
