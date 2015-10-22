@@ -11,9 +11,11 @@
 module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
+  // 任务执行所用的时间，可以对构建时间优化提供帮助
   require('time-grunt')(grunt);
 
   // Automatically load required grunt tasks
+  // 自动加载需要用到的grunt 任务，加速插件加载
   require('jit-grunt')(grunt, {
       useminPrepare: 'grunt-usemin'
   });
@@ -32,6 +34,7 @@ module.exports = function (grunt) {
     config: config,
 
     // Watches files for changes and runs tasks based on the changed files
+    // 实时监听文件的增删改
     watch: {
       bower: {
         files: ['bower.json'],
@@ -49,8 +52,8 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'postcss']
+        files: ['<%= config.tpl %>/css/{,*/}*.css'],
+        tasks: ['copy:styles', 'postcss']
       },
       //jade变化
       jade:{
@@ -131,6 +134,7 @@ module.exports = function (grunt) {
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
+    // 确保代码风格达到标准,没有明显的错误
     eslint: {
       target: [
         'Gruntfile.js',
@@ -141,6 +145,7 @@ module.exports = function (grunt) {
     },
 
     // Mocha testing framework configuration options
+    // 摩卡测试框架配置选项
     mocha: {
       all: {
         options: {
@@ -196,6 +201,7 @@ module.exports = function (grunt) {
     },
 
     // Automatically inject Bower components into the HTML file
+    // 自动注入bower插件到html文件中
     wiredep: {
         app: {
             src: ['<%= config.app %>/index.html'],
@@ -336,8 +342,8 @@ module.exports = function (grunt) {
       styles: {
         expand: true,
         dot: true,
-        cwd: '<%= config.app %>/styles',
-        dest: '.tmp/styles/',
+        cwd: '<%= config.tpl %>/css',
+        dest: '<%= config.app %>/css',
         src: '{,*/}*.css'
       },
       images:{
@@ -418,7 +424,7 @@ module.exports = function (grunt) {
         expand: true,
         cwd: '<%= config.tpl %>/less/',
         src: ['common.less','login.less'],
-        dest: '<%= config.app%>/css/',
+        dest: '<%= config.tpl %>/css/',
         ext: '.css'
       },
     }
@@ -472,10 +478,10 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'postcss',
-    'concat',
-    'cssmin',
-    'uglify',
-    'copy:dist',
+    // 'concat',
+    // 'cssmin',
+    // 'uglify',
+    // 'copy:dist',
     // 'filerev',
     'usemin',
     'htmlmin'

@@ -114,6 +114,12 @@ $(function(){
             $('.main').html(dom)
           };
         })
+
+        service.getMyChildrenUser(function(flag,msg){
+            console.log(flag);
+            console.log(msg);
+        });
+
     }else {
         $('#main').addClass('hide');
         $('#login').removeClass('hide');

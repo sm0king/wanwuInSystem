@@ -150,24 +150,7 @@
       //保存我的拜访纪录
       /**
        * [function description]
-       * @param  {[type]}   record   [{
-       *   userId  用户名
-       *   token   token
-       *   taskId  任务id,如果存在将执行更新操作，没有我执行插入操作
-       *   mobile  手机号
-       *   shopName 超市名称
-       *   shopLogo 图片url
-       *   pid      省份id
-       *   cid      城市id
-       *   did       区域id
-       *   parentId  父级id
-       *   location  地址位置
-       *   address   详细地址
-       *   scales    超市规模
-       *   running_state 经营状况
-       *   remark     备注
-       *
-       * }]
+       * @param  {[type]}   record  [传参]
        * @param  {Function} callback [description]
        * @return {[type]}            [description]
        */
@@ -642,7 +625,7 @@
               } else {
                   window.location.href = '/diguaApp/index.html';
               }
-          })
+          });
         },
         // 获取用户权限表。新接口，不再是再登录的时候进行操作。
         getMyMessage: function(callback) {
@@ -656,7 +639,19 @@
                 }else{
                     callback(false,reContent);
                 }
-            })
+            });
+        },
+        // 是否存在下属员工接口
+        getMyChildrenUser: function(callback){
+            var url = host + '/service/getMyChildrenUser';
+            var userInfo = this.getUserInfo();
+            data={
+              userId:userInfo.id,
+              token:userInfo.token
+            }
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            });
         }
     };
 })(window, jQuery);
