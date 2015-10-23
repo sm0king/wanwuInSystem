@@ -344,9 +344,9 @@
                 userId:userInfo.id,
                 token:userInfo.token,
                 taskId:emp.taskId || "",
-                dp_id:emp.dp_id,
+                dp_id:emp.dp_id || "",
                 name:emp.name,
-                parent_id:emp.parent_id,
+                parent_id:emp.parent_id || userInfo.id,
                 phone:emp.phone,
                 type:emp.type,
                 img:emp.img || "/diguaApp/images/tuwen.png",
@@ -507,9 +507,15 @@
                     console.log("error");
                 })
         },
-        getBusinessUrl: function(url_name){
+        getBusinessUrl: function(url_name,isChild){
+            var record;
+            if (isChild) {
+                record = './business/push/recordMyGuys.html';
+            }else {
+                record = './business/push/recordList.html';
+            }
             var url = {
-              '拜访记录':'./business/push/recordList.html',
+              '拜访记录':record,
               '我的用户':'./business/push/myUserList.html',
               '业务数据':'./business/push/myBusiness.html',
               '员工管理':'./business/manage/employeeList.html',
@@ -635,7 +641,12 @@
                 // var userRight = JSON.stringify(reContent.result);
                 // window.localStorage.setItem('userRight', userRight);
                 if (isTrue) {
-                    callback(true,reContent.result)
+                    var rightList = reContent.result;
+                    service.getMyChildrenUser(function(flag, msg){
+                        if (flag) {
+                            callback(true,rightList,msg.isChild);
+                        }
+                    });
                 }else{
                     callback(false,reContent);
                 }
@@ -644,6 +655,18 @@
         // 是否存在下属员工接口
         getMyChildrenUser: function(callback){
             var url = host + '/service/getMyChildrenUser';
+            var userInfo = this.getUserInfo();
+            data={
+              userId:userInfo.id,
+              token:userInfo.token
+            }
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            });
+        },
+        // 拜访记录下属部门
+        getMyRecordList: function(callback){
+            var url = host + '/service/getMyRecordList';
             var userInfo = this.getUserInfo();
             data={
               userId:userInfo.id,

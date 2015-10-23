@@ -29,10 +29,10 @@ $(function(){
       alert('你没有相关权限');
   });
 
-  function madeDom(data){
+  function madeDom(data,isChild){
     var menu = "",list = "",myclass = "",url,status = "";
     for (var i = 0; i < data.length; i++) {
-      url = service.getBusinessUrl(data[i].title);
+      url = service.getBusinessUrl(data[i].title,isChild);
       if (url != 'javascript:;') {
         list += '<a href="'+ url +'">'+
                 '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title;
@@ -84,9 +84,9 @@ $(function(){
     }
   }
   function getUserRight(callback){
-    service.getMyMessage(function(isTrue,rightData){
+    service.getMyMessage(function(isTrue,rightData,isChild){
       if (isTrue) {
-        var dom = madeDom(rightData);
+        var dom = madeDom(rightData,isChild);
         callback(dom)
       }else{
         rightData && alert(rightData);
@@ -114,12 +114,6 @@ $(function(){
             $('.main').html(dom)
           };
         })
-
-        service.getMyChildrenUser(function(flag,msg){
-            console.log(flag);
-            console.log(msg);
-        });
-
     }else {
         $('#main').addClass('hide');
         $('#login').removeClass('hide');
