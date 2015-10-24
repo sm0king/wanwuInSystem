@@ -675,6 +675,17 @@
             this.getData(url, data, function(isTrue, reContent) {
                 callback(isTrue, reContent);
             });
+        },
+        // 修改密码
+        updatePwd: function(callback){
+            var url = host + '/my/updatePwd';
+            var userInfo = this.getUserInfo();
+            data.userId = userInfo.id,
+            data.token = userInfo.token
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            });
         }
+
     };
 })(window, jQuery);

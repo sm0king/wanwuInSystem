@@ -96,7 +96,7 @@ $(function(){
 
   // 上级列表
   $("#superior").on('click',function(event) {
-    service.manageGetEmployeeList("","1","10","0",function(flag,msg){
+    service.manageGetEmployeeList({},function(flag,msg){
         if (flag) {
           var list = msg.employeeList;
           var dom = "",img;
