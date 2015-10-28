@@ -12,6 +12,14 @@ html
       include includes/top.jade
     block section
     block tag
-  script(src="/js/wanwu.js")
+    // script(src="/js/wanwu.js")
+    script(type='text/javascript',data-main="config",src="require.js")
+    script.
+      requirejs(['config'],function(){
+        requirejs(['service'],function(service){
+          service.userLogin();
+          debugger;
+        })
+      });
   block script
   

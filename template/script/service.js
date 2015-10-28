@@ -3,10 +3,10 @@
 */
 'use strict';
 //加载配置模块。
-define(['jquery'], function($) {
+define(['jquery','md5'], function($) {
     //加载jquery进来。
     //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-    var host = window.location.hostname === 'localhost' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
+    var host = window.location.hostname === 'localhost' ||  ? 'http://123.59.58.104' : 'http://api.wanwu.com' + '/newosadmin';
     var service = {
         catchError: function(error_no) {
             if (error_no === '401') {
@@ -72,7 +72,11 @@ define(['jquery'], function($) {
                         var userInfo = JSON.stringify(reContent.userInfo);
                         window.localStorage.setItem('userInfo', userInfo);
                         //将获取的用户信息存在本地存储中 获取方式为：var  useuInfo = JSON.parse(window.localStorage.getItem('userInfo')); 这样，获取的就是数据对象。
-                        callback(true, reContent.rights);
+                        if (reContent.rights.length > 0) {
+                            callback(true, reContent.rights);
+                        }else{
+                            callback(false,"相关权限还未开通，请联系管理员！")
+                        }
                     } else {
                         callback(false, '登陆失败');
                     }
@@ -110,7 +114,7 @@ define(['jquery'], function($) {
                     token: userInfo.token,
                     PageNumber: page || 0,
                     pageSize: pageSize || 10,
-                    keyword: keyValue || ""
+                    keywords: keyValue || ""
                 };
                 this.getData(url, data, function(isTrue, reContent) {
                     if (isTrue) {
@@ -204,7 +208,7 @@ define(['jquery'], function($) {
                 return JSON.parse(localItem);
             } else {
                 //
-                this.catchError('error_login');
+                this.catchError('401');
                 return false;
             }
         },
@@ -259,7 +263,7 @@ define(['jquery'], function($) {
                 var data = {
                     userId: userInfo.id,
                     token: userInfo.token,
-                    keyword: keyValue || ""
+                    keywords: keyValue || ""
                 };
                 this.getData(url, data, function(isTrue, reContent) {
                     //

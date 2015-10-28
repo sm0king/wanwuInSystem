@@ -35,10 +35,10 @@ module.exports = function (grunt) {
     watch: {
       bower: {
         files: ['bower.json'],
-        tasks: ['wiredep','bower']
+        tasks: ['wiredep']
       },
       babel: {
-        files: ['<%= config.app %>/scripts/{,*/}*.js'],
+        files: ['<%= config.tpl %>/scripts/{,*/}*.js'],
         tasks: ['babel:dist']
       },
       babelTest: {
@@ -56,18 +56,6 @@ module.exports = function (grunt) {
       jade:{
         files:['<%= config.tpl %>/**/*.{html,jade}'],
         tasks:['jade']
-      },
-      less:{
-        files: ['<%= config.tpl %>/less/**/*.less'],
-        tasks: ['less'],
-      },
-      images:{
-        files: ['<%= config.tpl %>/images/**/*.*'],
-        tasks: ['copy:images'],
-      },
-      js:{
-        files: ['<%= config.tpl %>/js/**/*.*'],
-        tasks: ['copy:js'],
       }
     },
 
@@ -86,27 +74,27 @@ module.exports = function (grunt) {
           ],
           port: 9000,
           server: {
-            baseDir: ['./app'],
+            baseDir: [config.app],
             routes: {
               '/bower_components': './bower_components'
             }
           }
         }
       },
-      test: { // 几乎去掉测试部分
-        options: {
-          port: 9001,
-          open: false,
-          logLevel: 'silent',
-          host: 'localhost',
-          server: {
-            baseDir: ['.tmp', './test', config.app],
-            routes: {
-              '/bower_components': './bower_components'
-            }
-          }
-        }
-      },
+      // test: { // 几乎去掉测试部分
+      //   options: {
+      //     port: 9001,
+      //     open: false,
+      //     logLevel: 'silent',
+      //     host: 'localhost',
+      //     server: {
+      //       baseDir: ['.tmp', './test', config.app],
+      //       routes: {
+      //         '/bower_components': './bower_components'
+      //       }
+      //     }
+      //   }
+      // },
       dist: {
         options: {
           background: false,
@@ -158,21 +146,21 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= config.app %>/scripts',
+          cwd: '<%= config.tpl %>/scripts',
           src: '{,*/}*.js',
-          dest: '.tmp/scripts',
+          dest: '<%= config.app %>/scripts',
           ext: '.js'
         }]
       },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.js',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
+      // test: {
+      //   files: [{
+      //     expand: true,
+      //     cwd: 'test/spec',
+      //     src: '{,*/}*.js',
+      //     dest: '.tmp/spec',
+      //     ext: '.js'
+      //   }]
+      // }
     },
 
     postcss: {
@@ -197,12 +185,13 @@ module.exports = function (grunt) {
 
     // Automatically inject Bower components into the HTML file
     wiredep: {
-        app: {
-            src: ['<%= config.app %>/*.html'],
-            // exclude: ['bootstrap.js'],
-            ignorePath: /^(\.\.\/)*\.\./
-        }
+      app: {
+        src: ['<%= config.app %>/**/*.{html,jade}'],
+        exclude: ['bootstrap.js'],
+        ignorePath: /^(\.\.\/)*\.\./
+      }
     },
+
     // Renames files for browser caching purposes  取消此部分，暂不对文件重命名
     // filerev: {
     //   dist: {
@@ -336,23 +325,9 @@ module.exports = function (grunt) {
       styles: {
         expand: true,
         dot: true,
-        cwd: '<%= config.app %>/styles',
-        dest: '.tmp/styles/',
+        cwd: '<%= config.tpl %>/styles',
+        dest: '<%= config.app %>/styles/',
         src: '{,*/}*.css'
-      },
-      images:{
-        expand: true,
-        dot: true,
-        cwd: '<%= config.tpl %>/images',
-        dest: '<%= config.app %>/images',
-        src: '{,*/}*.*'
-      },
-      js:{
-        expand: true,
-        dot: true,
-        cwd: '<%= config.tpl %>/js',
-        dest: '<%= config.app %>/js',
-        src: '{,*/}*.*'
       }
     },
 
@@ -362,10 +337,10 @@ module.exports = function (grunt) {
         'babel:dist',
         'copy:styles'
       ],
-      test: [
-        'babel',
-        'copy:styles'
-      ],
+      // test: [
+      //   'babel',
+      //   'copy:styles'
+      // ],
       dist: [
         'babel',
         'copy:styles',
@@ -383,41 +358,13 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%= config.tpl %>',
                 dest: '<%= config.app%>',
-                src: ['**/*.html'],//,'*.html'
+                src: ['*.html'],//,'*.html'
                 ext: '.html'
             }]
         }
-    },
-    //bower task
-    bower:{
-      install:{
-        options:{
-          targetDir:'<%= config.tpl %>/plugs',
-          layout:'byComponent',
-          install:true,
-          verbose:false,
-          cleanTargerDir:false,
-          cleanBowerDir:false,
-          bowerOptions:{}
-        }
-      }
-    },
-    less:{
-      options:{
-        compress: true,
-        yuicompress: true
-      },
-      main: {
-        expand: true,
-        cwd: '<%= config.tpl %>/less/',
-        src: ['common.less','login.less'],
-        dest: '<%= config.app%>/css/',
-        ext: '.css'
-      },
     }
   });
-  // jit 无法加载 只能手动加载bower任务
-  grunt.loadNpmTasks('grunt-bower-task');
+
 
   grunt.registerTask('serve', 'start the server and preview your app', function (target) {
 
@@ -430,7 +377,6 @@ module.exports = function (grunt) {
       'jade',
       'clean:server',
       // 'wiredep',
-      'less',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',
@@ -442,22 +388,22 @@ module.exports = function (grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
   });
-  /*
-  grunt.registerTask('test', function (target) {
-    if (target !== 'watch') {
-      grunt.task.run([
-        'clean:server',
-        'concurrent:test',
-        'postcss'
-      ]);
-    }
 
-    grunt.task.run([
-      'browserSync:test',
-      'mocha'
-    ]);
-  });
-  */
+  // grunt.registerTask('test', function (target) {
+  //   if (target !== 'watch') {
+  //     grunt.task.run([
+  //       'clean:server',
+  //       'concurrent:test',
+  //       'postcss'
+  //     ]);
+  //   }
+
+  //   grunt.task.run([
+  //     'browserSync:test',
+  //     'mocha'
+  //   ]);
+  // });
+
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
@@ -475,7 +421,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:eslint',
-    'test',
+    // 'test',
     'build'
   ]);
 };
