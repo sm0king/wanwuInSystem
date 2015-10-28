@@ -6,32 +6,29 @@ block section
   section
     .record-list
       .search-box.clearfix
-        input.left-input.form-control(type="text" placeholder="搜索")
+        input#search.left-input.form-control(type="text" placeholder="搜索")
         div.right-btn.cancel 取消
-      .list-date.clearfix.bg-warning
-        span 部门
-      ul.depart-inline
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
+      #searchList
+      //
+        .list-date.clearfix.bg-warning
+          span 部门
+        ul.depart-inline
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              div alonehover
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              div alonehover
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              div alonehover
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              div alonehover
 
 block script
-  script.
-    $(function(){
-        $('.cancel').on('click',function(){
-            history.back(-1);
-        });
-    })
+  script(src="/diguaApp/js/manage/departmentSearch.js")

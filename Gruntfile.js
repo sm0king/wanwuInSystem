@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
   // Configurable paths
   var config = {
-    app: 'app',
+    app: 'app/diguaApp',
     dist: 'dist',
     tpl:'template'
   };
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
         tasks: ['copy:images'],
       },
       js:{
-        files: ['<%= config.tpl %>/js/**/*.*'],
+        files: ['<%= config.tpl %>/**/*.js'],
         tasks: ['copy:js'],
       }
     },
@@ -350,9 +350,16 @@ module.exports = function (grunt) {
       js:{
         expand: true,
         dot: true,
-        cwd: '<%= config.tpl %>/js',
-        dest: '<%= config.app %>/js',
-        src: '{,*/}*.*'
+        cwd: '<%= config.tpl %>/',
+        dest: '<%= config.app %>',
+        src: '**/*.js'
+      },
+      plugs:{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.tpl %>/plugs',
+          dest: '<%= config.app %>/plugs',
+          src: '**/*.*'
       }
     },
 
@@ -431,6 +438,7 @@ module.exports = function (grunt) {
       'clean:server',
       // 'wiredep',
       'less',
+      'copy',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',

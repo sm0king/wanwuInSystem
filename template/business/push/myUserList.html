@@ -14,14 +14,8 @@ block section
     .record-list
       .search-box
         input#search.form-control(type="text" placeholder="搜索")
-      include ../../includes/record.jade
+      #userList.user-list
+        //
+          include ../../includes/record.jade
 block script
-   script.
-      $(function(){
-          $("#search").on('keyup',function(e){
-              var k = e.keyCode || e.which;
-              if(k == 13){
-                window.location.href = "./myUserSearch.html";
-              }
-          });
-      });
+   script(src="/diguaApp/js/push/userList.js")

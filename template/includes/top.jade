@@ -1,14 +1,28 @@
 nav.navbar.navbar-default.navbar-fixed-top
-  .container-fluid
-    .navbar-header
-      block topleft
-        div.navbar-back
-          i.glyphicon.glyphicon-chevron-left
-          span 返回
-      div.navbar-content
-        block topcenter
-          | 业务
-      block topright
-        div.navbar-info
-          block toprightTxt
-            | ...
+    .container-fluid
+      .navbar-header
+        block topleft
+          div.navbar-back
+            i.glyphicon.glyphicon-chevron-left
+            span 返回
+        div.navbar-content
+          block topcenter
+            | 业务
+        block topright
+          div.navbar-info
+            block toprightTxt
+              | ...
+
+//
+  nav.navbar
+    .navbar-inner
+      .left
+        a.link(href="#")
+          block topleft 
+            | < 返回
+      .center.navbar-content
+        block topcenter 
+          | 业务  
+      .right
+        block toprightTxt
+          a.link(href="#") ...

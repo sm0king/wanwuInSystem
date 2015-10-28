@@ -1,17 +1,34 @@
 extends common.jade
 
+block head
+  link(rel="stylesheet", href="css/login.css")
+
 block topleft
 block topcenter
-  | 消息
+  | 业务
 block topright
 
 block section
   section.mar-bottom.main
+  //
     include includes/business.jade
-    //
-      include includes/person.jade
-      include includes/order.jade
-      include includes/person.jade
-      include includes/goods.jade
 block tag
   include includes/foot.jade
+
+block login
+  div#login.container.hide
+    div.form-signin
+      h2.form-signin-heading#titleName 地瓜--2.0测试
+      label(for="inputTel").sr-only 手机号
+      input#inputTel.form-control(type="tel" placeholder="手机号" required="" autofocus="")
+      label(for="inputPassword").sr-only 密码
+      input#inputPassword.form-control(type="password" placeholder="密码" required="")
+      div.checkbox
+        a(href="") 忘记密码
+        //
+          a.pull-right(href="") 验证码登录
+      div#msg.alert.hide
+      div#login-btn.btn.btn-lg.btn-primary.btn-block 登录
+block script
+  script(type='text/javascript',src='/diguaApp/js/login.js')
+  script(type='text/javascript',src='/diguaApp/plugs/jquery/md5.min.js')

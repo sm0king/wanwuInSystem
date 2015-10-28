@@ -8,42 +8,36 @@ block topleft
     span 业务
 block topcenter
   | 部门管理
+block toprightTxt
+  span#add 添加
 
 block section
   section.main
     .record-list
       .search-box
         input#search.form-control(type="text" placeholder="搜索")
-      .list-date.clearfix.bg-warning
-        span 部门
-      ul.depart-inline
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-        li.depart-list
-          img(src="../../images/tuwen.png")
-          .caption
-            div alonehover
-              
+      #departList
+      //
+        .list-date.clearfix.bg-warning
+          span 部门
+        ul.depart-inline
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              | alonehover
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              | alonehover
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              | alonehover
+          li.depart-list
+            img(src="../../images/tuwen.png")
+            .caption
+              | alonehover
+
 block script
+   script(src="/diguaApp/js/manage/departmentList.js")
    script.
-      $(function(){
-          $("#search").on('keyup',function(e){
-              var k = e.keyCode || e.which;
-              if(k == 13){
-                window.location.href = "./departmentSearch.html";
-              }
-          });
-          $('.depart-inline').on('click',function(){
-              window.location.href = "./departmentInfo.html";
-          });
-      });

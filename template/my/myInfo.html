@@ -1,0 +1,34 @@
+extends ../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 我的
+block topcenter
+  | 我的资料
+block toprightTxt
+
+block section
+  section.main
+    ul.list-group
+      li.list-group-item.info-item
+        .left-txt 头像
+        #addImage.right-content.text-right
+          | >
+      li.list-group-item
+        | 手机号
+        span.pull-right#phone
+      p
+      li.list-group-item
+        | 上级
+        span.pull-right#leader
+      li.list-group-item
+        | 部门
+        span.pull-right#depart 
+block tag
+  include ../includes/foot.jade
+
+block script
+  script(type='text/javascript',src='/diguaApp/js/utils.js')
+  script(type='text/javascript',src='/diguaApp/js/Hybrid.js')
+  script(type='text/javascript',src='/diguaApp/js/my/myInfo.js')

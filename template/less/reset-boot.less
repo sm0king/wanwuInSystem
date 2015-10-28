@@ -1,6 +1,9 @@
 .navbar{
   margin-bottom: 0;
 }
+.list-group {
+    margin-bottom: 0;
+}
 .list-group-item{
   padding: 10px;
 }
@@ -51,6 +54,55 @@ input[type=checkbox], input[type=radio]{
   border-radius: 0;
 }
 
+.btn-danger,
+.btn-danger.focus,
+.btn-danger:focus,
+.btn-danger:hover,
+.btn-danger.active.focus,
+.btn-danger.active:focus,
+.btn-danger.active:hover,
+.btn-danger:active.focus,
+.btn-danger:active:focus,
+.btn-danger:active:hover,
+ {
+    color: @red;
+    background-color: #fff;
+    border-color: @red;
+}
+
+// .btn-primary,
+// .btn-primary.focus,
+// .btn-primary:focus,
+// .btn-primary:hover,
+// .btn-primary.active.focus,
+// .btn-primary.active:focus,
+// .btn-primary.active:hover,
+// .btn-primary:active.focus,
+// .btn-primary:active:focus,
+// .btn-primary:active:hover,
+//  {
+//     color: @blue;
+//     background-color: #fff;
+//     border-color: @blue;
+// }
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus {
+    outline: thin dotted;
+    outline: none;
+    outline-offset: 0;
+}
+
+.btn.active, .btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 
 @media (min-width: 768px){
   .navbar-header {

@@ -1,7 +1,7 @@
 mixin infoList(lt,rt)
   li.list-group-item.info-item
     .left-txt= lt
-    .right-content.text-right= rt 
+    .right-content.text-right.addImage#addImage= rt 
       | >
   
 ul.list-group
@@ -9,42 +9,50 @@ ul.list-group
   li.list-group-item.info-item
     .left-txt.txt-red 超市名称
     .right-content 
-      input.form-control
+      input#marketName.form-control
   p
   li.list-group-item.info-item
     .left-txt 联系人
     .right-content 
-      input.form-control
+      input#linkman.form-control
   li.list-group-item.info-item
     .left-txt 联系电话
     .right-content 
-      input.form-control
+      input#phone.form-control(type="tel")
   li.list-group-item.info-item
     .left-txt.txt-red 地址
     .right-content 
-      select.select.form-control
-        option 全国
-      select.select.form-control
-        option 四川省四川省
-      select.select.form-control
-        option 成都市
+      select#provinces.select.form-control
+        option 省
+      select#city.select.form-control
+        option 市
+      select#district.select.form-control
+        option 区
   li.list-group-item.info-item
     .left-txt
     .right-content 
-      input.form-control.address
+      input#street.form-control.address
       i.glyphicon.glyphicon-map-marker.point#point
   p
   li.list-group-item.info-item
     .left-txt 超市规模
     .right-content 
-      select.form-control
-        option 小型独立超市
+      select#scale.form-control
+        option(value="1") 小卖部
+        option(value="2") 小型独立超市
+        option(value="3") 中型独立超市
+        option(value="4") 连锁超市
+        option(value="5") 饭店
+        option(value="0") 其他
   li.list-group-item.info-item
     .left-txt 经营状况
     .right-content 
-      select.form-control
-        option 无法判断
+      select#state.form-control
+        option(value="1") 好
+        option(value="2") 中
+        option(value="3") 差
+        option(value="0") 无法判断
   li.list-group-item.info-item
     .left-txt 备注
     .right-content 
-      textarea.form-control
+      textarea#remark.form-control

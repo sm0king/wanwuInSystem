@@ -16,22 +16,15 @@ block section
         input#search.form-control(type="text" placeholder="搜索")
       .add-record
         a.btn.btn-primary.btn-lg.btn-block(href="./recordAdd.html") +添加拜访记录
-      .list-date.clearfix.bg-warning
-        span.pull-left 今天（2）
-        span.pull-right.point
-          i.glyphicon.glyphicon-map-marker
-      include ../../includes/record.jade
-
+      #record-list
+        //
+          .list-date.bg-warning
+            span 今天（2）
+            i.glyphicon.glyphicon-map-marker.point.text-right
+          include ../../includes/record.jade
+    #mapPage
+        #mapContainer
+        button.btn#cancel 返回
 block script
-   script.
-      $(function(){
-          $(".point").on("click", function(){
-              window.location.href = "./recordMap.html";
-          });
-          $("#search").on('keyup',function(e){
-              var k = e.keyCode || e.which;
-              if(k == 13){
-                window.location.href = "./recordSearch.html";
-              }
-          });
-      });
+    script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1abff9b9417a4c2a1b5ee2bba67abc4b")
+    script(src="/diguaApp/js/push/recordList.js?201510171751")

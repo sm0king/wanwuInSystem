@@ -2,17 +2,17 @@ doctype html
 html
   head
     title= title
+    meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
-    link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
-    link(rel="stylesheet", href="/css/common.css")
-    script(src="/bower_components/jquery/dist/jquery.min.js")
+    link(rel="stylesheet", href="/diguaApp/plugs/bootstrap/bootstrap.min.css")
+    link(rel="stylesheet", href="/diguaApp/css/common.css")
+    script(src="/diguaApp/plugs/jquery/jquery.js")
     block head
   body
     block top
       include includes/top.jade
     block section
     block tag
-    // script(src="/js/wanwu.js")
     script(type='text/javascript',data-main="config",src="require.js")
     script.
       requirejs(['config'],function(){
@@ -22,4 +22,5 @@ html
         })
       });
   block script
+
   
