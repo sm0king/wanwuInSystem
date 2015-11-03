@@ -35,7 +35,7 @@ block toprightTxt
 
 block section
   section.main
-    div 基本信息
+    li.list 基本信息
     + infoList('头像','新增')(class="right-tip addImage",id="addImage")
     + infoInput('姓名')(id="name")
     + infoInput('手机号')(id="phone")
@@ -49,7 +49,7 @@ block section
           option 请选择
     + infoList('上级','请选择')(id="superior",class="right-tip")
     + infoList('部门','请选择')(id="depart",class="right-tip")
-    div 功能开通
+    li.list 功能开通
     ul.list-group
       + infoSwitch("地推功能")(id="pushFun")
       + infoSwitch("配送功能")(id="shipFun")

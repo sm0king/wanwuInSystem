@@ -10,6 +10,7 @@ $(function(){
                 }
             }
         }
+        emp = '<li class="list-top">员工列表<span class="closebtn">x</span></li>' + emp;
         var h = $(window).height() - 130 ;
         $("#empList").css('height',h).html(emp).show();
     });
@@ -18,10 +19,14 @@ $(function(){
         back.go('./recordList.html');
     });
 
+
+
     $("#empList").on('click','.list-group-item',function(){
         var id = $(this).data('id');
         var url = './recordGuysList.html?id='+id;
         back.go(url);
+    }).on('click','.closebtn',function(){
+        $("#empList").html("").data('id',"").hide();
     });
 
     function load(){

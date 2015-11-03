@@ -17,11 +17,8 @@ $(function(){
         taskId : $("#marketName").data('id'),
         local: $("#point").data('nowpoi')
       };
-      if (!data.shopName) {
-          alert("请填写超市名称");
-      }else if(!data.local){
-          alert("当前无法定位，无法添加地址");
-      }else{
+
+      if (checkData(data)) {
           service.serviceSaveMyRecord(data,function(flag,msg){
               if (flag) {
                   alert("保存成功");
@@ -31,6 +28,24 @@ $(function(){
               }
           });
       }
+    }
+
+    function checkData(data){
+        if (!data.shopName) {
+            alert("请填写超市名称");
+            return false;
+        }else if(!data.local){
+            alert("当前无法定位，添加地址失败");
+            return false;
+        }else if(data.phone != ""){
+            var tel = data.phone;
+            var flag = !!tel.match(/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+            if (!flag) {
+                alert("请填写真实联系电话，如没有请留空!");
+                return false;
+            }
+        }
+        return true;
     }
 
     $("#save").on('click',function(){

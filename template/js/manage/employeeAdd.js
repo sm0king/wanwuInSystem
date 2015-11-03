@@ -20,15 +20,36 @@ $(function(){
       firmFun : $("#firmFun").prop('checked')? 1:0
     };
 
-    service.saveEmployee(data,function(flag,msg){
-        if (flag) {
-          alert('添加成功');
-          history.go(-1);
-        }else {
-          alert(msg);
-        }
-    });
+    if (checkData(data)) {        
+        service.saveEmployee(data,function(flag,msg){
+            if (flag) {
+              alert('添加成功');
+              history.go(-1);
+            }else {
+              alert(msg);
+            }
+        });
+    }
   }
+
+    // 数据格式验证
+    function checkData(data){
+        if (!data.name) {
+            alert("请填写姓名！");
+            return false;
+        }else if(!data.phone){
+            alert("请填写手机号！");
+            return false;
+        }else if(data.phone != ""){
+            var tel = data.phone;
+            var flag = !!tel.match(/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+            if (!flag) {
+                alert("请填写真实联系电话!");
+                return false;
+            }
+        }
+        return true;
+    }
 
   $("#save").on('click',function(){
       saveDate();
