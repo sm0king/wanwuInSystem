@@ -11,9 +11,6 @@ block toprightTxt
 block section
   section.main
     ul.list-group.data-cont
-      li.list-group-item
-        | 我的邀请码
-        span#recommend_code(style="padding:0 10px")
       li.list-group-item.business-data
         div.list-flex
           p 拜访量
@@ -32,5 +29,9 @@ block section
         li.list-group-item
           | 详细数据
           span.badge >
+          //      
+            li.list-group-item
+                | 我的邀请码
+                span#recommend_code(style="padding:0 10px")
 block script
   script(src="/diguaApp/js/push/mybusiness.js")
