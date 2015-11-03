@@ -25,7 +25,6 @@ $(function(){
         $("#search").val(data.phone);
           service.manageGetEmployeeList(data,function(flag,msg){
              if (flag) {
-                // console.log(msg);
                 var dom = "",img;
                 var data = msg.employeeList;
                 if (data.length) {
