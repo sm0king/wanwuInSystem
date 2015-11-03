@@ -3,10 +3,10 @@
 */
 'use strict';
 //加载配置模块。
-define(['jquery'], function($) {
+define(['jquery','md5'], function($) {
     //加载jquery进来。
     //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-    var host = window.location.hostname === 'localhost' ? 'http://123.59.58.104/newosadmin' : 'http://api.wanwu.com/newosadmin';
+    var host = window.location.hostname === 'localhost' ||  ? 'http://123.59.58.104' : 'http://api.wanwu.com' + '/newosadmin';
     var service = {
         catchError: function(error_no) {
             if (error_no == '401') {
@@ -79,7 +79,11 @@ define(['jquery'], function($) {
                         var userInfo = JSON.stringify(reContent.userInfo);
                         window.localStorage.setItem('userInfo', userInfo);
                         //将获取的用户信息存在本地存储中 获取方式为：var  useuInfo = JSON.parse(window.localStorage.getItem('userInfo')); 这样，获取的就是数据对象。
-                        callback(true, reContent.rights);
+                        if (reContent.rights.length > 0) {
+                            callback(true, reContent.rights);
+                        }else{
+                            callback(false,"相关权限还未开通，请联系管理员！");
+                        }
                     } else {
                         callback(false, '登陆失败');
                     }
@@ -295,9 +299,9 @@ define(['jquery'], function($) {
                     taskId: id
                 };
                 this.getData(url, data, function(isTrue, reContent) {
-                    callback(isTrue, reContent)
-                })
-            };
+                    callback(isTrue, reContent);
+                });
+            }
         },
         //保存我的用户详情
         serviceSaveCustomersDetail: function(user, callback) {
@@ -322,8 +326,8 @@ define(['jquery'], function($) {
                     remark: user.remark,
                 };
                 this.getData(url, data, function(isTrue, reContent) {
-                    callback(isTrue, reContent)
-                })
+                    callback(isTrue, reContent);
+                });
             }
         },
         // 获取业务数据
@@ -338,7 +342,7 @@ define(['jquery'], function($) {
                 };
                 this.getData(url, data, function(isTrue, reContent) {
                     callback(isTrue, reContent);
-                })
+                });
             }
         },
         //获取所有员工 （老接口）
@@ -357,19 +361,13 @@ define(['jquery'], function($) {
                 })
             };
         },
-        //获取所有员工
-        manageGetEmployeeList: function(keyValue, page, pageSize, isGroup, callback) {
+        //获取员工列表
+        manageGetEmployeeList: function(data, callback) {
             var url = host + '/manage/employeeListNew';
             var userInfo = this.getUserInfo();
             if (userInfo) {
-                var data = {
-                    userId: userInfo.id,
-                    token: userInfo.token,
-                    phone: keyValue || "",
-                    page: page,
-                    pageSize: pageSize,
-                    isGroup: isGroup || 0
-                };
+                data.userId = userInfo.id;
+                data.token = userInfo.token;
                 this.getData(url, data, function(isTrue, reContent) {
                     callback(isTrue, reContent);
                 })

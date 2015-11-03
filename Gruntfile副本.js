@@ -11,18 +11,16 @@
 module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
-  // 任务执行所用的时间，可以对构建时间优化提供帮助
   require('time-grunt')(grunt);
 
   // Automatically load required grunt tasks
-  // 自动加载需要用到的grunt 任务，加速插件加载
   require('jit-grunt')(grunt, {
       useminPrepare: 'grunt-usemin'
   });
 
   // Configurable paths
   var config = {
-    app: 'app/diguaApp',
+    app: 'app',
     dist: 'dist',
     tpl:'template'
   };
@@ -34,14 +32,13 @@ module.exports = function (grunt) {
     config: config,
 
     // Watches files for changes and runs tasks based on the changed files
-    // 实时监听文件的增删改
     watch: {
       bower: {
         files: ['bower.json'],
-        tasks: ['wiredep','bower']
+        tasks: ['wiredep']
       },
       babel: {
-        files: ['<%= config.app %>/scripts/{,*/}*.js'],
+        files: ['<%= config.tpl %>/scripts/{,*/}*.js'],
         tasks: ['babel:dist']
       },
       babelTest: {
@@ -52,25 +49,13 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       styles: {
-        files: ['<%= config.tpl %>/css/{,*/}*.css'],
-        tasks: ['copy:styles', 'postcss']
+        files: ['<%= config.app %>/styles/{,*/}*.css'],
+        tasks: ['newer:copy:styles', 'postcss']
       },
       //jade变化
       jade:{
         files:['<%= config.tpl %>/**/*.{html,jade}'],
         tasks:['jade']
-      },
-      less:{
-        files: ['<%= config.tpl %>/less/**/*.less'],
-        tasks: ['less'],
-      },
-      images:{
-        files: ['<%= config.tpl %>/images/**/*.*'],
-        tasks: ['copy:images'],
-      },
-      js:{
-        files: ['<%= config.tpl %>/**/*.js'],
-        tasks: ['copy:js'],
       }
     },
 
@@ -89,27 +74,27 @@ module.exports = function (grunt) {
           ],
           port: 9000,
           server: {
-            baseDir: ['./app'],
+            baseDir: [config.app],
             routes: {
               '/bower_components': './bower_components'
             }
           }
         }
       },
-      test: { // 几乎去掉测试部分
-        options: {
-          port: 9001,
-          open: false,
-          logLevel: 'silent',
-          host: 'localhost',
-          server: {
-            baseDir: ['.tmp', './test', config.app],
-            routes: {
-              '/bower_components': './bower_components'
-            }
-          }
-        }
-      },
+      // test: { // 几乎去掉测试部分
+      //   options: {
+      //     port: 9001,
+      //     open: false,
+      //     logLevel: 'silent',
+      //     host: 'localhost',
+      //     server: {
+      //       baseDir: ['.tmp', './test', config.app],
+      //       routes: {
+      //         '/bower_components': './bower_components'
+      //       }
+      //     }
+      //   }
+      // },
       dist: {
         options: {
           background: false,
@@ -134,7 +119,6 @@ module.exports = function (grunt) {
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
-    // 确保代码风格达到标准,没有明显的错误
     eslint: {
       target: [
         'Gruntfile.js',
@@ -145,7 +129,6 @@ module.exports = function (grunt) {
     },
 
     // Mocha testing framework configuration options
-    // 摩卡测试框架配置选项
     mocha: {
       all: {
         options: {
@@ -163,21 +146,21 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= config.app %>/scripts',
+          cwd: '<%= config.tpl %>/scripts',
           src: '{,*/}*.js',
-          dest: '.tmp/scripts',
+          dest: '<%= config.app %>/scripts',
           ext: '.js'
         }]
       },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.js',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
+      // test: {
+      //   files: [{
+      //     expand: true,
+      //     cwd: 'test/spec',
+      //     src: '{,*/}*.js',
+      //     dest: '.tmp/spec',
+      //     ext: '.js'
+      //   }]
+      // }
     },
 
     postcss: {
@@ -201,14 +184,14 @@ module.exports = function (grunt) {
     },
 
     // Automatically inject Bower components into the HTML file
-    // 自动注入bower插件到html文件中
     wiredep: {
-        app: {
-            src: ['<%= config.app %>/*.html'],
-            // exclude: ['bootstrap.js'],
-            ignorePath: /^(\.\.\/)*\.\./
-        }
+      app: {
+        src: ['<%= config.app %>/**/*.{html,jade}'],
+        exclude: ['bootstrap.js'],
+        ignorePath: /^(\.\.\/)*\.\./
+      }
     },
+
     // Renames files for browser caching purposes  取消此部分，暂不对文件重命名
     // filerev: {
     //   dist: {
@@ -342,30 +325,9 @@ module.exports = function (grunt) {
       styles: {
         expand: true,
         dot: true,
-        cwd: '<%= config.tpl %>/css',
-        dest: '<%= config.app %>/css',
+        cwd: '<%= config.tpl %>/styles',
+        dest: '<%= config.app %>/styles/',
         src: '{,*/}*.css'
-      },
-      images:{
-        expand: true,
-        dot: true,
-        cwd: '<%= config.tpl %>/images',
-        dest: '<%= config.app %>/images',
-        src: '{,*/}*.*'
-      },
-      js:{
-        expand: true,
-        dot: true,
-        cwd: '<%= config.tpl %>/',
-        dest: '<%= config.app %>',
-        src: '**/*.js'
-      },
-      plugs:{
-          expand: true,
-          dot: true,
-          cwd: '<%= config.tpl %>/plugs',
-          dest: '<%= config.app %>/plugs',
-          src: '**/*.*'
       }
     },
 
@@ -375,10 +337,10 @@ module.exports = function (grunt) {
         'babel:dist',
         'copy:styles'
       ],
-      test: [
-        'babel',
-        'copy:styles'
-      ],
+      // test: [
+      //   'babel',
+      //   'copy:styles'
+      // ],
       dist: [
         'babel',
         'copy:styles',
@@ -396,41 +358,13 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%= config.tpl %>',
                 dest: '<%= config.app%>',
-                src: ['**/*.html'],//,'*.html'
+                src: ['*.html'],//,'*.html'
                 ext: '.html'
             }]
         }
-    },
-    //bower task
-    bower:{
-      install:{
-        options:{
-          targetDir:'<%= config.tpl %>/plugs',
-          layout:'byComponent',
-          install:true,
-          verbose:false,
-          cleanTargerDir:false,
-          cleanBowerDir:false,
-          bowerOptions:{}
-        }
-      }
-    },
-    less:{
-      options:{
-        compress: true,
-        yuicompress: true
-      },
-      main: {
-        expand: true,
-        cwd: '<%= config.tpl %>/less/',
-        src: ['common.less','login.less'],
-        dest: '<%= config.tpl %>/css/',
-        ext: '.css'
-      },
     }
   });
-  // jit 无法加载 只能手动加载bower任务
-  grunt.loadNpmTasks('grunt-bower-task');
+
 
   grunt.registerTask('serve', 'start the server and preview your app', function (target) {
 
@@ -443,8 +377,6 @@ module.exports = function (grunt) {
       'jade',
       'clean:server',
       // 'wiredep',
-      'less',
-      'copy',
       'concurrent:server',
       'postcss',
       'browserSync:livereload',
@@ -456,32 +388,32 @@ module.exports = function (grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
   });
-  /*
-  grunt.registerTask('test', function (target) {
-    if (target !== 'watch') {
-      grunt.task.run([
-        'clean:server',
-        'concurrent:test',
-        'postcss'
-      ]);
-    }
 
-    grunt.task.run([
-      'browserSync:test',
-      'mocha'
-    ]);
-  });
-  */
+  // grunt.registerTask('test', function (target) {
+  //   if (target !== 'watch') {
+  //     grunt.task.run([
+  //       'clean:server',
+  //       'concurrent:test',
+  //       'postcss'
+  //     ]);
+  //   }
+
+  //   grunt.task.run([
+  //     'browserSync:test',
+  //     'mocha'
+  //   ]);
+  // });
+
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
     'postcss',
-    // 'concat',
-    // 'cssmin',
-    // 'uglify',
-    // 'copy:dist',
+    'concat',
+    'cssmin',
+    'uglify',
+    'copy:dist',
     // 'filerev',
     'usemin',
     'htmlmin'
@@ -489,7 +421,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:eslint',
-    'test',
+    // 'test',
     'build'
   ]);
 };

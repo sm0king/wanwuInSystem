@@ -1,0 +1,10 @@
+block Define
+    -var subTitle ='－－－－我只是一个测试页面';
+extends test.jade
+block content
+    h3.title 我是测试页面的h3标签
+
+script.
+    $(window).unload(function(){
+        debugger
+    });
