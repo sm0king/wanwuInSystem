@@ -47,3 +47,85 @@
         border-top: 1px #eee solid;
     }
 }
+.customerDetail{
+    .flex-body{
+        margin-left:8px;
+        #shopName{
+            margin-top:8px;
+        }
+    }
+}
+.contact{
+    border-top: 1px dashed;
+    margin-top: 12px;
+    padding-top: 8px;
+    em,i{
+        font-style: normal;
+        &:after{
+            content:":";
+            padding-right:6px;
+        }
+    }
+}
+.visitData{
+    font-size:0px;
+    *word-spacing:-1px;
+    white-space:nowrap;
+    text-align:center;
+    background-color: #fff;
+    margin: 8px 0;
+    padding: 0 12px;
+    border: 1px solid #dedede;
+    height: 46px;
+    line-height: 46px;
+    .dib{
+        display: inline-block;
+        *display:inline;
+        *zoom:1;
+        font-size: 12px;
+        letter-spacing: normal;
+        word-spacing: normal;
+        vertical-align:top;
+        text-align:left;
+    }
+    .w10{
+        width:10%;
+    }
+    .w20{
+        width:20%;
+    }
+    .w30{
+        width:30%;
+    }
+    .w40{
+        width:40%;
+        text-align:right;
+    }
+    .orderNumber{
+        &:after{
+            content:"单"
+        }
+    }
+    .money{
+        &:before{
+            content:"￥"
+        }
+    }
+    .moreData{
+        text-align:right;
+    }
+}
+.visitTitle{
+    padding-left:12px
+}
+.visitList{
+    background-color:#fff;
+    .vistTime{
+        display:inline-block;
+        width:20%;
+    }
+    .vistRemark{
+        display:inline-block;
+        width:80%;
+    }
+}
