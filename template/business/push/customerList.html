@@ -1,6 +1,6 @@
 extends ../../common.jade
 block local
-  - var local = "./recordAdd.html";
+  - var local = "./customerAdd.html";
 
 block topleft
   div.navbar-back
@@ -15,39 +15,105 @@ block section
         .search-box
             input#search.form-control(type="text" placeholder="搜索")
         .add-record
-            a.btn.btn-primary.btn-lg.btn-block(href="./recordAdd.html") +添加新的客户
+            a.btn.btn-primary.btn-lg.btn-block(href="./customerAdd.html") +添加新的客户
         #customer-list
-            .list-date.bg-warning
-              span 昨天应该去拜访的客户（2）
-            ul.list-group
+            .list-date.bg-warning.panel-head(data-collapse="lastTask")
+              span 昨天应该去拜访的客户 
+                  b.txt-red（2）
+            ul#lastTask.list-group.panel-main.collapse.in
+                li.list-group-item
+                    a.block(href="#{local}")
+                        .flex
+                            .flex-left.meida-middle
+                                img(src="/diguaApp/images/tuwen.png", alt="")
+                            .flex-body
+                                div 阿里巴巴
+                                div 18215566566
+                                div.address 水水水水水水水水水水水水水水水水水水水
+                                div 2015-09-08
+                            .flex-right 
+                                div.right-center
+                                    p 过去7天 
+                                    p 40单 
+                                    p ￥25003.00 
+                    p.record-txt
+                        | 叭叭叭叭叭叭叭 
+                        time —— 2015-11-05
                 li.list-group-item
                   a.block(href="#{local}")
-                    .media
-                        .media-left.meida-middle
+                    .flex
+                        .flex-left.meida-middle
                             img(src="/diguaApp/images/tuwen.png", alt="")
-                        .media-body
+                        .flex-body
                             div 阿里巴巴
                             div 18215566566
-                            div asdasdasdasdasdasdasdasd
+                            div.address 水水水水水水水水水水水水水水水水水水水
                             div 2015-09-08
-                        .media-right.txt-red 还未添加位置 
+                        .flex-right.txt-red
+                            div.right-center
+                                p 还未注册
+            .list-date.bg-warning.panel-head(data-collapse="todayTask")
+                span 今天应该去拜访的客户（2）
+            ul#todayTask.list-group.panel-main.collapse
                 li.list-group-item
                   a.block(href="#{local}")
-                    .media
-                      .media-left.meida-middle
-                        img(src="/diguaApp/images/tuwen.png", alt="")
-                      .media-body
-                        div 阿里巴巴
-                        div 18215566566
-                        div asdasdasdasdasdasdasdasd
-                        div 2015-09-08
-            .list-date.bg-warning
-                span 今天应该去拜访的客户（2）
-            include ../../includes/record.jade
-            .list-date.bg-warning
+                    .flex
+                        .flex-left.meida-middle
+                            img(src="/diguaApp/images/tuwen.png", alt="")
+                        .flex-body
+                            div 阿里巴巴
+                            div 18215566566
+                            div.address 水水水水水水水水水水水水水水水水水水水
+                            div 2015-09-08
+                        .flex-right 
+                            div.right-center
+                                p 过去7天 
+                                p 40单 
+                                p ￥25003.00 
+                li.list-group-item
+                  a.block(href="#{local}")
+                    .flex
+                        .flex-left.meida-middle
+                            img(src="/diguaApp/images/tuwen.png", alt="")
+                        .flex-body
+                            div 阿里巴巴
+                            div 18215566566
+                            div.address 水水水水水水水水水水水水水水水水水水水
+                            div 2015-09-08
+                        .flex-right.txt-red
+                            div.right-center
+                                p 还未注册
+            .list-date.bg-warning.panel-head(data-collapse="allTask")
                 span 所有拜访的客户（2）
-            include ../../includes/record.jade
+            ul#allTask.list-group.panel-main.collapse
+                li.list-group-item
+                  a.block(href="#{local}")
+                    .flex
+                        .flex-left.meida-middle
+                            img(src="/diguaApp/images/tuwen.png", alt="")
+                        .flex-body
+                            div 阿里巴巴
+                            div 18215566566
+                            div.address 水水水水水水水水水水水水水水水水水水水
+                            div 2015-09-08
+                        .flex-right 
+                            div.right-center
+                                p 过去7天 
+                                p 40单 
+                                p ￥25003.00 
+                li.list-group-item
+                  a.block(href="#{local}")
+                    .flex
+                        .flex-left.meida-middle
+                            img(src="/diguaApp/images/tuwen.png", alt="")
+                        .flex-body
+                            div 阿里巴巴
+                            div 18215566566
+                            div.address 水水水水水水水水水水水水水水水水水水水
+                            div 2015-09-08
+                        .flex-right.txt-red
+                            div.right-center
+                                p 还未注册
 
 block script
-    script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1abff9b9417a4c2a1b5ee2bba67abc4b")
-    script(src="/diguaApp/js/push/customerList.js?201510211424")
+    script(src="/diguaApp/js/push/customerList.js")

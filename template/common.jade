@@ -9,18 +9,16 @@ html
     script(src="/diguaApp/plugs/jquery/jquery.js")
     block head
   body
-    block top
-      include includes/top.jade
-    block section
-    block tag
-    script(type='text/javascript',data-main="config",src="require.js")
-    script.
-      requirejs(['config'],function(){
-        requirejs(['service'],function(service){
-          service.userLogin();
-          debugger;
-        })
-      });
+      #main.page
+        block top
+          include includes/top.jade
+        block section
+        block tag
+        block login
+
+        script(src="/diguaApp/js/utils.js")
+        script(src="/diguaApp/js/back.js")
+        script(src="/diguaApp/js/Hybrid.js")
   block script
 
   

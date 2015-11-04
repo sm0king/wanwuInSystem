@@ -1,0 +1,126 @@
+extends ../../common.jade
+mixin infoList(lt,rt)
+  li.list-group-item.info-item
+    .left-txt= lt
+    .right-content.text-right.addImage#addImage= rt
+      | >
+
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 拜访记录
+block topcenter
+  | 商家详情
+block toprightTxt
+  span#save 保存
+
+block section
+  section.main
+    .record-form
+      ul.list-group
+        + infoList('门店图片','新增')
+        li.list-group-item.info-item
+            .left-txt.txt-red 超市名称
+            .right-content
+                input#marketName.form-control
+
+        li.list-group-item.info-item.mt10
+            .left-txt 联系人
+            .right-content
+                input#linkman.form-control
+        li.list-group-item.info-item
+            .left-txt 联系电话
+            .right-content
+                input#phone.form-control(type="tel")
+        li.list-group-item.info-item
+            .left-txt.txt-red 地址
+            .right-content
+                select#provinces.select.form-control
+                    option 省
+                select#city.select.form-control
+                    option 市
+                select#district.select.form-control
+                    option 区
+        li.list-group-item.info-item
+            .left-txt
+            .right-content
+                input#street.form-control.address
+                i.glyphicon.glyphicon-map-marker.point#point
+
+        li.list-group-item.info-item.mt10
+            .left-txt 超市规模
+            .right-content
+                select#scale.form-control
+                    option(value="1") 小卖部
+                    option(value="2") 小型独立超市
+                    option(value="3") 中型独立超市
+                    option(value="4") 连锁超市
+                    option(value="5") 饭店
+                    option(value="0") 其他
+        li.list-group-item.info-item
+            .left-txt 经营状况
+            .right-content
+                select#state.form-control
+                    option(value="1") 好
+                    option(value="2") 中
+                    option(value="3") 差
+                    option(value="0") 无法判断
+        li.list-group-item.info-item
+            .left-txt 备注
+            .right-content
+                textarea#remark.form-control
+
+        li.list-group-item.info-item.mt10
+            .left-txt 客户等级
+            .right-content
+                select#state.form-control
+                    option(value="1") A级（每天拜访一次）
+                    option(value="2") B级（每周拜访一次）
+                    option(value="3") C级（每月拜访一次）
+                    option(value="0") D级（不指定拜访时间）
+        li.list-group-item.info-item
+            .left-txt 备注
+            .right-content
+                每天
+
+        li.list-group-item.info-item.mt10
+            .left-txt 客户等级
+            .right-content
+                select#state.form-control
+                    option(value="1") A级（每天拜访一次）
+                    option(value="2" selected) B级（每周拜访一次）
+                    option(value="3") C级（每月拜访一次）
+                    option(value="0") D级（不指定拜访时间）
+        li.list-group-item.info-item
+            .left-txt 备注
+            .right-content
+                select#state.form-control
+                    option(value="1") 周一
+                    option(value="2") 周二
+                    option(value="3") 周三
+                    option(value="4") 周四
+                    option(value="5") 周五
+                    option(value="6") 周六
+                    option(value="7") 周日
+    small#time.time.help-block 添加时间 2015-09-28
+    small#time.time.help-block 客户注册时间 2015-09-28
+     #mapPage
+        nav.navbar.navbar-default.navbar-fixed-top
+            .container-fluid
+                .navbar-header
+                    div#cancel.cancel
+                        i.glyphicon.glyphicon-chevron-left
+                        span 返回
+                    div.navbar-content
+                        | 地图详情
+                    div.navbar-info
+        #mapContainer
+        div#option.option
+           span#addrInfo 正在定位中...
+           button.btn.pull-right.addLocal 确定
+        img#pointImg(src="http://webapi.amap.com/images/marker_sprite.png")
+        button.btn#cancel 取消
+block script
+   script(type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1abff9b9417a4c2a1b5ee2bba67abc4b")
+   script(src="/diguaApp/js/push/customerEdit.js")
