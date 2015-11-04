@@ -12,7 +12,7 @@ block section
   section.main
     .record-list
         .add-record
-            a.btn.btn-primary.btn-lg.btn-block(href="javascript:;") 未拜访
+            a.btn.btn-primary.btn-lg.btn-block(href="javascript:;")#clickVisit 未拜访
   section.list-group-item#customer-list.customerDetail
         a.block
             .flex
@@ -66,6 +66,20 @@ block section
                 li.list-group-item.info-item
                     span.vistTime 11-6
                     span.vistRemark 备注.....
-
+  section#visitNotes.visitNotes.clearfix
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+            .navbar-header
+                .navbar-back#backVisitMain
+                    i.glyphicon.glyphicon-chevron-left
+                        span 取消
+                .navbar-content
+                    span [超市名称]拜访记录
+                .navbar-info
+    .visitNotesMain
+        h5.title 拜访记录
+        .visitNotesContent#visitNotesContent
+            textarea(name="visitNotes")
+        a.btn.btn-primary.btn-lg.btn-block(href="javascript:;")#notesClose 完成
 block script
     script(src="/diguaApp/js/push/customerDetail.js")
