@@ -299,13 +299,13 @@ $(function(){
     	if(!navigator.geolocation){
     			alert("不支持位置定位");
     	}else {
-    			navigator.geolocation.getCurrentPosition(function(pos){
-              data = {
-                latitude : pos.coords.latitude,
-        				longitude : pos.coords.longitude,
-              }
-              callback(data);
-    			});
+    		navigator.geolocation.getCurrentPosition(function(pos){
+                data = {
+                    latitude : pos.coords.latitude,
+        			longitude : pos.coords.longitude,
+                }
+                callback(data);
+    		});
     	}
     }
 

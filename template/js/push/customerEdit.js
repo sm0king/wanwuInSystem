@@ -52,6 +52,34 @@ $(function(){
         saveDate();
     });
 
+    $("#level").change(function(event) {
+        switch (event.target.value) {
+            case '1':
+                $("#frequency").html('每天');
+                break;
+            case '2':
+                var list = '<select name="week" class="form-control"><option value="week1">周一</option>'+
+                            '<option value="week2">周二</option>'+
+                            '<option value="week3">周三</option>'+
+                            '<option value="week4">周四</option>'+
+                            '<option value="week5">周五</option>'+
+                            '<option value="week6">周六</option>'+
+                            '<option value="week7">周日</option></select>';
+                $("#frequency").html(list);
+                break;
+            case '3':
+                var dom = '';
+                for (var i = 1; i <= 31 ; i++) {
+                    dom += '<option value="'+ i +'">'+ i +'</option>';
+                }
+                dom = '<select name = "day" class="form-control">'+ dom +'</select>';
+                $("#frequency").html(dom);
+                break;
+            case '4':
+                $("#frequency").html('不指定');
+        }
+    });
+
     function madeOption(data) {
         var pro = data.regions,
             opt = "";

@@ -11,7 +11,7 @@ block topleft
     i.glyphicon.glyphicon-chevron-left
     span 拜访记录
 block topcenter
-  | 商家详情
+  | 编辑客户
 block toprightTxt
   span#save 保存
 
@@ -74,35 +74,16 @@ block section
         li.list-group-item.info-item.mt10
             .left-txt 客户等级
             .right-content
-                select#state.form-control
+                select#level.form-control
                     option(value="1") A级（每天拜访一次）
                     option(value="2") B级（每周拜访一次）
                     option(value="3") C级（每月拜访一次）
                     option(value="0") D级（不指定拜访时间）
         li.list-group-item.info-item
             .left-txt 备注
-            .right-content
+            .right-content#frequency
                 每天
 
-        li.list-group-item.info-item.mt10
-            .left-txt 客户等级
-            .right-content
-                select#state.form-control
-                    option(value="1") A级（每天拜访一次）
-                    option(value="2" selected) B级（每周拜访一次）
-                    option(value="3") C级（每月拜访一次）
-                    option(value="0") D级（不指定拜访时间）
-        li.list-group-item.info-item
-            .left-txt 备注
-            .right-content
-                select#state.form-control
-                    option(value="1") 周一
-                    option(value="2") 周二
-                    option(value="3") 周三
-                    option(value="4") 周四
-                    option(value="5") 周五
-                    option(value="6") 周六
-                    option(value="7") 周日
     small#time.time.help-block 添加时间 2015-09-28
     small#time.time.help-block 客户注册时间 2015-09-28
      #mapPage
