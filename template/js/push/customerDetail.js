@@ -1,17 +1,17 @@
 $(function(){
     $('#clickVisit').bind('click',function(e){
         elmVist = $(this);
-        $('#visitNotes').show()
+        $('#visitNotes').slideDown()
     })
     $('#notesClose').bind('click',function(e){
-        $('#visitNotes').hide();
+        $('#visitNotes').slideUp();
         var notes = $('#visitNotesContent textarea').val();
         $('#clickVisit').html('已拜访')
     })
     $('#backVisitMain').bind('click',function(e){
         e.stopPropagation()
-        $('#visitNotes').hide();
-        $('#visitNotesContent textarea').value('');
+        $('#visitNotes').slideUp();
+        $('#visitNotesContent textarea').val('');
         return false;
     })
 })
