@@ -61,35 +61,39 @@
         },
         getPosition: function(positionDOM) {
             win.positionDOM = positionDOM;
+            //var defer = $.Deferred();
+            //HybridJS.tempFunciton = defer;
             if (HybridJS.browser().android) {
-                AndroidJs.execAndroid(win.showPic, function(e) {
+                AndroidJs.execAndroid(win.showPosition, function(e) {
                     //失败
                     alert('获取地理位置错误,失败原因为：' + e);
                 }, "Wanwu", "getPositionAndroid", '{["name":"tom","sex":"男","age":"24"]}');
             } else {
                 //如果是iOS，调用
-                window.getPositionIos();
+                window.getPositionIos() && alert('版本过于陈旧，请升级！旧版本停止使用。');
             }
+            //return defer.promise();
         }
     };
     win.showPic = function(imgUrl) {
         //成功返回参数
         //imgUrl 为android返回的图片地址
-        if (typeof(imgUrl) == "object") {
+        if (HybridJS.browser().android) {
+            imgUrl = eval(imgUrl);
             imgUrl = imgUrl[0];
         }
         imgUrl = "http://imgcdn.wanwu.com" + imgUrl;
         win.domNode.style.backgroundImage = "url(" + imgUrl + ")";
         win.domNode.dataset.imgUrl = imgUrl;
-    }
+    };
     win.showPosition = function(position){
         //成功返回地址信息，iOS返回的数据格式为： 123.00,12.00 中间有分号 字符串
-        
-        if (typeof(position) && position.indexOf(',') != -1) {
+        if (!HybridJS.browser().android && position.indexOf(',') != -1) {
             position =  position.split(',');
             var positionData = '{"latitude":"'+position[0]+'","longitude":"'+position[1]+'"}';
-        };
-        win.positionDOM.dataset.position = positionData || '';
-    }
-    win.HybridJS = win.AndroidJs
+        }
+        win.positionDOM.value = positionData || '';
+        //HybridJS.tempFunciton.done();
+    };
+    win.HybridJS = win.AndroidJs;
 })(window, jQuery);
