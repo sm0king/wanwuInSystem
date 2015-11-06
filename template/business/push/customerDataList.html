@@ -1,0 +1,54 @@
+extends ../../common.jade
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 客户信息
+block toprightTxt
+  span#add 添加新客户
+
+block section
+  section.main
+    .record-list#customerData
+        .search-box
+            input#search.form-control(type="text" placeholder="搜索客户姓名/手机号")
+        #screenBox.screen-box
+            .inline-box
+                select#depart.form-control(name="depart")
+                    option(value="0") 所有部门
+            .inline-box
+                select#employ.form-control(name="employ")
+                    option(value="0") 所有人
+            #searchSome.search
+                i.glyphicon.glyphicon-search
+        .sort-box
+            div.sort-item.txt-red
+                a(href="javascript:;" data-sort="asc" data-field="level").asc 等级
+            div.sort-item
+                a(href="javascript:;" data-sort="desc" data-field="money").desc 金额
+            div.sort-item
+                a(href="javascript:;" data-sort="desc" data-field="time").desc 时间
+            div.sort-item.pointbox
+                i.glyphicon.glyphicon-map-marker.point#point
+        #customerDataList
+            ul.list-group
+                li.list-group-item.list-item
+                    div.item-line 
+                        b 超市名称
+                        span.left 七天订单：￥12665.00
+                    div 
+                        span.mr20 业务员
+                        span 最近到访：11-15
+                li.list-group-item.list-item
+                    div.item-line 
+                        b 超市名称
+                        span.left 七天订单：￥12665.00
+                    div 
+                        span.mr20 业务员
+                        span 最近到访：11-15
+block script
+    script(src="/diguaApp/js/push/customerDataList.js")

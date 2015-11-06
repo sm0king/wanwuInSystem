@@ -685,7 +685,19 @@
             this.getData(url, data, function(isTrue, reContent) {
                 callback(isTrue, reContent);
             });
-        }
+        },
+
+        // 【客户管理】  获取部门
+        getSubDepartmentList: function(data,callback){
+            var url = host + '/department/getSubDepartmentList';
+            var userInfo = this.getUserInfo();
+            data.userId = userInfo.id,
+            data.token = userInfo.token
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            });
+        },
+        
 
     };
 })(window, jQuery);
