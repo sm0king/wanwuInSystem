@@ -1,0 +1,37 @@
+extends ../../common.jade
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 返回
+block topcenter
+  | 订单列表
+
+
+block section
+  section.main
+    .record-list
+        ul#orderList.list-group.mt10
+            a(href="")
+                li.list-group-item
+                    p.clearfix
+                        span.pull-left 订单号：201509203256
+                        span.pull-right 已支付
+                    p.clearfix
+                        span.pull-left.txt-red.ordertime 下单时间：2015-09-08 17:46:47
+                        span.pull-right 已支付
+                    .orderlist.clearfix
+                        .order-left.text-over
+                            img.img-item(src="/diguaApp/images/tuwen.png", alt="")
+                            img.img-item(src="/diguaApp/images/tuwen.png", alt="")
+                            img.img-item(src="/diguaApp/images/tuwen.png", alt="")
+                            img.img-item(src="/diguaApp/images/tuwen.png", alt="")
+                        .order-right
+                            b.goods-num 共36件
+                    p.all-price
+                        span ￥ 998.00
+
+block script
+    script(src="/diguaApp/js/push/customerDataList.js")

@@ -521,6 +521,7 @@
               '员工管理':'./business/manage/employeeList.html',
               '部门管理':'./business/manage/departmentList.html',
               '客户管理':'/newosadmin/customer/index',
+              '客户信息':'/newosadmin/customer/getCustomerData',
               // '配送业绩':'./business/manage/distributionList.html',
               // '厂商管理':'#',
             }[url_name] || 'javascript:;';
@@ -697,7 +698,7 @@
                 callback(isTrue, reContent);
             });
         },
-        
+
 
     };
 })(window, jQuery);

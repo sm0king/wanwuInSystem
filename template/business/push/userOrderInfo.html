@@ -1,0 +1,52 @@
+extends ../../common.jade
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 订单列表
+block topcenter
+  | 订单详情
+
+
+block section
+  section.main
+    .record-list
+        ul#orderInfo.list-group.mt10
+            li.list-group-item
+                div.clearfix
+                    span.pull-left 订单号：201509203256
+                    span.pull-right 已支付
+            li.list-group-item.mt10
+                div 超市名称
+                div 收货人
+                div 联系电话
+                div 地址
+            li.list-group-item.mt10
+                div 供应商名称
+                div 联系人
+                div 联系电话
+                div 地址
+            li.list-group-item.mt10
+                .media
+                    .media-left
+                        a.block(href="#")
+                            img.media-object(src="/diguaApp/images/tuwen.png", alt="")
+                    .media-body
+                        | 商品名称商品名称商品名称商品名称商品名称
+                    .media-left.text-right X 23
+            li.list-group-item
+                .media
+                    .media-left
+                        a.block(href="#")
+                            img.media-object(src="/diguaApp/images/tuwen.png", alt="")
+                    .media-body
+                        | 商品名称商品名称商品名称商品名称商品名称
+                    .media-left.text-right X 23
+            li.list-group-item.mt10
+                div 订金金额：￥ 3025.60
+                div 支付方式：线上支付
+                div 支付状态：已支付
+block script
+    script(src="/diguaApp/js/push/customerDataList.js")
