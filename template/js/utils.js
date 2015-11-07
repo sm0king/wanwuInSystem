@@ -699,6 +699,16 @@
             });
         },
 
+        // 【客户信息】 获取列表坐标值
+        getCustomerLocation: function(data,callback){
+            var url = host + '/customer/getCustomerLocation';
+            var userInfo = this.getUserInfo();
+            data.userId = userInfo.id,
+            data.token = userInfo.token
+            this.getData(url, data, function(isTrue, reContent) {
+                callback(isTrue, reContent);
+            });
+        }
 
     };
 })(window, jQuery);
