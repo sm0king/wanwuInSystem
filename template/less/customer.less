@@ -204,7 +204,7 @@
             border: 5px solid transparent;
             border-bottom-color: #333;
             position: absolute;
-            top: 0; 
+            top: 0;
             right: -16px;
         }
     }
@@ -231,29 +231,27 @@
 
 }
 
-#customerDataList{
-    .list-item{
-        position: relative;
-        padding-right: 24px;
-        font-size: 12px;
-        &::after{
-            content: ">";
-            width: 18px;
-            height: 18px;
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            margin-top: -9px;
+.list-item{
+    position: relative;
+    padding-right: 24px;
+    font-size: 12px;
+    &::after{
+        content: ">";
+        width: 18px;
+        height: 18px;
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -9px;
+    }
+    .item-line {
+        margin-bottom: 5px;
+        .right{
+            float: right;
         }
-        .item-line {
-            margin-bottom: 5px;
-            .right{
-                float: right;
-            }
-        }
-        .mr20{
-            margin-right: 20px;
-        }
+    }
+    .mr20{
+        margin-right: 20px;
     }
 }
