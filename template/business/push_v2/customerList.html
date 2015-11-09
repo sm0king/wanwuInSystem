@@ -1,0 +1,50 @@
+extends ../../common.jade
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 取消
+block topcenter
+  | 选择客户
+
+block section
+  section.main
+    .record-list
+        .search-box
+            input#search.form-control(type="text" placeholder="搜索客户姓名/手机号")
+        #customer-list.mt10
+            ul#lastTask.list-group
+                a.block(href="#")
+                    li.list-group-item
+                        .flex
+                            .flex-left.meida-middle
+                                img(src="/diguaApp/images/tuwen.png", alt="")
+                            .flex-body
+                                div 阿里巴巴
+                                div.address(data-lng="30",data-lat="104")
+                                    i.glyphicon.glyphicon-map-marker.point#point
+                                    | 水水水水水水水水水水水水水水水水水水水
+                                div 2.5km
+                                div.txt-red 2015-09-08
+                            .flex-right
+                                div.right-center.text-right
+                                    .btn.btn-primary.sign  签到
+                a.block(href="#")
+                    li.list-group-item
+                        .flex
+                            .flex-left.meida-middle
+                                img(src="/diguaApp/images/tuwen.png", alt="")
+                            .flex-body
+                                div 阿里巴巴
+                                div.address
+                                    i.glyphicon.glyphicon-map-marker.point#point
+                                    | 水水水水水水水水水水水水水水水水水水水
+                                div 2.5km
+                                div.txt-red 2015-09-08
+                            .flex-right
+                                div.right-center.text-right
+                                    div.btn.btn-default.disabled 已签到
+block script
+    script(src="/diguaApp/js/push_v2/customerList.js")

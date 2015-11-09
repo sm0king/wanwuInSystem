@@ -1,0 +1,33 @@
+extends ../../common.jade
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 取消
+block topcenter
+  | 签到
+
+block section
+  section.main
+    .record-list
+        form(action="" method="")
+            ul.list-group.mt10
+                li.list-group-item.info-item
+                    .left-txt 签到超市
+                    .right-content 巴拉巴拉
+                li.list-group-item.info-item
+                    .left-txt 签到时间
+                    .right-content 2015-11-06 10:58:25
+                li.list-group-item.info-item
+                    .left-txt 签到时定位
+                    #poiInfo.right-content.text 巴拉巴拉
+                    input#poiInput.hide(name="address")
+            li.list
+                p 签到记录
+                textarea(rows="6" style="width:100%;")
+            .large-btnbox
+                button.btn.btn-lg.btn-block(type="submit") 完成
+block script
+    script(src="/diguaApp/js/push_v2/recordMark.js")

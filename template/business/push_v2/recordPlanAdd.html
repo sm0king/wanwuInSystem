@@ -1,0 +1,31 @@
+extends ../../common.jade
+block head
+    link(rel="stylesheet", href="/diguaApp/plugs/datepicker/bootstrap-datepicker.min.css")
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 取消
+block topcenter
+  | 添加临时拜访计划
+
+block section
+  section.main
+    .record-list
+        form(action="" method="")
+            ul.list-group.mt10
+                li.list-group-item.right-tip.info-item
+                    .left-txt 拜访超市
+                    .right-content
+                li.list-group-item.info-item
+                    .left-txt 拜访时间
+                    .right-content
+                        input.datepicker.form-control(data-provide="datepicker")
+            .large-btnbox
+                button.btn.btn-lg.btn-block(type="submit") 完成
+block script
+    script(src="/diguaApp/plugs/datepicker/bootstrap-datepicker.min.js")
+    script(src="/diguaApp/plugs/datepicker/bootstrap-datepicker.zh-CN.min.js")
+    script(src="/diguaApp/js/push_v2/recordPlanAdd.js")

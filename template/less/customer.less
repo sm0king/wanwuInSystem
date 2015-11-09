@@ -10,7 +10,7 @@
         }
 
         .flex-body{
-            .box-flex(2);
+            .box-flex(3);
             .address{
                 word-break:break-all;
             }
@@ -29,10 +29,6 @@
                 text-align: right;
             }
         }
-    }
-
-    .list-date{
-        border-bottom: 1px #ddd solid;
     }
 
     .list-group-item{
@@ -253,5 +249,33 @@
     }
     .mr20{
         margin-right: 20px;
+    }
+}
+
+.time-box{
+    background: #fff;
+    .week-frame{
+        line-height: 32px;
+        margin-bottom: 5px;
+    }
+    .week-frame,.week-group{
+        .flex;
+    }
+    .last-week,.next-week,.week-item{
+        .box-flex(1);
+        text-align: center;
+    }
+    .this-week{
+        width: 80%;
+        text-align: center;
+    }
+    .week-group{
+        border-top: 1px #ccc solid;
+        border-bottom: 1px #ccc solid;
+    }
+    .week-item{
+        border-left: 1px #ccc solid;
+        padding: 5px;
+        line-height: 24px;
     }
 }

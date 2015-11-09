@@ -1,0 +1,79 @@
+extends ../../common.jade
+block local
+  - var local = "./customerAdd.html";
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 业务
+block topcenter
+  | 客户管理
+
+block section
+  section.main
+    .record-list
+        div.time-box
+            .week-frame
+                .last-week <
+                .this-week 11月9日 —— 11月15日
+                .next-week.text-right >
+            .week-group
+                .week-item
+                    div 一
+                    div 9
+                .week-item
+                    div 二
+                    div 10
+                .week-item
+                    div 三
+                    div 11
+                .week-item
+                    div 四
+                    div 12
+                .week-item
+                    div 五
+                    div 13
+                .week-item
+                    div 六
+                    div 14
+                .week-item
+                    div 日
+                    div 15
+        #customer-list
+            .list-date
+              span 今日需要拜访的客户
+            ul#lastTask.list-group
+                a.block(href="#")
+                    li.list-group-item
+                        .flex
+                            .flex-left.meida-middle
+                                img(src="/diguaApp/images/tuwen.png", alt="")
+                            .flex-body
+                                div 阿里巴巴
+                                div.address(data-lng="30",data-lat="104")
+                                    i.glyphicon.glyphicon-map-marker.point#point
+                                    | 水水水水水水水水水水水水水水水水水水水
+                                div 2.5km
+                                div.txt-red 2015-09-08
+                            .flex-right
+                                div.right-center.text-right
+                                    .btn.btn-primary.sign  签到
+                a.block(href="#")
+                    li.list-group-item
+                        .flex
+                            .flex-left.meida-middle
+                                img(src="/diguaApp/images/tuwen.png", alt="")
+                            .flex-body
+                                div 阿里巴巴
+                                div.address
+                                    i.glyphicon.glyphicon-map-marker.point#point
+                                    | 水水水水水水水水水水水水水水水水水水水
+                                div 2.5km
+                                div.txt-red 2015-09-08
+                            .flex-right
+                                div.right-center.text-right
+                                    div.btn.btn-default.disabled 已签到
+            li.list-group-item.text-center
+                a.block(href="./recordPlanAdd.html") + 添加拜访计划
+block script
+    script(src="/diguaApp/js/push_v2/customerManage.js")

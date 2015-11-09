@@ -508,12 +508,12 @@
                 })
         },
         getBusinessUrl: function(url_name,isChild){
-            var record;
-            if (isChild) {
-                record = './business/push/recordMyGuys.html';
-            }else {
-                record = './business/push/recordList.html';
-            }
+            // var record;
+            // if (isChild) {
+            //     record = './business/push/recordMyGuys.html';
+            // }else {
+            //     record = './business/push/recordList.html';
+            // }
             var url = {
             //   '拜访记录':record,
             //   '我的用户':'./business/push/myUserList.html',
@@ -709,6 +709,17 @@
             this.getData(url, data, function(isTrue, reContent) {
                 callback(isTrue, reContent);
             });
+        },
+
+        // H5获取当前地理坐标
+        getH5Local: function(callback){
+            if(!navigator.geolocation){
+                alert("不支持位置定位");
+            }else {
+               navigator.geolocation.getCurrentPosition(function(poi){
+                   callback(poi.coords);
+               });
+            }
         }
 
     };
