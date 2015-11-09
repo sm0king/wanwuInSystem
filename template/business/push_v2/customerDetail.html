@@ -1,0 +1,86 @@
+extends ../../common.jade
+
+block topleft
+  div.navbar-back
+    i.glyphicon.glyphicon-chevron-left
+    span 客户管理
+block topcenter
+  | 客户详情
+block toprightTxt
+    span#edit 编辑
+block section
+  section.main
+    .record-list
+        .add-record
+            a.btn.btn-primary.btn-lg.btn-block(href="javascript:;")#clickVisit 未拜访
+  section.list-group-item#customer-list.customerDetail
+        a.block
+            .flex
+                .flex-left.meida-middle
+                    img(src="/diguaApp/images/tuwen.png", alt="超市图片")
+                .flex-body
+                    h3#shopName 超市名称
+                    div
+                        span#addTime 添加时间
+                        | /
+                        span#regTime 注册时间
+        div#contact.contact
+            .contactPhone
+                em 联系人
+                span 手机号.....
+            .contactAddress
+                em 详细地址
+                span 详细地址
+  section.visitData
+    //数据
+    div.dib.w30
+        span 最近七天
+    div.dib.w20
+        span.orderNumber 4
+    div.dib.w30
+        span.money 2365.2
+    div.dib.w20
+        span.moreData 更多数据 >
+  section
+    //拜访记录
+    div.visitTitle 拜访记录
+    div.visitList
+        ul.list-group
+            a
+                li.list-group-item.info-item
+                    span.vistTime 11-10
+                    span.vistRemark 备注.....
+            a
+                li.list-group-item.info-item
+                    span.vistTime 11-9
+                    span.vistRemark 备注.....
+            a
+                li.list-group-item.info-item
+                    span.vistTime 11-8
+                    span.vistRemark 备注.....
+            a
+                li.list-group-item.info-item
+                    span.vistTime 11-7
+                    span.vistRemark 备注.....
+            a
+                li.list-group-item.info-item
+                    span.vistTime 11-6
+                    span.vistRemark 备注.....
+  section#visitNotes.visitNotes.clearfix
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+            .navbar-header
+                .left-back#backVisitMain
+                    i.glyphicon.glyphicon-chevron-left
+                        span 取消
+                .navbar-content
+                    span [超市名称]拜访记录
+                .navbar-info
+    .visitNotesMain
+        h5.title 拜访记录
+        .visitNotesContent#visitNotesContent
+            textarea(name="visitNotes")
+        a.btn.btn-primary.btn-lg.btn-block(href="javascript:;")#notesClose 完成
+block script
+    script(src="/diguaApp/plugs/velocity/velocity.min.js")
+    script(src="/diguaApp/js/push/customerDetail.js")
