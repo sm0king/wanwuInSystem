@@ -29,18 +29,20 @@ $(function(){
       alert('你没有相关权限');
   });
 
-  function madeDom(data,isChild){
+  function madeDom(data){
     var menu = "",list = "",myclass = "",url,status = "";
     for (var i = 0; i < data.length; i++) {
-      url = service.getBusinessUrl(data[i].title,isChild);
-      if (url != 'javascript:;') {
-        list += '<a href="'+ url +'">'+
-                '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title;
-        if (data[i].isNum) {
-          list += '<span class="badge">'+data[i].isNum+'</span>';
-        };
-        list +='</li></a>';
-      }
+        if (data[i].isMenu == '1') {
+            url = service.getBusinessUrl(data[i]);
+            if (url != 'javascript:;') {
+                list += '<a href="'+ url +'">'+
+                        '<li class="list-group-item info-item '+ myclass +'">'+ data[i].title;
+            if (data[i].isNum) {
+                list += '<span class="badge">'+data[i].isNum+'</span>';
+            };
+            list +='</li></a>';
+            }
+        }
       // myclass = url == 'javascript:;' ? 'no-right' : "";
       // status = url == 'javascript:;' ? '<span class="text-right right-content txt-red">暂未开通</span>' : "";
       // list += '<a href="'+ url +'">'+
@@ -84,9 +86,9 @@ $(function(){
     }
   }
   function getUserRight(callback){
-    service.getMyMessage(function(isTrue,rightData,isChild){
+    service.getMyMessage(function(isTrue,rightData){
       if (isTrue) {
-        var dom = madeDom(rightData,isChild);
+        var dom = madeDom(rightData);
         callback(dom)
       }else{
         rightData && alert(rightData);

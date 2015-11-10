@@ -1,6 +1,6 @@
 (function(win,$){
   //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
-  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : 'http://www.wanwu.com/newosadmin';
+  var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : '/newosadmin';
   win.service = {
       catchError: function(error_no) {
           if (error_no == '401') {
@@ -20,6 +20,7 @@
               '400': '您没有相关权限',
               '402': '系统异常，请稍候再试',
               '404': '系统不允许的操作',
+              '405': '手机号码已经存在',
               '500': '服务器错误，请稍候再试',
           }[error_no] || '未知或者网络错误！';
           return error_messge;
@@ -181,6 +182,83 @@
               });
           }
       },
+
+      //编辑客户
+      /**
+       * [function description]
+       * @param  {[type]}   record  [传参]
+       * @param  {Function} callback [description]
+       * @return {[type]}            [description]
+       */
+      editCustomer: function(record , callback) {
+          var url = host + '/customer/saveCustomer';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId: userInfo.id,
+                  token: userInfo.token,
+                  id: record.id || "",
+                  phone: record.phone,
+                  shopName: record.shopName,
+                  shopLogo: record.shopLogo || "/diguaApp/images/tuwen.png",
+                  consignee: record.consignee,
+                  pid: record.pid,
+                  cid: record.cid,
+                  did: record.did,
+                  parentId: record.parentId || 0,
+                  location: record.local,
+                  address: record.address,
+                  scales: record.scales,
+                  runningState: record.state,
+                  remark: record.remark || "",
+                  shopLevel: record.shopLevel,
+                  week: record.week,
+                  day: record.day,
+              };
+              this.getData(url, data, function(isTrue, reContent) {
+                  callback(isTrue, reContent);
+              });
+          }
+      },
+
+      //新增客户
+      /**
+       * [function description]
+       * @param  {[type]}   record  [传参]
+       * @param  {Function} callback [description]
+       * @return {[type]}            [description]
+       */
+      addCustomer: function(record , callback) {
+          var url = host + '/customer/saveCustomer';
+          var userInfo = this.getUserInfo();
+          if (userInfo) {
+              var data = {
+                  userId: userInfo.id,
+                  token: userInfo.token,
+                  taskId: record.taskId || "",
+                  phone: record.phone,
+                  shopName: record.shopName,
+                  shopLogo: record.shopLogo || "/diguaApp/images/tuwen.png",
+                  consignee: record.consignee,
+                  pid: record.pid,
+                  cid: record.cid,
+                  did: record.did,
+                  parentId: record.parentId || 0,
+                  location: record.local,
+                  address: record.address,
+                  scales: record.scales,
+                  runningState: record.state,
+                  remark: record.remark || "",
+                  shopLevel: record.shopLevel,
+                  week: record.week,
+                  day: record.day,
+              };
+              this.getData(url, data, function(isTrue, reContent) {
+                  callback(isTrue, reContent);
+              });
+          }
+      },
+
       //获取地址列表
       serviceGetAddress: function(region, callback) {
           var url = host + '/service/getAddress';
@@ -507,25 +585,17 @@
                     console.log("error");
                 })
         },
-        getBusinessUrl: function(url_name,isChild){
-            // var record;
-            // if (isChild) {
-            //     record = './business/push/recordMyGuys.html';
-            // }else {
-            //     record = './business/push/recordList.html';
-            // }
+        getBusinessUrl: function(url_name){
             var url = {
-            //   '拜访记录':record,
             //   '我的用户':'./business/push/myUserList.html',
               '业务数据':'./business/push/myBusiness.html',
               '员工管理':'./business/manage/employeeList.html',
               '部门管理':'./business/manage/departmentList.html',
-              '客户管理':'/newosadmin/customer/index',
-              '客户信息':'/newosadmin/customer/getCustomerData',
-              '我的业绩':'/newosadmin/count/myScore',
+            //   '客户管理':'/newosadmin/customer/index',
+            //   '客户信息':'/newosadmin/customer/getCustomerData',
+            //   '我的业绩':'/newosadmin/count/myScore',
               // '配送业绩':'./business/manage/distributionList.html',
-              // '厂商管理':'#',
-            }[url_name] || 'javascript:;';
+          }[url_name.title] || '/newosadmin' + url_name.action;
             return url;
         },
         getScale: function(key) {
@@ -644,11 +714,7 @@
                 // window.localStorage.setItem('userRight', userRight);
                 if (isTrue) {
                     var rightList = reContent.result;
-                    service.getMyChildrenUser(function(flag, msg){
-                        if (flag) {
-                            callback(true,rightList,msg.isChild);
-                        }
-                    });
+                    callback(true,rightList);
                 }else{
                     callback(false,reContent);
                 }
