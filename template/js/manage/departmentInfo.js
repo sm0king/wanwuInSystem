@@ -14,9 +14,7 @@ $(function(){
       if (checkData(data)) {
         service.departmentUpdate(data,function(flag,msg){
             if (flag) {
-              alert('编辑成功');
-              // var url = './departmentList.html';
-              // back.go(url);
+              Msg.alert('编辑成功');
               history.go(-1);
             }else {
               alert(msg);
@@ -28,11 +26,11 @@ $(function(){
 
     function checkData(data){
         if (data.departmentName == "") {
-           alert('请填写部门名称');
+           Msg.alert('请填写部门名称');
            return false;
         }
         if (!data.chargeId) {
-          alert('请选择部门负责人');
+          Msg.alert('请选择部门负责人');
           return false;
         }
         return true;
@@ -60,6 +58,20 @@ $(function(){
     $("#noticePanel").on('click','#cancel',function(){
         $('#noticePanel').find('textarea').val($("#notice").html());
         $("#noticePanel").hide();
+    });
+
+    $("#del").on('click',function(){
+        var id = service.getSearch('id');
+        Msg.confirm("确认撤销该部门？ （撤消后该部门员工部门需要重新设置）","确认","取消",function(){
+            service.departmentDelete(id,function(flag,msg){
+                if (flag) {
+                    Msg.alert("撤销成功！快去设置原部门员工所属部门吧~",1500);
+                    history.go(-1);
+                }else {
+                    Msg.alert("撤销失败！");
+                }
+            })
+        });
     });
 
     $("#leader").on('click',function(){

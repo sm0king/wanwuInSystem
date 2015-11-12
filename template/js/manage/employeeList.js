@@ -16,7 +16,7 @@ $(function() {
           url = './employeeInfo.html?id=' + id;
           back.go(url);
         } else {
-          alert('不能编辑');
+          Msg.tip('请在 我的资料 中修改自己的信息',2000);
         }
     }).on('click','.link-more.conceal',function(){
         var arg = {
@@ -96,7 +96,7 @@ $(function() {
           list += '<li class="list-group-item ' + control + '" data-id="' + emp[i].id + '">' +
               '<div class="media">' +
               '<div class="media-left meida-middle w20">' +
-              '<img src="' + img + '" style="max-height:60px;"></div>' +
+              '<img src="' + img + '"></div>' +
               '<div class="media-body w60">' +
                   '<div>' + emp[i].name + '</div>' +
                   '<div> ' + emp[i].phone + ' </div>'+

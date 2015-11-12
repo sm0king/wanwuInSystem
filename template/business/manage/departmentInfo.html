@@ -45,7 +45,7 @@ block section
         div#notice.notice
       .text-right.right-align
         | >
-    li.list 部门成员
+    li.list 部门成员(修改成员请在员工管理中操作)
     ul#departEmployee.depart-inline
       //
         li.depart-list
@@ -71,6 +71,8 @@ block section
     p
     + infoList('负责人','')(id="leader")
     small#creatTime.time.help-block
+    .large-btnbox
+      button#del.btn.btn-danger.btn-lg.btn-block 撤销该部门
 
     #searchPanel.z-panel
       .record-list
@@ -78,7 +80,6 @@ block section
           input#search.left-input.form-control(type="text" placeholder="搜索")
           div.right-btn.cancel 取消
         #searchList.search-list
-
     #noticePanel.z-panel
       div.notice-box
         textarea.form-control(name="name")

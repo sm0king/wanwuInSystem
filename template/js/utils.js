@@ -588,7 +588,7 @@
         getBusinessUrl: function(url_name){
             var url = {
             //   '我的用户':'./business/push/myUserList.html',
-              '业务数据':'./business/push/myBusiness.html',
+            //   '业务数据':'./business/push/myBusiness.html',
               '员工管理':'./business/manage/employeeList.html',
               '部门管理':'./business/manage/departmentList.html',
             //   '客户管理':'/newosadmin/customer/index',

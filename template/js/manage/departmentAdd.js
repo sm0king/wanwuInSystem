@@ -13,9 +13,7 @@ $(function(){
         if (checkData(data)) {
           service.departmentUpdate(data,function(flag,msg){
               if (flag) {
-                alert('添加成功');
-                // var url = './departmentList.html';
-                // back.go(url);
+                Msg.alert('添加成功');
                 history.go(-1);
               }else {
                 alert(msg);
@@ -26,11 +24,11 @@ $(function(){
 
       function checkData(data){
           if (data.departmentName == "") {
-             alert('请填写部门名称');
+             Msg.alert('请填写部门名称');
              return false;
           }
           if (!data.chargeId) {
-            alert('请选择部门负责人');
+            Msg.alert('请选择部门负责人');
             return false;
           }
           return true;

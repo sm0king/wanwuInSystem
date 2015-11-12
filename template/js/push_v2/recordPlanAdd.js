@@ -1,7 +1,7 @@
 $(function(){
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
-        startDate: '-3d',
+        startDate: '0d',
         language: 'zh-CN'
     })
 })
