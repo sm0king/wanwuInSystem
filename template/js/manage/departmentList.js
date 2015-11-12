@@ -35,8 +35,10 @@ $(function(){
                              '<div class="caption">'+data[i].employeeList.employeeList[j].name+'</div></li>';
                     }
                   }
-                  dom = '<li class="depart-list"><img src="' + (data[i].employeeList.charge[0].img || '/diguaApp/images/user.png') +'" >'+
-                        '<div class="caption">' + data[i].employeeList.charge[0].name + '</div></li>' + dom;
+                  if (data[i].employeeList.charge.length) {
+                      dom = '<li class="depart-list"><img src="' + (data[i].employeeList.charge[0].img || '/diguaApp/images/user.png') +'" >'+
+                            '<div class="caption">' + data[i].employeeList.charge[0].name + '</div></li>' + dom;
+                  }
                 }else {
                   dom = '<div class="text-center">暂无成员</div>'
                 }
