@@ -29,12 +29,14 @@ $(function(){
                 if (data[i].employeeList.employeeList.length > 0) {
                   for (var j = 0; j < data[i].employeeList.employeeList.length; j++) {
                     if (j < 5) {
-                      img = data[i].employeeList.employeeList[j].img ? data[i].employeeList.employeeList[j].img : '/diguaApp/images/tuwen.png';
+                      img = data[i].employeeList.employeeList[j].img ? data[i].employeeList.employeeList[j].img : '/diguaApp/images/user.png';
                       dom += '<li class="depart-list">'+
                              '<img src="' + img +'" >'+
                              '<div class="caption">'+data[i].employeeList.employeeList[j].name+'</div></li>';
                     }
                   }
+                  dom = '<li class="depart-list"><img src="' + (data[i].employeeList.charge[0].img || '/diguaApp/images/user.png') +'" >'+
+                        '<div class="caption">' + data[i].employeeList.charge[0].name + '</div></li>' + dom;
                 }else {
                   dom = '<div class="text-center">暂无成员</div>'
                 }

@@ -6,7 +6,7 @@ $(function() {
     var data = {
       name: str($("#name").val()),
       phone: str($("#phone").val()),
-      img: $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
+      img: $("#addImage").data('imgUrl') || '/diguaApp/images/user.png',
       email: str($("#email").val()),
       pid: str($('#provinces').val()),
       cid: str($("#city").val()),
@@ -125,7 +125,7 @@ $(function() {
         var dom = "",
           img;
         for (var i = 0; i < list.length; i++) {
-          img = list[i].img ? list[i].img : "/diguaApp/images/tuwen.png";
+          img = list[i].img ? list[i].img : "/diguaApp/images/user.png";
           dom += '<li class="list-group-item employee-item" data-id="' + (list[i].user_id || list[i].id) + '">' +
             '<div class="media">' +
             '<div class="media-left meida-middle w20">' +
@@ -153,7 +153,7 @@ $(function() {
           img;
         var list = msg.departmentList;
         for (var i = 0; i < list.length; i++) {
-          img = list[i].img ? list[i].img : "/diguaApp/images/tuwen.png";
+          img = list[i].img ? list[i].img : "/diguaApp/images/department.png";
           dom += '<li class="list-group-item depart-item" data-id="' + (list[i].user_id || list[i].id) + '">' +
             '<div class="media">' +
             '<div class="media-left meida-middle w20">' +

@@ -92,7 +92,7 @@ $(function() {
               control = "";
               guys = emp[i].guysNumber ? '<div class="guys-link"><div class="myguys"></div><p class="link-more conceal" data-id="'+ emp[i].id +'" data-num="'+ emp[i].guysNumber +'">点击查看他的'+ emp[i].guysNumber +'个下级</p></div>' : "";
           }
-          img = emp[i].img ? emp[i].img : '/diguaApp/images/tuwen.png';
+          img = emp[i].img ? emp[i].img : '/diguaApp/images/user.png';
           list += '<li class="list-group-item ' + control + '" data-id="' + emp[i].id + '">' +
               '<div class="media">' +
               '<div class="media-left meida-middle w20">' +

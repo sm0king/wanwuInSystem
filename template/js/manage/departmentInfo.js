@@ -6,7 +6,7 @@ $(function(){
       data = {
         dpId:id,
         departmentName:str($("#departName").val()),
-        headImage : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
+        headImage : $("#addImage").data('imgUrl') || '/diguaApp/images/department.png',
         departmentNotice:str($("#notice").text()),
         chargeId:$("#leader").data('id'),
         isEditSubDepartmentNotice:$("#notice").data('flag'),
@@ -69,7 +69,7 @@ $(function(){
               var list = msg.employeeList;
               var dom = "",img;
               for (var i = 0; i < list.length; i++) {
-                  img = list[i].img ? list[i].img : "/diguaApp/images/tuwen.png";
+                  img = list[i].img ? list[i].img : "/diguaApp/images/user.png";
                   dom += '<li class="list-group-item employee-item" data-id="'+ (list[i].user_id || list[i].id)+'">'+
                         '<div class="media">'+
                           '<div class="media-left meida-middle w20">'+
@@ -107,14 +107,14 @@ $(function(){
             if (flag) {
                 $("#departName").val(msg.name || "");
                 $("#notice").html(msg.department_notice || "");
-                $("#addImage").css('background-image','url('+ (msg.img || "/diguaApp/images/tuwen.png") +')');
+                $("#addImage").css('background-image','url('+ (msg.img || "/diguaApp/images/department.png") +')');
                 service.departmentEmployeeList(id,msg.charge_employee_id,'1','10',function(status,data){
                     if (status) {
                         var empList = data.employeeList;
                         var dom = "",img;
                         if (empList.length) {
                           for (var i = 0; i < empList.length; i++) {
-                              img = empList[i].img ? empList[i].img : '/diguaApp/images/tuwen.png';
+                              img = empList[i].img ? empList[i].img : '/diguaApp/images/department.png';
                               dom += '<li class="depart-list">'+
                                       '<img src="'+img+'">'+
                                       '<div class="caption">' + empList[i].name + '</div></li>';

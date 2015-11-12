@@ -29,7 +29,7 @@ $(function(){
                 var data = msg.employeeList;
                 if (data.length) {
                   for (var i = 0; i < data.length; i++) {
-                      img = data[i].img ? data[i].img : '/diguaApp/images/tuwen.png';
+                      img = data[i].img ? data[i].img : '/diguaApp/images/user.png';
                       dom += '<li class="list-group-item" data-id="'+ data[i].id +'">'+
                               '<div class="media">'+
                                 '<div class="media-left meida-middle w20">'+

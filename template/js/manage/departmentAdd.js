@@ -5,7 +5,7 @@ $(function(){
         var str = service.strCheck,id = service.getSearch('id');
         data = {
           departmentName:str($("#departName").val()),
-          headImage : $("#addImage").data('imgUrl') || '/diguaApp/images/tuwen.png',
+          headImage : $("#addImage").data('imgUrl') || '/diguaApp/images/department.png',
           departmentNotice:str($("#notice").text()),
           chargeId:$("#leader").data('id'),
           isEditSubDepartmentNotice:$("#notice").data('flag')||'0',
@@ -66,7 +66,7 @@ $(function(){
                 var list = msg.employeeList;
                 var dom = "",img;
                 for (var i = 0; i < list.length; i++) {
-                    img = list[i].img ? list[i].img : "/diguaApp/images/tuwen.png";
+                    img = list[i].img ? list[i].img : "/diguaApp/images/user.png";
                     dom += '<li class="list-group-item employee-item" data-id="'+ (list[i].user_id || list[i].id)+'">'+
                           '<div class="media">'+
                             '<div class="media-left meida-middle w20">'+

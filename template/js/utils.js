@@ -427,7 +427,7 @@
                 parent_id:emp.parent_id || userInfo.id,
                 phone:emp.phone,
                 type:emp.type,
-                img:emp.img || "/diguaApp/images/tuwen.png",
+                img:emp.img || "/diguaApp/images/user.png",
                 pid:emp.pid,
                 cid:emp.cid,
                 did:emp.did,
