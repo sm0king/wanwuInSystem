@@ -482,13 +482,13 @@
           var userInfo = this.getUserInfo();
       },
       //获取部门列表 关键字 第几页 每页多少个
-      departmentList: function(keyValue,page,pageSize,callback) {
+      departmentList: function(data,callback) {
           var url = host + '/department/departmentList';
-          var data = {
-              page:page,
-              pageSize:pageSize,
-              search:keyValue || ""
-          };
+        //   var data = {
+        //       page:page,
+        //       pageSize:pageSize,
+        //       search:keyValue || ""
+        //   };
           this.getData(url, data, function(isTrue, reContent) {
               // reContent.departmentList 为部门信息
               callback(isTrue,reContent);

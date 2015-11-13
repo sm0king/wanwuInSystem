@@ -155,7 +155,7 @@ $(function(){
 
     $("#record-list").on('click','#load',function(){
         loadOther();
-    })
+    });
 
    function madeDom(data){
         var list = "",

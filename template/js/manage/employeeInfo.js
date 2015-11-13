@@ -119,7 +119,7 @@ $(function() {
 
   // 上级列表
   $("#superior").on('click', function(event) {
-    service.manageGetEmployeeList({}, function(flag, msg) {
+    service.manageGetEmployeeList({pageSize:10000}, function(flag, msg) {
       if (flag) {
         var list = msg.employeeList;
         var dom = "",
@@ -147,7 +147,7 @@ $(function() {
 
   // 部门列表
   $("#depart").on('click', function(event) {
-    service.departmentList("", "1", "10", function(flag, msg) {
+    service.departmentList({pageSize:10000}, function(flag, msg) {
       if (flag) {
         var dom = "",
           img;

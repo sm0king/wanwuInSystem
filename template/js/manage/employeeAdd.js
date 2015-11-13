@@ -144,7 +144,11 @@ $(function(){
 
   // 部门列表
   $("#depart").on('click',function(event) {
-    service.departmentList("","1","10",function(flag,msg){
+      var data = {
+        PageNumber: page || 1,
+        PageSize: pageSize || 10,
+      }
+    service.departmentList(data,function(flag,msg){
         if (flag) {
           var dom = "",img;
           var list = msg.departmentList;

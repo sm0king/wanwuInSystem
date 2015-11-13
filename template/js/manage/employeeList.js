@@ -81,6 +81,26 @@ $(function() {
   //   })
   // }
 
+  // 滚动加载
+  $(window).scroll(function(){
+      loadOther();
+  });
+
+  function loadOther(){
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+          if ($("#load") && $("#load").data('status') == '0') {
+              var page  =  parseInt($("#employeeList").data('page')) + 1;
+                  $("#load").data('status','1');
+                  load(page);
+          }
+      }
+  }
+
+  $("#employeeList").on('click','#load',function(){
+      loadOther();
+  });
+
   function madeDom(emp){
       var my = service.getUserInfo();
       var list = "",control,img,guys;
@@ -105,12 +125,23 @@ $(function() {
       return list;
   }
 
-  function load() {
-     var arg = {};
-    service.manageGetEmployeeList(arg, function(flag, msg) {
+  function load(page,pageSize) {
+     var data = {
+       page: page || 1,
+       PageSize: pageSize || 10,
+     }
+    service.manageGetEmployeeList(data, function(flag, msg) {
       if (flag) {
+        $("#load").remove();
         var list = madeDom(msg.employeeList);
-        $('#employeeList').html(list);
+        var totalPage = parseInt(Math.ceil(msg.totalCount / msg.pageSize));
+        if(msg.page < totalPage){
+            list  = list + '<li id="load" class="loading list-group-item text-center show">加载更多...</li>';
+            $("#employeeList").append(list).data('page',data.page);
+            $("#load").data('status','0');
+        }else if(msg.page == totalPage){
+            $("#employeeList").append(list);
+        }
       }
     });
   }

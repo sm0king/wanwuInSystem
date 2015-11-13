@@ -20,7 +20,12 @@ $(function(){
     function load(word){
         var key = word ? word : service.getSearch('key') || "";
         $("#search").val(key);
-          service.departmentList(key,"1","10",function(flag,msg){
+        var data = {
+          PageNumber: page || 1,
+          PageSize: pageSize || 10,
+          search:key
+        }
+          service.departmentList(data,function(flag,msg){
               if (flag) {
                 var data = msg.departmentList;
                 var list = "",dom = "",img;
