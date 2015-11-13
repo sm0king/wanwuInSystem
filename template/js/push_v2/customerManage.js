@@ -5,13 +5,7 @@ $(function(){
 
     $(".sign").on('click', function(event) {
         event.preventDefault();
-        location.href='./recordMark.html';
-    });
-    $(".address").on('click', function(event) {
-        event.preventDefault();
-        var lng = $(this).data('lng'),
-            lat = $(this).data('lat');
-            console.log(lng);
-            console.log(lat);
+        var id = $(this).data('id');
+        location.href='/newosadmin/customer/confirmVisit?shopId='+id;
     });
 });

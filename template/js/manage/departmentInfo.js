@@ -76,7 +76,7 @@ $(function(){
 
     $("#leader").on('click',function(){
         var id = service.getSearch('id');
-        service.departmentEmployeeList(id,"","1","10",function(flag,msg){
+        service.departmentLeaderList(function(flag,msg){
             if (flag) {
               var list = msg.employeeList;
               var dom = "",img;

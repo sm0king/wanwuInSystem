@@ -177,6 +177,14 @@ $(function() {
     $(".z-panel").hide();
   });
 
+  $("#manageFun").on('click',function(){
+      if ($(this).prop('checked')) {
+          $("#employeeCURD").parents('.list-group-item').removeClass('hide');
+      }else {
+          $("#employeeCURD").prop('checked',false).parents('.list-group-item').addClass('hide');
+      }
+  });
+
   $('#searchList').on('click', '.list-group-item', function(e) {
     e.preventDefault();
     if ($(this).hasClass('employee-item')) {
@@ -239,7 +247,9 @@ $(function() {
         $("#pushFun").prop('checked', open.pushFunction);
         $("#shipFun").prop('checked', open.shippingFunction);
         $("#manageFun").prop('checked', open.managementFunction);
-        $("#employeeCURD").prop('checked', open.employeeCURD);
+        if (open.managementFunction) {
+            $("#employeeCURD").prop('checked', open.employeeCURD).parents('.list-group-item').removeClass('hide');
+        }
         $("#firmFun").prop('checked', open.firmFunction);
         $("#del").data('id', id);
         service.getJobs(function(flag, msg) {

@@ -19,7 +19,7 @@ mixin infoSelect
       select#district.select.form-control
         option 成都市
 mixin infoSwitch(name)
-  li.list-group-item.clearfix
+  li.list-group-item.clearfix(class!=attributes.class)
     div.pull-left= name
     input.pull-right.mui-switch.mui-switch-animbg(id!=attributes.id)(type="checkbox")
 
@@ -54,7 +54,7 @@ block section
       + infoSwitch("地推功能")(id="pushFun")
       + infoSwitch("配送功能")(id="shipFun")
       + infoSwitch("管理功能")(id="manageFun")
-      + infoSwitch("新增/修改/删除员工")(id="employeeCURD")
+      + infoSwitch("新增/修改/删除员工")(id="employeeCURD",class="hide")
       + infoSwitch("厂商功能")(id="firmFun")
 
     #searchPanel.z-panel

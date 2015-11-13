@@ -530,7 +530,13 @@
               pageSize:pageSize || 10
           };
           this.getData(url, data, function(isTrue, reContent) {
-              //
+              callback(isTrue,reContent);
+          })
+      },
+      // 【部门管理】负责人列表
+      departmentLeaderList: function(callback){
+          var url = host + '/department/getAllGuys';
+          this.getData(url, {}, function(isTrue, reContent) {
               callback(isTrue,reContent);
           })
       },

@@ -173,6 +173,14 @@ $(function(){
     $(".z-panel").hide();
   });
 
+  $("#manageFun").on('click',function(){
+      if ($(this).prop('checked')) {
+          $("#employeeCURD").parents('.list-group-item').removeClass('hide');
+      }else {
+          $("#employeeCURD").prop('checked',false).parents('.list-group-item').addClass('hide');
+      }
+  });
+
   $('#searchList').on('click','.list-group-item',function(e){
       e.preventDefault();
       if ($(this).hasClass('employee-item')) {
