@@ -26,9 +26,9 @@ $(function(){
             var list = "",dom = "",img;
             for (var i = 0; i < data.length; i++) {
                 dom = "";
-                if (data[i].employeeList.employeeList.length > 0) {
+                if (data[i].employeeList.employeeList.length > 0 ) {
                   for (var j = 0; j < data[i].employeeList.employeeList.length; j++) {
-                    if (j < 5) {
+                    if (j < 4) {
                       img = data[i].employeeList.employeeList[j].img ? data[i].employeeList.employeeList[j].img : '/diguaApp/images/user.png';
                       dom += '<li class="depart-list">'+
                              '<img src="' + img +'" >'+
@@ -39,6 +39,9 @@ $(function(){
                       dom = '<li class="depart-list"><img src="' + (data[i].employeeList.charge[0].img || '/diguaApp/images/user.png') +'" >'+
                             '<div class="caption">' + data[i].employeeList.charge[0].name + '</div></li>' + dom;
                   }
+              }else if (data[i].employeeList.charge.length > 0 ) {
+                  dom = '<li class="depart-list"><img src="' + (data[i].employeeList.charge[0].img || '/diguaApp/images/user.png') +'" >'+
+                        '<div class="caption">' + data[i].employeeList.charge[0].name + '</div></li>' + dom;
                 }else {
                   dom = '<div class="text-center">暂无成员</div>'
                 }

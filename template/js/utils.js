@@ -2,7 +2,8 @@
   //关于api接口 这里本地调试的时候会出现 跨域问题，自行解决
   var host = window.location.hostname === 'localhost' || window.location.hostname === '123.59.58.104' ? 'http://123.59.58.104/newosadmin' : '/newosadmin';
   win.service = {
-      catchError: function(error_no) {
+      catchError: function(data) {
+          var error_no = data.error_no;
           if (error_no == '401') {
             //未登录 分两种情况 一种 有本地 存储一种没有，当有本地存储的时候 自动登录
             if (window.localStorage.getItem('userInfo')) {
@@ -14,7 +15,7 @@
             }
           }
           var error_messge = {
-              '101': '参数错误',
+              '101': data.error_desc,
               '100': '暂无数据',
               '301': '后台错误请联系管理员',
               '400': '您没有相关权限',
@@ -41,7 +42,7 @@
                   callback(true, result.content);
               } else {
                   //请求失败，无数据
-                  callback(false, serviceThis.catchError(result.error_no));
+                  callback(false, serviceThis.catchError(result));
               }
           }).fail(function(result) {
               //无返回数据

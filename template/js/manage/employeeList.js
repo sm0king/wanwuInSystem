@@ -95,9 +95,9 @@ $(function() {
           img = emp[i].img ? emp[i].img : '/diguaApp/images/user.png';
           list += '<li class="list-group-item ' + control + '" data-id="' + emp[i].id + '">' +
               '<div class="media">' +
-              '<div class="media-left meida-middle w20">' +
+              '<div class="media-left meida-middle px60">' +
               '<img src="' + img + '"></div>' +
-              '<div class="media-body w60">' +
+              '<div class="media-body">' +
                   '<div>' + emp[i].name + '</div>' +
                   '<div> ' + emp[i].phone + ' </div>'+
                   '<div> ' + (emp[i].departName || "暂无部门") + ' </div></div></div></li>'+ guys;
