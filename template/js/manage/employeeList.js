@@ -21,7 +21,8 @@ $(function() {
     }).on('click','.link-more.conceal',function(){
         var arg = {
             isGroup:    1,
-            employeeId: $(this).data('id')
+            employeeId: $(this).data('id'),
+            pageSize: $(this).data('num')
         }
         var _this = $(this);
         _this.addClass('on').removeClass('conceal');

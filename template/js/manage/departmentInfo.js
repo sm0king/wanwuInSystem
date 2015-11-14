@@ -131,6 +131,13 @@ $(function(){
                                       '<img src="'+img+'">'+
                                       '<div class="caption">' + empList[i].name + '</div></li>';
                           }
+                          if (data.charge.length) {
+                              dom = '<li class="depart-list"><img src="' + (data.charge[0].img || '/diguaApp/images/user.png') +'" >'+
+                                    '<div class="caption">' + data.charge[0].name + '</div></li>' + dom;
+                          }
+                        }else if (data.charge.length > 0 ) {
+                            dom = '<li class="depart-list"><img src="' + (data.charge[0].img || '/diguaApp/images/user.png') +'" >'+
+                                '<div class="caption">' + data.charge[0].name + '</div></li>' + dom;
                         }else {
                           dom = '<div class="text-center">暂无成员</div>';
                         }

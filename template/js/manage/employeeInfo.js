@@ -117,6 +117,29 @@ $(function() {
     });
   });
 
+  // 上级列表生成
+  function madeLeaderDom(emp){
+      var my = service.getUserInfo();
+      var list = "",control,img,guys;
+      for (var i = 0; i < emp.length; i++) {
+          if (emp[i].phone == my.phone) {
+              guys = "";
+          } else {
+              guys = emp[i].guysNumber ? '<div class="guys-link"><div class="myguys"></div><p class="link-more conceal" data-id="'+ emp[i].id +'" data-num="'+ emp[i].guysNumber +'">点击查看他的'+ emp[i].guysNumber +'个下级</p></div>' : "";
+          }
+          img = emp[i].img ? emp[i].img : '/diguaApp/images/user.png';
+          list += '<li class="list-group-item employee-item" data-id="' + emp[i].id + '">' +
+              '<div class="media">' +
+              '<div class="media-left meida-middle px60">' +
+              '<img src="' + img + '"></div>' +
+              '<div class="media-body">' +
+                  '<div class="employee-name">' + emp[i].name + '</div>' +
+                  '<div> ' + emp[i].phone + ' </div>'+
+                  '<div> ' + (emp[i].departName || "暂无部门") + ' </div></div></div></li>'+ guys;
+      }
+      return list;
+  }
+
   // 上级列表
   $("#superior").on('click', function(event) {
     service.manageGetEmployeeList({pageSize:10000}, function(flag, msg) {
@@ -124,18 +147,7 @@ $(function() {
         var list = msg.employeeList;
         var dom = "",
           img;
-        for (var i = 0; i < list.length; i++) {
-          img = list[i].img ? list[i].img : "/diguaApp/images/user.png";
-          dom += '<li class="list-group-item employee-item" data-id="' + (list[i].user_id || list[i].id) + '">' +
-            '<div class="media">' +
-            '<div class="media-left meida-middle w20">' +
-            '<img src="' + img + '" alt=""></div>' +
-            '<div class="media-body w60">' +
-            '<div class="employee-name">' + list[i].name + '</div>' +
-            '<div>' + list[i].phone + '</div>' +
-            '<div>' + (list[i].departmentName || "暂无部门") + '</div>' +
-            '</div></div></li>';
-        }
+        dom = madeLeaderDom(list);
         dom = '<ul class="list-group">' + dom + '</ul>';
         $("#searchList").html(dom);
       } else {
@@ -144,6 +156,30 @@ $(function() {
       $(".z-panel").show();
     });
   });
+
+  $("#searchList").on('click','.link-more.conceal',function(){
+      var arg = {
+          isGroup:    1,
+          employeeId: $(this).data('id'),
+          pageSize: $(this).data('num')
+      }
+      var _this = $(this);
+      _this.addClass('on').removeClass('conceal');
+      _this.siblings('.myguys').addClass('have')
+      service.manageGetEmployeeList(arg, function(flag, msg) {
+          if (flag) {
+              var list = madeLeaderDom(msg.employeeList);
+              _this.siblings('.myguys').html(list);
+              _this.html("收起下级列表");
+          }
+      })
+  }).on('click','.link-more.on',function(){
+      $(this).siblings('.myguys').html("");
+      $(this).html("点击查看他的"+$(this).data('num')+"个下级");
+      $(this).addClass('conceal').removeClass('on');
+      $(this).siblings('.myguys').removeClass('have')
+  });
+
 
   // 部门列表
   $("#depart").on('click', function(event) {
